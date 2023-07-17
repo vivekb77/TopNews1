@@ -193,12 +193,12 @@ const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the cu
 
 	if(AITweets.length > 0){
 		//shuffle array
-		for (let i = AITweets.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[AITweets[i], AITweets[j]] = [AITweets[j], AITweets[i]];
-		  }
+		// for (let i = AITweets.length - 1; i > 0; i--) {
+		// 	const j = Math.floor(Math.random() * (i + 1));
+		// 	[AITweets[i], AITweets[j]] = [AITweets[j], AITweets[i]];
+		//   }
 		//sort the array by date
-		// AITweets.sort((a, b) => (a.articleImportedToTopNewsDate > b.articleImportedToTopNewsDate) ? -1 : 1)
+		AITweets.sort((a, b) => (a.articlePublicationDate > b.articlePublicationDate) ? -1 : 1)
 	return res.json({ status: 'ok', tweets: AITweets })
 	}else{
 		return res.json({ status: 'error', error: 'No News found' })

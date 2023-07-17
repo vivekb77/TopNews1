@@ -98,8 +98,19 @@ const Topic = () => {
 
 		const data = await req.json()
 		if (data.status === 'ok') {
-
+			
 			for (let i=0;i<data.tweets.length;i++){ 
+
+				const inputDate = new Date(data.tweets[i].articlePublicationDate);
+				const options = { 
+					day: '2-digit', 
+					month: 'short', 
+					year: '2-digit', 
+					hour: '2-digit', 
+					minute: '2-digit', 
+					hour12: true 
+				  };
+				const formattedDate = inputDate.toLocaleDateString('en-US', options);
 
 				const obj = {
 					dbid:data.tweets[i]._id,
@@ -110,7 +121,7 @@ const Topic = () => {
 					teaserImageUrl: data.tweets[i].teaserImageUrl,
 					articleAuthor: data.tweets[i].articleAuthor,
 					articleGuid: data.tweets[i].articleGuid,
-					articlePublicationDate: data.tweets[i].articlePublicationDate,
+					articlePublicationDate: formattedDate,
 					articleImportedToTopNewsDate: data.tweets[i].articleImportedToTopNewsDate,
 					
 				}

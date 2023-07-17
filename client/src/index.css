@@ -489,9 +489,9 @@ a:active {
   }
   /* small screen */
   .card-image{
-    border-radius: 4px;
+    border-radius: 10px;
     padding: 2px;
-    max-width: 90%;
+    max-width: 95%;
     height: auto;
     display: block;
     margin-top: 10px;
@@ -530,11 +530,10 @@ a:active {
     width: 70%;
   }
 
-  .Tweetlink{
-    font-size: 0.7rem;
+  .articledateandsource{
+    font-size: 0.8rem;
   }
 
-  
   .userIdTextBox .tagTextBox
   {
     width: 80%;
