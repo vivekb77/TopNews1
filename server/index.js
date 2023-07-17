@@ -108,7 +108,7 @@ async function addNewsItemsToDB(NewsItemsArray) {
 	try {
 		await mongoose.connect(`${MONGO_URL}`)
 	  } catch (error) {
-		handleError(error);
+		console.log("could not connect to mongo db "+error)
 	  }
 	try {
 	  for (const item of NewsItemsArray) {
@@ -152,7 +152,7 @@ let topictopulltweets = "PullAllNews";
 try {
 	await mongoose.connect(`${MONGO_URL}`)
   } catch (error) {
-	handleError(error);
+	console.log("could not connect to mongo db "+error)
   }
 const timeZone = 'Pacific/Auckland';
 const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the current date in the specified time zone
