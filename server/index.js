@@ -18,7 +18,12 @@ const PORT = process.env.PORT || 1337
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect(`${MONGO_URL}`)
+
+try {
+	await mongoose.connect(`${MONGO_URL}`)
+  } catch (error) {
+	handleError(error);
+  }
 
 // Get RSS feed from Stuff every 3 hours
 setInterval(runRSSFeedPull, 10800000);
