@@ -20,8 +20,8 @@ app.use(express.json())
 
 mongoose.connect(`${MONGO_URL}`)
 
-// Get RSS feed from Stuff every hour
-// setInterval(runRSSFeedPull, 3600000);
+// Get RSS feed from Stuff every 3 hours
+setInterval(runRSSFeedPull, 10800000);
 // runRSSFeedPull();
 async function runRSSFeedPull(){
 await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
@@ -75,7 +75,7 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 				// teaserImageUrl: item.media_content['url'],
 				articleGuid: item.guid,
 				articlePublicationDate: new Date(item.pubDate),
-				articleImportedToTopNewsDate: moment().tz(timeZone).date
+				articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
 				};
 			NewsItemsArray.push(newsItem);		
 		}
@@ -108,10 +108,10 @@ async function addNewsItemsToDB(NewsItemsArray) {
 	  for (const item of NewsItemsArray) {
 		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid });
 		if (existingItem) {
-		  console.log('Duplicate entry found. Skipping insertion:', item.articleGuid);
+		  console.log('Duplicate entry found. Skipping insertion '+item.articleSource);
 		} else {
 		  await NewsData.create(item);
-		  console.log('News Data inserted successfully:', item.articleGuid);
+		  console.log('News Data inserted successfully '+item.articleSource);
 		}
 	  }
 	} catch (error) {
