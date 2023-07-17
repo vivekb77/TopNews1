@@ -19,11 +19,7 @@ app.use(cors())
 app.use(express.json())
 
 
-try {
-	await mongoose.connect(`${MONGO_URL}`)
-  } catch (error) {
-	handleError(error);
-  }
+
 
 // Get RSS feed from Stuff every 3 hours
 setInterval(runRSSFeedPull, 10800000);
@@ -110,6 +106,11 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 //add news articles to mongo db, do not add if the guid is already present
 async function addNewsItemsToDB(NewsItemsArray) {
 	try {
+		await mongoose.connect(`${MONGO_URL}`)
+	  } catch (error) {
+		handleError(error);
+	  }
+	try {
 	  for (const item of NewsItemsArray) {
 		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid });
 		if (existingItem) {
@@ -148,7 +149,11 @@ app.post('/api/GetNewsForProvider', async (req, res) => {
 
 // let topictopulltweets = req.body.topictopulltweets.trim();
 let topictopulltweets = "PullAllNews";
-
+try {
+	await mongoose.connect(`${MONGO_URL}`)
+  } catch (error) {
+	handleError(error);
+  }
 const timeZone = 'Pacific/Auckland';
 const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the current date in the specified time zone
 
