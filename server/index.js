@@ -22,7 +22,11 @@ app.use(express.json())
 
 
 // Get RSS feed from Stuff every 3 hours
-setInterval(runRSSFeedPull, 10800000);
+setInterval(runRSSFeedPull, 3600000);
+setInterval(keepServerRunning, 300000);
+async function keepServerRunning(){
+	console.log("server is running")
+}
 // runRSSFeedPull();
 async function runRSSFeedPull(){
 await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
