@@ -18,7 +18,7 @@ app.use(cors())
 app.use(express.json())
 
 
-// Get RSS feed from Stuff every 1 hour
+// Get RSS feed from new providers every 1 hour
 
 app.post('/api/cron', async (req, res) => {
 
