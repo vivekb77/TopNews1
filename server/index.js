@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const NewsData = require('./models/news.model')
 const axios = require('axios');
 const Parser = require('rss-parser');
+var cron = require('node-cron');
 
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
@@ -17,8 +18,15 @@ const PORT = process.env.PORT || 1337
 app.use(cors())
 app.use(express.json())
 
-// runCron();
-async function runCron(sourceUrl,articleSource) {
+// https://github.com/ncb000gt/node-cron
+cron.schedule('0 * * * *', () => {
+	const currentDateTime = new Date().toLocaleString();
+  	console.log(`[${currentDateTime}] Running a task every hour`);
+	runCron();
+  });
+
+
+async function runCron() {
 	await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
 
 	await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/curated/78/?outputType=xml&_website=nzh',"NZ Herald")
@@ -31,8 +39,9 @@ async function runCron(sourceUrl,articleSource) {
 	await fetchDataFromRSS('https://www.rnz.co.nz/rss/political.xml',"RNZ")
 	await fetchDataFromRSS('https://www.rnz.co.nz/rss/country.xml',"RNZ")
 }
-// Get RSS feed from new providers every 1 hour
 
+
+// Get RSS feed from new providers whenever needed with a post request
 app.post('/api/cron', async (req, res) => {
 
 await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
@@ -126,10 +135,10 @@ async function addNewsItemsToDB(NewsItemsArray) {
 	  for (const item of NewsItemsArray) {
 		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid });
 		if (existingItem) {
-		  console.log('Skipping'+item.articleSource);
+		  console.log('Skipping ' +item.articleSource);
 		} else {
 		  await NewsData.create(item);
-		  console.log('News Inserted'+item.articleSource);
+		  console.log('News Inserted '+item.articleSource);
 		}
 	  }
 	} catch (error) {
