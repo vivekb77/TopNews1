@@ -4,8 +4,3 @@ import './index.css'
 import App from './App'
 
 ReactDOM.render(<App />, document.getElementById('root'))
-
-
-//todo
-//filtering tweets for "" and ' does not work
-// pull data based on url query string

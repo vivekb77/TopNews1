@@ -12,13 +12,10 @@ const bcrypt = require('bcryptjs')
 require('dotenv').config();
 
 const MONGO_URL = process.env.MONGO_URL
-|| 'mongodb+srv://curate_top_news:tqxfHyp9Efa41tMN@clustertopnewsnew.sdomob1.mongodb.net/NewsDataDB?retryWrites=true&w=majority'
 const PORT = process.env.PORT || 1337
 
 app.use(cors())
 app.use(express.json())
-
-
 
 
 // Get RSS feed from Stuff every 1 hour
@@ -114,10 +111,10 @@ async function addNewsItemsToDB(NewsItemsArray) {
 	  for (const item of NewsItemsArray) {
 		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid });
 		if (existingItem) {
-		  console.log('Duplicate entry found. Skipping insertion '+item.articleSource);
+		  console.log('Skipping'+item.articleSource);
 		} else {
 		  await NewsData.create(item);
-		  console.log('News Data inserted successfully '+item.articleSource);
+		  console.log('Inserted'+item.articleSource);
 		}
 	  }
 	} catch (error) {
@@ -147,7 +144,6 @@ async function addNewsItemsToDB(NewsItemsArray) {
 //get news articles
 app.post('/api/GetNewsForProvider', async (req, res) => {
 
-// let topictopulltweets = req.body.topictopulltweets.trim();
 let topictopulltweets = "PullAllNews";
 try {
 	await mongoose.connect(`${MONGO_URL}`)
@@ -199,11 +195,11 @@ const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the cu
 		//   }
 		//sort the array by date
 		AITweets.sort((a, b) => (a.articlePublicationDate > b.articlePublicationDate) ? -1 : 1)
-		AITweets = AITweets.slice(0, 50);
+		AITweets = AITweets.slice(0, 100);
 
 	return res.json({ status: 'ok', tweets: AITweets })
 	}else{
-		return res.json({ status: 'error', error: 'No News found' })
+		return res.json({ status: 'error', error: 'Something went wrong' })
 	}
 
 })

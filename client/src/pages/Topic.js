@@ -104,14 +104,14 @@ const Topic = () => {
 				const inputDate = new Date(data.tweets[i].articlePublicationDate);
 				const options = { 
 					day: '2-digit', 
-					month: 'short', 
+					month: 'short',
 					// year: '2-digit', 
 					hour: '2-digit', 
 					minute: '2-digit', 
 					hour12: true 
 				  };
 				const formattedDate = inputDate.toLocaleDateString('en-US', options);
-
+				
 				const obj = {
 					dbid:data.tweets[i]._id,
 					articleSource: data.tweets[i].articleSource,
@@ -155,7 +155,8 @@ const Topic = () => {
 		<div className='header'>
 			<h1 className='maintitle'>TOP NEWS</h1>
 			{/* <h2 className='mainsubtitle'>Find new Tweet inspiration by analysing user's last few Tweets, and write new Tweets with AI in the same style.</h2> */}
-			<h3 className='mainsubtitle'>Sometimes just reading #Headlines can keep you up to date about the latest events</h3>
+			<h3 className='mainsubtitle'>Just reading #Headlines can keep you up to date about the latest events</h3>
+			<h5 className="articledateandsource"><span style={{color: `#808080`}}>Top NEWS updated every hour</span></h5>
 			 {errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 
 			 {/* <h2 className='mainsubtitle'><a className='mainsubtitlelink' href="/handle">Search Twitter Users here</a></h2> */}
@@ -184,7 +185,7 @@ const Topic = () => {
 				{/* <input type="submit" className='button' value={disable ? `Searching...` : `Get News` } disabled={!twitterUserID}/>
 				
 			</form> */}
-			{disable && <h6>Getiing NEWS just for you. Please wait..</h6>}
+			{disable && <h6>Getting NEWS just for you. Please wait..</h6>}
 			<br/>
 			{/* {disable && <h5><a href="mailto:learn@dictionaryv2.com">Send us feedback at learn@dictionaryv2.com</a></h5>} */}
 			{/* <br/> */}

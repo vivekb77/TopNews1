@@ -28,11 +28,9 @@ code {
 
 
 .tweetdiv{
-  width: 98%;
   height: 100%;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 40px;
   margin: 0px;
   box-shadow: 0 0 10px #ccc;
   display: flex;
@@ -98,16 +96,11 @@ code {
 
 
 /* CARD */
-.card-body{
-  /* display: flex; */
-  /* flex-direction: column; */
-  align-items: left;
-  margin: 3%;
-}
 
+/* //big screen */
 .card{
   width: 80%;
-  /* display: flex; */
+  display: flex;
   height: 100%;
   background-color: #ffffff;
   border: 1px solid #ccc;
@@ -115,6 +108,51 @@ code {
   padding: 5px;
   margin: 5px;
   box-shadow: 0 0 10px #ccc;
+}
+/* //big screen */
+.card-image{
+  border-radius: 10px;
+  max-width: 80%;
+  height: auto;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+   /* change this along with .card-body width to adjust horizontal space */
+  width:80%; 
+}
+/* //big screen */
+.card-body{
+  display: flex;
+  align-items: left;
+  margin-top: 10px;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: 30px;
+   /* change this along with .card-image width to adjust horizontal space */
+  width: 90%;
+}
+/* big screen */
+.card-title{
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  color: #003366;
+}
+/* big screen */
+.card-text{
+  font-size: 1.0rem;
+  font-weight: 550;
+  color: #000033;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.articledateandsource{
+  font-size: 0.8rem;
+  margin-bottom: 20px;
+  color: #808080
 }
 
 .admincardmain{
@@ -188,33 +226,6 @@ code {
   cursor: pointer;
 }
 
-.card-title{
-  font-size: 2.2rem;
-  font-weight: 600;
-  color: #000033;
-}
-
-.card-text{
-  font-size: 1.5rem;
-  font-weight: 550;
-  color: #000000;
-}
-
-/* //big screen */
-.card-image{
-  border-radius: 2px;
-  padding: 2px;
-  max-width: 100%;
-  max-height: 10%;
-  height: 25%;
-  display: block;
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  width:55%;
-}
-
-
 .Tweetlink{
   font-size: 1.2rem;
 }
@@ -232,34 +243,6 @@ code {
   box-shadow: 0px 2px 10px 5px #d7d7d7;
   color: #000;
 }
-
-
-.userIdTextBox{
-  text-indent:20px;
-  font-size: 14px;
-  width: 95%;
-  height: 40px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 5px;
-  align-self: center;
-  margin-top: 5px;
-}
-.tagTextBox{
-  text-indent:20px;
-  font-size: 14px;
-  width: 19%;
-  height: 40px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px;
-  margin-bottom: 10px;
-  align-self: center;
-  margin-top: 5px;
-}
-
-
 
 .button {
   text-align: center;
@@ -424,27 +407,86 @@ a:active {
   width: 80%;
 }
 
+
+
+
+
 @media screen and (max-width: 600px) {
 
 
-  .tweetdiv{
-    width: 98%;
-    height: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 40px;
-    margin: 0px;
-    box-shadow: 0 0 10px #ccc;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.tweetdiv{
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 0px;
+  box-shadow: 0 0 10px #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  }
+}
 
-
-  .card{
-    width: 90%;
-  }
+/* small screen */
+.card{
+  justify-content: center;
+  width: 90%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  box-shadow: 0 0 10px #ccc;
+}
+/* small screen */
+.card-image{
+  border-radius: 10px;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+   /* change this along with .card-body width to adjust horizontal space */
+  width:95%; 
+  max-width: 95%;
+}
+/* small screen */
+.card-body{
+  align-items: left;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+   /* change this along with .card-image width to adjust horizontal space */
+  width: 90%;
+  max-width: 90%;
+}
+/* small screen */
+.card-title{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #003366;
+}
+/* small screen */
+.card-text{
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #000000;
+}
+/* small screen */
+.articledateandsource{
+  font-size: 0.6rem;
+  margin-bottom: 20px;
+  color: #808080
+}
+  
   .header{
     width: 90%;
     height: 100%;
@@ -477,29 +519,6 @@ a:active {
     width: 80%;
     color: #333;
   }
-
-
-  
-  .card-body {
-    padding: 0.5rem;
-    max-width: 100%;
-    overflow-x: hidden;
-    position: relative
-
-  }
-  /* small screen */
-  .card-image{
-    border-radius: 10px;
-    padding: 2px;
-    max-width: 95%;
-    height: auto;
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    width:100%;
-  }
  
   .button {
     width: 100%;
@@ -508,17 +527,7 @@ a:active {
     font-size: 15px;
   }
 
-  .card-title{
-    margin-top: 10px;
-    margin-bottom: 0px;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-  
-  .card-text{
-    font-size: 0.9rem;
-    font-weight: 550;
-  }
+ 
   
   
   .card-text > span {
@@ -542,125 +551,4 @@ a:active {
   .admincard{
     height: auto;  
   }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* not needed 
- */
-
-
-
-.logindiv{
-
-  width: 50%;
-  height: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 50px;
-  margin: 100px;
-  box-shadow: 0 0 10px #ccc;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.emaillogin{
-  width: 100%;
-  height: 30px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 5px;
-  align-self: center;
-  margin-top: 5px;
-}
-
-.buttonlogin {
-  width: 100%;
-  height: 40px;
-  border: 1px solid rgb(113, 13, 13);
-  border-radius: 5px;
-  color: rgb(255, 255, 255);
-  background-color: rgb(40, 160, 220);
-  padding: 5px;
-  margin: 5px;
-  align-self: center;
-}
-
-.formlogin{
-  width: 40%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.registerdiv{
-  width: 50%;
-  height: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 50px;
-  margin: 100px;
-  box-shadow: 0 0 10px #ccc;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.registerform{
-  width: 40%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.registerinput{
-  width: 100%;
-  height: 30px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 5px;
-  align-self: center;
-  margin-top: 5px;
-}
-
-.registerbutton{
-  width: 100%;
-  height: 40px;
-  border: 1px solid rgb(113, 13, 13);
-  border-radius: 5px;
-  color: rgb(255, 255, 255);
-  background-color: rgb(40, 160, 220);
-  padding: 5px;
-  margin: 5px;
-  align-self: center;
-  font-size: 13px;
-
-}
-.maindiv{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ffffff;
 }
