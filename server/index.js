@@ -125,23 +125,23 @@ async function addNewsItemsToDB(NewsItemsArray) {
   }
   
   //get news providers
-//   app.post('/api/providers', async (req, res) => {
-// 	try {
+  app.post('/api/providers', async (req, res) => {
+	try {
 		
-// 		TopicArray = []
-// 		TopicArray.push("STUFF")
-// 		TopicArray.push("NZ Herald")
-// 		TopicArray.push("RNZ")
+		TopicArray = []
+		TopicArray.push("STUFF")
+		TopicArray.push("NZ Herald")
+		TopicArray.push("RNZ")
 
-// 		TopicArray = [...new Set(TopicArray)];  //remove duplicates
+		TopicArray = [...new Set(TopicArray)];  //remove duplicates
 		
-// 		return res.json({ status: 'ok', TopicArray:TopicArray })
+		return res.json({ status: 'ok', TopicArray:TopicArray })
 
-// 	} catch (error) {
-// 		console.log(error)
-// 		res.json({ status: 'error', error: 'Error while sending providers' })
-// 	}
-// })
+	} catch (error) {
+		console.log(error)
+		res.json({ status: 'error', error: 'Error while sending providers' })
+	}
+})
 
 //get news articles
 app.post('/api/GetNewsForProvider', async (req, res) => {
