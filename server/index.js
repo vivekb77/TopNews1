@@ -19,9 +19,9 @@ app.use(express.json())
 
 
 // Get RSS feed from Stuff every 1 hour
-setInterval(runRSSFeedPull, 3600000);
-// runRSSFeedPull();
-async function runRSSFeedPull(){
+
+app.post('/api/cron', async (req, res) => {
+
 await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
 
 await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/curated/78/?outputType=xml&_website=nzh',"NZ Herald")
@@ -33,7 +33,9 @@ await fetchDataFromRSS('https://www.rnz.co.nz/rss/on-the-inside.xml',"RNZ")
 await fetchDataFromRSS('https://www.rnz.co.nz/rss/national.xml',"RNZ")
 await fetchDataFromRSS('https://www.rnz.co.nz/rss/political.xml',"RNZ")
 await fetchDataFromRSS('https://www.rnz.co.nz/rss/country.xml',"RNZ")
-}
+
+});
+
 
 async function fetchDataFromRSS(sourceUrl,articleSource) {
   try {
