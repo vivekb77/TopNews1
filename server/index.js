@@ -21,12 +21,8 @@ app.use(express.json())
 
 
 
-// Get RSS feed from Stuff every 3 hours
+// Get RSS feed from Stuff every 1 hour
 setInterval(runRSSFeedPull, 3600000);
-setInterval(keepServerRunning, 300000);
-async function keepServerRunning(){
-	console.log("server is running")
-}
 // runRSSFeedPull();
 async function runRSSFeedPull(){
 await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
@@ -203,6 +199,8 @@ const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the cu
 		//   }
 		//sort the array by date
 		AITweets.sort((a, b) => (a.articlePublicationDate > b.articlePublicationDate) ? -1 : 1)
+		AITweets = AITweets.slice(0, 50);
+
 	return res.json({ status: 'ok', tweets: AITweets })
 	}else{
 		return res.json({ status: 'error', error: 'No News found' })
