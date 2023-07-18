@@ -116,7 +116,7 @@ async function addNewsItemsToDB(NewsItemsArray) {
 		  console.log('Skipping'+item.articleSource);
 		} else {
 		  await NewsData.create(item);
-		  console.log('Inserted'+item.articleSource);
+		  console.log('News Inserted'+item.articleSource);
 		}
 	  }
 	} catch (error) {
