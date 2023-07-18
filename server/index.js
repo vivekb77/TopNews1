@@ -17,7 +17,20 @@ const PORT = process.env.PORT || 1337
 app.use(cors())
 app.use(express.json())
 
+// runCron();
+async function runCron(sourceUrl,articleSource) {
+	await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
 
+	await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/curated/78/?outputType=xml&_website=nzh',"NZ Herald")
+	await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/nz/?outputType=xml&_website=nzh',"NZ Herald")
+	await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/business/?outputType=xml&_website=nzh',"NZ Herald")
+	await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/world/?outputType=xml&_website=nzh',"NZ Herald")
+	
+	await fetchDataFromRSS('https://www.rnz.co.nz/rss/on-the-inside.xml',"RNZ")
+	await fetchDataFromRSS('https://www.rnz.co.nz/rss/national.xml',"RNZ")
+	await fetchDataFromRSS('https://www.rnz.co.nz/rss/political.xml',"RNZ")
+	await fetchDataFromRSS('https://www.rnz.co.nz/rss/country.xml',"RNZ")
+}
 // Get RSS feed from new providers every 1 hour
 
 app.post('/api/cron', async (req, res) => {
