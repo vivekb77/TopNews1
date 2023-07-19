@@ -7,10 +7,6 @@ import ReactGA from 'react-ga';
 import { Helmet } from 'react-helmet';
 require('dotenv').config();
 
-ReactGA.event({
-	category: 'Topic',
-	action: 'Topic Page Viewed'
-  });
 
 const baseURL = process.env.REACT_APP_BASE_URL
 
@@ -21,14 +17,16 @@ const Topic = () => {
 	const [disable, setDisable] = React.useState(false);
 	const [disable1, setDisable1] = React.useState(false);
 	const [handle, setHandle] = React.useState();
-	const [userName, setUserName] = React.useState();
+	const [dateTimeOfLastPulltoshow, setDateTimeOfLastPulltoshow] = React.useState();
 	const [errormessage, setErrormessage] = React.useState();
+	const [userName, setUserName] = React.useState();
 
 	const [admin, setAdmin] = useState([])
 
 	
 	useEffect(() => {
 		GetTweets();
+		dateTimeOfLastPull();
 		
 		const params = new URLSearchParams()
 		if (handle) {
@@ -39,39 +37,64 @@ const Topic = () => {
 		history.push({search: params.toString()})
 	  }, [handle, history])
 
+//get date time when articles were updated from rss
+	async function dateTimeOfLastPull(event) {
+	const req = await fetch(`${baseURL}/api/dateTimeOfLastPull`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			//nothing
+		}),
+	})
+	const dateTimeOfLastPull = await req.json();
+	if (dateTimeOfLastPull.status === 'ok') {
 
-	
-	async function Admin(event) {
+		const inputDate = new Date(dateTimeOfLastPull.dateTimeOfLastPull);
+				const options = { 
+					day: '2-digit', 
+					month: 'short',
+					// year: '2-digit', 
+					hour: '2-digit', 
+					minute: '2-digit', 
+					hour12: true 
+				  };
+				  setDateTimeOfLastPulltoshow(handle => inputDate.toLocaleDateString('en-US', options));
+	}
+	} 
+
+	// async function Admin(event) {
 		
-		// setAdmin(admin => []);
-		// setDisable1(false);
+	// 	// setAdmin(admin => []);
+	// 	// setDisable1(false);
 
-		const req = await fetch(`${baseURL}/api/providers`, {
+	// 	const req = await fetch(`${baseURL}/api/providers`, {
 			
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'x-access-token': localStorage.getItem('token'),
-			},
-			body: JSON.stringify({
-				// tweeterUserHadleToPullTweets: twitterUserID,
-			}),
+	// 		method: 'POST',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 			'x-access-token': localStorage.getItem('token'),
+	// 		},
+	// 		body: JSON.stringify({
+	// 			// tweeterUserHadleToPullTweets: twitterUserID,
+	// 		}),
 		
-		})
+	// 	})
 
-		const data = await req.json()
-		if (data.status === 'ok') {
+	// 	const data = await req.json()
+	// 	if (data.status === 'ok') {
 
-			setAdmin(admin => []); //clear them first
+	// 		setAdmin(admin => []); //clear them first
 
-		for (let i=0;i<data.TopicArray.length;i++){ 
+	// 	for (let i=0;i<data.TopicArray.length;i++){ 
 		
-			setAdmin(prevArray => [...prevArray, data.TopicArray[i]])
+	// 		setAdmin(prevArray => [...prevArray, data.TopicArray[i]])
 
-		}
-		setDisable1(true);
+	// 	}
+	// 	setDisable1(true);
 		
-	} }  
+	// } }  
 
 	async function GetTweets(event) {
 		// event.preventDefault()
@@ -156,7 +179,7 @@ const Topic = () => {
 			<h1 className='maintitle'>TOP NEWS</h1>
 			{/* <h2 className='mainsubtitle'>Find new Tweet inspiration by analysing user's last few Tweets, and write new Tweets with AI in the same style.</h2> */}
 			<h3 className='mainsubtitle'>Just reading #Headlines can keep you up to date about the latest events</h3>
-			<h5 className="articledateandsource"><span style={{color: `#808080`}}>Top NEWS updated every hour</span></h5>
+			<h5 className="articledateandsource"><span style={{color: `#808080`}}>{`Top NEWS updated every hour. Last updated - ${dateTimeOfLastPulltoshow}`}</span></h5>
 			 {errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 
 			 {/* <h2 className='mainsubtitle'><a className='mainsubtitlelink' href="/handle">Search Twitter Users here</a></h2> */}

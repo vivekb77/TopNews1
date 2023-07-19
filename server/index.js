@@ -4,6 +4,7 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const NewsData = require('./models/news.model')
+const DateTimeOfLastPullModel = require('./models/datetime.model')
 const axios = require('axios');
 const Parser = require('rss-parser');
 var cron = require('node-cron');
@@ -17,24 +18,6 @@ const PORT = process.env.PORT || 1337
 
 app.use(cors())
 app.use(express.json())
-
-let addedArticlesCount;
-let skippedArticlesCount;
-let errorAddingArticlesCount;
-// Get RSS feed from new providers whenever needed with a post request to api/cron
-app.post('/api/cron', async (req, res) => {
-	console.log("Cron job via API triggered")
-  	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
-	addedArticlesCount = 0;
-	skippedArticlesCount = 0;
-	errorAddingArticlesCount = 0;
-	await runCron();
-	console.log("Added Articles Count "+addedArticlesCount);
-	console.log("Skipped Articles Count "+skippedArticlesCount);
-	console.log("Error adding Articles Count "+errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
-	});
-
 
 
 //cron job every 30 mins to pull latest articles
@@ -51,15 +34,35 @@ app.post('/api/cron', async (req, res) => {
 // 	console.log(`Cron job finished at [${currentDateTimeafter}]`);
 //   });
 
-//   cron.schedule('*/2 * * * *', () => {
-// 	console.log('running a task every two minutes');
-//   });
+try {
+	 mongoose.connect(`${MONGO_URL}`)
+  } catch (error) {
+	console.log("could not connect to mongo db "+error)
+}
+
+let addedArticlesCount;
+let skippedArticlesCount;
+let errorAddingArticlesCount;
+// Get RSS feed from new providers whenever needed with a post request to api/cron
+app.post('/api/cron', async (req, res) => {
+	try{
+		console.log("Cron job via API triggered")
+		console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
+		addedArticlesCount = 0;
+		skippedArticlesCount = 0;
+		errorAddingArticlesCount = 0;
+		await runCron();
+		console.log("Added Articles Count "+addedArticlesCount);
+		console.log("Skipped Articles Count "+skippedArticlesCount);
+		console.log("Error adding Articles Count "+errorAddingArticlesCount);
+		console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+		AddDateTimeOfLastPull(new Date().toLocaleString());
+		return res.json({ status: 'ok', errormessage: 'Cron job completed successfully'})
+	}catch{
+		return res.json({ status: 'error', errormessage: 'Cron job failed'})
+	}
 	
-//   setInterval( function() { funca(); }, 5000 );
-// 	function funca (){
-// 		const currentDateTimeafter = new Date().toLocaleString();
-// 		console.log(`Cron job testing at [${currentDateTimeafter}]`);
-// 	}
+	});
 
 async function runCron() {
 	await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
@@ -144,11 +147,7 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 //add news articles to mongo db, do not add if the guid is already present
 
 async function addNewsItemsToDB(NewsItemsArray) {
-	try {
-		await mongoose.connect(`${MONGO_URL}`)
-	  } catch (error) {
-		console.log("could not connect to mongo db "+error)
-	  }
+	
 	try {
 	  for (const item of NewsItemsArray) {
 		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid });
@@ -167,35 +166,22 @@ async function addNewsItemsToDB(NewsItemsArray) {
 	  console.error('Error inserting News article, mostly due to duplicate key');
 	}
   }
-  
-  //get news providers
-//   app.post('/api/providers', async (req, res) => {
-// 	try {
-		
-// 		TopicArray = []
-// 		TopicArray.push("STUFF")
-// 		TopicArray.push("NZ Herald")
-// 		TopicArray.push("RNZ")
 
-// 		TopicArray = [...new Set(TopicArray)];  //remove duplicates
-		
-// 		return res.json({ status: 'ok', TopicArray:TopicArray })
-
-// 	} catch (error) {
-// 		console.log(error)
-// 		res.json({ status: 'error', error: 'Error while sending providers' })
-// 	}
-// })
+  async function AddDateTimeOfLastPull(dateTimeOfLastPull){
+	try{
+		DateTimeOfLastPullModel.findByIdAndUpdate("64b7bd95181d90534a16cb5a", {dateTimeOfLastPull: new Date(dateTimeOfLastPull)}, {new: false}, (err, doc) => {
+		if (err) return handleError(err);
+	});	
+		console.log("dateTimeOfLastPull updated");
+	}catch{
+		console.log("dateTimeOfLastPull not updated");
+	}
+  }
 
 //get news articles
 app.post('/api/GetNewsForProvider', async (req, res) => {
 
 let topictopulltweets = "PullAllNews";
-try {
-	await mongoose.connect(`${MONGO_URL}`)
-  } catch (error) {
-	console.log("could not connect to mongo db "+error)
-  }
 const timeZone = 'Pacific/Auckland';
 const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the current date in the specified time zone
 
@@ -245,10 +231,43 @@ const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the cu
 
 	return res.json({ status: 'ok', tweets: AITweets })
 	}else{
-		return res.json({ status: 'error', error: 'Something went wrong' })
+		return res.json({ status: 'error', errormessage: 'Something went wrong' })
 	}
 
 })
+
+  
+//get last article update datetime
+app.post('/api/dateTimeOfLastPull', async (req, res) => {
+try {
+	const dateTimeOfLastPull = await DateTimeOfLastPullModel.find({
+		_id: "64b7bd95181d90534a16cb5a"
+	})
+	return res.json({ status: 'ok', dateTimeOfLastPull:dateTimeOfLastPull[0].dateTimeOfLastPull })
+
+} catch (error) {
+	res.json({ status: 'error', errormessage: 'Error getting dateTimeOfLastPull' })
+}
+})
+
+  //get news providers
+//   app.post('/api/providers', async (req, res) => {
+// 	try {
+		
+// 		TopicArray = []
+// 		TopicArray.push("STUFF")
+// 		TopicArray.push("NZ Herald")
+// 		TopicArray.push("RNZ")
+
+// 		TopicArray = [...new Set(TopicArray)];  //remove duplicates
+		
+// 		return res.json({ status: 'ok', TopicArray:TopicArray })
+
+// 	} catch (error) {
+// 		console.log(error)
+// 		res.json({ status: 'error', error: 'Error while sending providers' })
+// 	}
+// })
 
 //topic.js
 //aicard.js
