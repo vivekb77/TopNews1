@@ -113,17 +113,6 @@ const Topic = () => {
 		if (data.status === 'ok') {
 			
 			for (let i=0;i<data.tweets.length;i++){ 
-
-				const inputDate = new Date(data.tweets[i].articlePublicationDate);
-				const options = { 
-					day: '2-digit', 
-					month: 'short',
-					// year: '2-digit', 
-					hour: '2-digit', 
-					minute: '2-digit', 
-					hour12: true 
-				  };
-				const formattedDate = inputDate.toLocaleDateString('en-US', options);
 				
 				const obj = {
 					dbid:data.tweets[i]._id,
@@ -132,9 +121,9 @@ const Topic = () => {
 					articleDescription: data.tweets[i].articleDescription,
 					articleUrl: data.tweets[i].articleUrl,
 					teaserImageUrl: data.tweets[i].teaserImageUrl,
-					articleAuthor: data.tweets[i].articleAuthor,
+					// articleAuthor: data.tweets[i].articleAuthor,
 					articleGuid: data.tweets[i].articleGuid,
-					articlePublicationDate: formattedDate,
+					articlePublicationDate: data.tweets[i].articleAuthor, //author field has formatted date so using it
 					articleImportedToTopNewsDate: data.tweets[i].articleImportedToTopNewsDate,
 					
 				}

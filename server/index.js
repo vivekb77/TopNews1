@@ -194,6 +194,7 @@ const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the cu
 		})
 	}
 	else {
+		//this will be need if want to pull articles for specific provider
 		 AITweets = await NewsData.find({
 			articleSource: { '$regex':topictopulltweets , '$options' : 'i'},
 			displayOnFE: true
@@ -225,6 +226,20 @@ const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the cu
 		AITweets.sort((a, b) => (a.articlePublicationDate > b.articlePublicationDate) ? -1 : 1)
 		AITweets = AITweets.slice(0, 100);
 
+		for (let f = 0; f < AITweets.length; f++) {
+			const inputDate = new Date(AITweets[f].articlePublicationDate);
+		
+			const options = {
+				day: '2-digit',
+				month: 'short',
+				// year: '2-digit', 
+				hour: '2-digit',
+				minute: '2-digit',
+				hour12: true,
+			};
+			const formattedDate = inputDate.toLocaleDateString('en-US', options);
+			AITweets[f].articleAuthor = formattedDate; //updating author field as new date is of string type can t reassign to date fields
+		}
 	return res.json({ status: 'ok', tweets: AITweets })
 	}else{
 		return res.json({ status: 'error', errormessage: 'Something went wrong' })
