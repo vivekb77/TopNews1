@@ -38,12 +38,12 @@ cron.schedule('*/30 * * * *', async () => {
   cron.schedule('*/2 * * * *', () => {
 	console.log('running a task every two minutes');
   });
-  
-  cron.schedule('*/1 * * * *', async () => {
-	const currentDateTimeafter = new Date().toLocaleString();
-	console.log(`Cron job testing at [${currentDateTimeafter}]`);
-  });
-
+	
+  setInterval( function() { funca(); }, 50000 );
+	function funca (){
+		const currentDateTimeafter = new Date().toLocaleString();
+		console.log(`Cron job testing at [${currentDateTimeafter}]`);
+	}
 
 async function runCron() {
 	await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
