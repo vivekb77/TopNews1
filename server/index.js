@@ -236,6 +236,7 @@ const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the cu
 				hour: '2-digit',
 				minute: '2-digit',
 				hour12: true,
+				timeZone: 'Pacific/Auckland'
 			};
 			const formattedDate = inputDate.toLocaleDateString('en-US', options);
 			AITweets[f].articleAuthor = formattedDate; //updating author field as new date is of string type can t reassign to date fields
@@ -261,7 +262,8 @@ try {
 					// year: '2-digit', 
 					hour: '2-digit', 
 					minute: '2-digit', 
-					hour12: true 
+					hour12: true ,
+					timeZone: 'Pacific/Auckland'
 				  };
 	return res.json({ status: 'ok', dateTimeOfLastPull: inputDate.toLocaleDateString('en-US', options)})
 
