@@ -481,11 +481,16 @@ a:active {
   color: #000000;
 }
 /* small screen */
-.articledateandsource{
+.articledateandsourcetop{
   font-size: 0.6rem;
   margin-bottom: 20px;
   margin-left: 20px;
   margin-right: 20px;
+  color: #808080
+}
+.articledateandsource{
+  font-size: 0.6rem;
+  margin-bottom: 20px;
   color: #808080
 }
   

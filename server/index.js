@@ -150,24 +150,23 @@ async function addNewsItemsToDB(NewsItemsArray) {
 		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid });
 		if (existingItem) {
 			skippedArticlesCount ++
-		//   console.log('Skipping ' +item.articleSource +skippedArticlesCount);
+		//   console.log('Skipping ' +item.articleSource);
 		 
 		} else {
 			addedArticlesCount ++;
 		  	await NewsData.create(item);
-		//   console.log('News Inserted '+item.articleSource +addedArticlesCount);
+		//   console.log('News Inserted '+item.articleSource);
 		}
 	  }
 	} catch (error) {
 		errorAddingArticlesCount++
-	  console.error('Error inserting News article, mostly due to duplicate key');
+	  console.error('Error inserting News article, mostly due to duplicate key' +error);
 	}
   }
 
   async function AddDateTimeOfLastPull(dateTimeOfLastPull){
 	try{
 		DateTimeOfLastPullModel.findByIdAndUpdate("64b7bd95181d90534a16cb5a", {dateTimeOfLastPull: new Date(dateTimeOfLastPull)}, {new: false}, (err, doc) => {
-		if (err) return handleError(err);
 	});	
 		console.log("dateTimeOfLastPull updated");
 	}catch{
@@ -240,7 +239,16 @@ try {
 	const dateTimeOfLastPull = await DateTimeOfLastPullModel.find({
 		_id: "64b7bd95181d90534a16cb5a"
 	})
-	return res.json({ status: 'ok', dateTimeOfLastPull:dateTimeOfLastPull[0].dateTimeOfLastPull })
+	const inputDate = new Date(dateTimeOfLastPull[0].dateTimeOfLastPull);
+				const options = { 
+					day: '2-digit', 
+					month: 'short',
+					// year: '2-digit', 
+					hour: '2-digit', 
+					minute: '2-digit', 
+					hour12: true 
+				  };
+	return res.json({ status: 'ok', dateTimeOfLastPull: inputDate.toLocaleDateString('en-US', options)})
 
 } catch (error) {
 	res.json({ status: 'error', errormessage: 'Error getting dateTimeOfLastPull' })
