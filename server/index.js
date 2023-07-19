@@ -35,6 +35,14 @@ cron.schedule('*/30 * * * *', async () => {
 	console.log(`Cron job finished at [${currentDateTimeafter}]`);
   });
 
+  cron.schedule('*/2 * * * *', () => {
+	console.log('running a task every two minutes');
+  });
+  
+  cron.schedule('*/1 * * * *', async () => {
+	const currentDateTimeafter = new Date().toLocaleString();
+	console.log(`Cron job testing at [${currentDateTimeafter}]`);
+  });
 
 
 async function runCron() {
