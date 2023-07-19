@@ -179,7 +179,7 @@ const Topic = () => {
 			<h1 className='maintitle'>TOP NEWS</h1>
 			{/* <h2 className='mainsubtitle'>Find new Tweet inspiration by analysing user's last few Tweets, and write new Tweets with AI in the same style.</h2> */}
 			<h3 className='mainsubtitle'>Just reading #Headlines can keep you up to date about the latest events</h3>
-			<h5 className="articledateandsource"><span style={{color: `#808080`}}>{`Top NEWS updated every hour. Last updated - ${dateTimeOfLastPulltoshow}`}</span></h5>
+			{dateTimeOfLastPulltoshow && <h5 className="articledateandsource"><span style={{color: `#808080`}}>{`Top NEWS updated every hour. Last updated - ${dateTimeOfLastPulltoshow}`}</span></h5>}
 			 {errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 
 			 {/* <h2 className='mainsubtitle'><a className='mainsubtitlelink' href="/handle">Search Twitter Users here</a></h2> */}

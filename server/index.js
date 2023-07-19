@@ -45,22 +45,19 @@ let skippedArticlesCount;
 let errorAddingArticlesCount;
 // Get RSS feed from new providers whenever needed with a post request to api/cron
 app.post('/api/cron', async (req, res) => {
-	try{
-		console.log("Cron job via API triggered")
-		console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
-		addedArticlesCount = 0;
-		skippedArticlesCount = 0;
-		errorAddingArticlesCount = 0;
-		await runCron();
-		console.log("Added Articles Count "+addedArticlesCount);
-		console.log("Skipped Articles Count "+skippedArticlesCount);
-		console.log("Error adding Articles Count "+errorAddingArticlesCount);
-		console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
-		AddDateTimeOfLastPull(new Date().toLocaleString());
-		return res.json({ status: 'ok', errormessage: 'Cron job completed successfully'})
-	}catch{
-		return res.json({ status: 'error', errormessage: 'Cron job failed'})
-	}
+	
+	console.log("Cron job via API triggered")
+	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await runCron();
+	console.log("Added Articles Count "+addedArticlesCount);
+	console.log("Skipped Articles Count "+skippedArticlesCount);
+	console.log("Error adding Articles Count "+errorAddingArticlesCount);
+	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: 'ok', errormessage: 'Cron job completed successfully'})
 	
 	});
 
