@@ -20,15 +20,18 @@ app.use(express.json())
 
 let addedArticlesCount;
 let skippedArticlesCount;
+let errorAddingArticlesCount;
 // Get RSS feed from new providers whenever needed with a post request to api/cron
 app.post('/api/cron', async (req, res) => {
 	console.log("Cron job via API triggered")
   	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
 	await runCron();
 	console.log("Added Articles Count "+addedArticlesCount);
 	console.log("Skipped Articles Count "+skippedArticlesCount);
+	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	});
 
@@ -154,12 +157,13 @@ async function addNewsItemsToDB(NewsItemsArray) {
 		//   console.log('Skipping ' +item.articleSource +skippedArticlesCount);
 		 
 		} else {
-		  await NewsData.create(item);
-		  addedArticlesCount++;
+			addedArticlesCount ++;
+		  	await NewsData.create(item);
 		//   console.log('News Inserted '+item.articleSource +addedArticlesCount);
 		}
 	  }
 	} catch (error) {
+		errorAddingArticlesCount++
 	  console.error('Error inserting News article, mostly due to duplicate key');
 	}
   }
