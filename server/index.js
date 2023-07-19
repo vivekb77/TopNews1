@@ -18,12 +18,23 @@ const PORT = process.env.PORT || 1337
 app.use(cors())
 app.use(express.json())
 
+let addedArticlesCount;
+let skippedArticlesCount;
+
+//cron job every 30 mins to pull latest articles
 // https://github.com/ncb000gt/node-cron
-cron.schedule('0 * * * *', () => {
-	const currentDateTime = new Date().toLocaleString();
-  	console.log(`[${currentDateTime}] Running a task every hour`);
-	runCron();
+cron.schedule('*/30 * * * *', async () => {
+	const currentDateTimebefore = new Date().toLocaleString();
+  	console.log(`Running cron job to fetch latest articles at [${currentDateTimebefore}]`);
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	await runCron();
+	console.log("Added Articles Count "+addedArticlesCount);
+	console.log("Skipped Articles Count "+skippedArticlesCount);
+	const currentDateTimeafter = new Date().toLocaleString();
+	console.log(`Cron job finished at [${currentDateTimeafter}]`);
   });
+
 
 
 async function runCron() {
@@ -118,13 +129,14 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 		
 		  
     });
-	addNewsItemsToDB(NewsItemsArray)
+	await addNewsItemsToDB(NewsItemsArray)
   } catch (error) {
     console.error('Error fetching or parsing RSS feed:', error);
   }
 }
 
 //add news articles to mongo db, do not add if the guid is already present
+
 async function addNewsItemsToDB(NewsItemsArray) {
 	try {
 		await mongoose.connect(`${MONGO_URL}`)
@@ -135,35 +147,38 @@ async function addNewsItemsToDB(NewsItemsArray) {
 	  for (const item of NewsItemsArray) {
 		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid });
 		if (existingItem) {
-		  console.log('Skipping ' +item.articleSource);
+			skippedArticlesCount ++
+		//   console.log('Skipping ' +item.articleSource +skippedArticlesCount);
+		 
 		} else {
 		  await NewsData.create(item);
-		  console.log('News Inserted '+item.articleSource);
+		  addedArticlesCount++;
+		//   console.log('News Inserted '+item.articleSource +addedArticlesCount);
 		}
 	  }
 	} catch (error) {
-	  console.error('Error inserting News data:', error);
+	  console.error('Error inserting News article, mostly due to duplicate key');
 	}
   }
   
   //get news providers
-  app.post('/api/providers', async (req, res) => {
-	try {
+//   app.post('/api/providers', async (req, res) => {
+// 	try {
 		
-		TopicArray = []
-		TopicArray.push("STUFF")
-		TopicArray.push("NZ Herald")
-		TopicArray.push("RNZ")
+// 		TopicArray = []
+// 		TopicArray.push("STUFF")
+// 		TopicArray.push("NZ Herald")
+// 		TopicArray.push("RNZ")
 
-		TopicArray = [...new Set(TopicArray)];  //remove duplicates
+// 		TopicArray = [...new Set(TopicArray)];  //remove duplicates
 		
-		return res.json({ status: 'ok', TopicArray:TopicArray })
+// 		return res.json({ status: 'ok', TopicArray:TopicArray })
 
-	} catch (error) {
-		console.log(error)
-		res.json({ status: 'error', error: 'Error while sending providers' })
-	}
-})
+// 	} catch (error) {
+// 		console.log(error)
+// 		res.json({ status: 'error', error: 'Error while sending providers' })
+// 	}
+// })
 
 //get news articles
 app.post('/api/GetNewsForProvider', async (req, res) => {
