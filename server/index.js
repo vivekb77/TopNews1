@@ -20,30 +20,43 @@ app.use(express.json())
 
 let addedArticlesCount;
 let skippedArticlesCount;
-
-//cron job every 30 mins to pull latest articles
-// https://github.com/ncb000gt/node-cron
-cron.schedule('*/30 * * * *', async () => {
-	const currentDateTimebefore = new Date().toLocaleString();
-  	console.log(`Running cron job to fetch latest articles at [${currentDateTimebefore}]`);
+// Get RSS feed from new providers whenever needed with a post request to api/cron
+app.post('/api/cron', async (req, res) => {
+	console.log("Cron job via API triggered")
+  	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	await runCron();
 	console.log("Added Articles Count "+addedArticlesCount);
 	console.log("Skipped Articles Count "+skippedArticlesCount);
-	const currentDateTimeafter = new Date().toLocaleString();
-	console.log(`Cron job finished at [${currentDateTimeafter}]`);
-  });
+	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	});
 
-  cron.schedule('*/2 * * * *', () => {
-	console.log('running a task every two minutes');
-  });
+
+
+//cron job every 30 mins to pull latest articles
+// https://github.com/ncb000gt/node-cron
+// cron.schedule('*/30 * * * *', async () => {
+// 	const currentDateTimebefore = new Date().toLocaleString();
+//   	console.log(`Running cron job to fetch latest articles at [${currentDateTimebefore}]`);
+// 	addedArticlesCount = 0;
+// 	skippedArticlesCount = 0;
+// 	await runCron();
+// 	console.log("Added Articles Count "+addedArticlesCount);
+// 	console.log("Skipped Articles Count "+skippedArticlesCount);
+// 	const currentDateTimeafter = new Date().toLocaleString();
+// 	console.log(`Cron job finished at [${currentDateTimeafter}]`);
+//   });
+
+//   cron.schedule('*/2 * * * *', () => {
+// 	console.log('running a task every two minutes');
+//   });
 	
-  setInterval( function() { funca(); }, 50000 );
-	function funca (){
-		const currentDateTimeafter = new Date().toLocaleString();
-		console.log(`Cron job testing at [${currentDateTimeafter}]`);
-	}
+//   setInterval( function() { funca(); }, 5000 );
+// 	function funca (){
+// 		const currentDateTimeafter = new Date().toLocaleString();
+// 		console.log(`Cron job testing at [${currentDateTimeafter}]`);
+// 	}
 
 async function runCron() {
 	await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
@@ -58,24 +71,6 @@ async function runCron() {
 	await fetchDataFromRSS('https://www.rnz.co.nz/rss/political.xml',"RNZ")
 	await fetchDataFromRSS('https://www.rnz.co.nz/rss/country.xml',"RNZ")
 }
-
-
-// Get RSS feed from new providers whenever needed with a post request
-app.post('/api/cron', async (req, res) => {
-
-await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
-
-await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/curated/78/?outputType=xml&_website=nzh',"NZ Herald")
-await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/nz/?outputType=xml&_website=nzh',"NZ Herald")
-await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/business/?outputType=xml&_website=nzh',"NZ Herald")
-await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/world/?outputType=xml&_website=nzh',"NZ Herald")
- 
-await fetchDataFromRSS('https://www.rnz.co.nz/rss/on-the-inside.xml',"RNZ")
-await fetchDataFromRSS('https://www.rnz.co.nz/rss/national.xml',"RNZ")
-await fetchDataFromRSS('https://www.rnz.co.nz/rss/political.xml',"RNZ")
-await fetchDataFromRSS('https://www.rnz.co.nz/rss/country.xml',"RNZ")
-
-});
 
 
 async function fetchDataFromRSS(sourceUrl,articleSource) {
