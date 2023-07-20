@@ -8,6 +8,7 @@ const DateTimeOfLastPullModel = require('./models/datetime.model')
 const axios = require('axios');
 const Parser = require('rss-parser');
 var cron = require('node-cron');
+const xml2js = require('xml2js');
 
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
@@ -62,7 +63,10 @@ app.post('/api/cron', async (req, res) => {
 	});
 
 async function runCron() {
-	await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF")
+	await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF");
+	await fetchDataFromRSS('https://www.thepost.co.nz/rss',"THE POST");
+	await fetchDataFromRSS('https://www.thepress.co.nz/rss',"THE PRESS");
+	await fetchDataFromRSS('https://www.waikatotimes.co.nz/rss',"WAIKATO TIMES");
 
 	await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/curated/78/?outputType=xml&_website=nzh',"NZ Herald")
 	await fetchDataFromRSS('https://www.nzherald.co.nz/arc/outboundfeeds/rss/section/nz/?outputType=xml&_website=nzh',"NZ Herald")
@@ -80,61 +84,129 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
   try {
     const response = await axios.get(sourceUrl);
     const parser = new Parser();
-    const feed = await parser.parseString(response.data);
+    const parsedrssfeedforstuff = await parser.parseString(response.data); //using rss parser , this does not parse image url
+	const parserrssfeed = await xml2js.parseStringPromise(response.data) //this parses image url
 
 	let NewsItemsArray= [];
 	const timeZone = 'Pacific/Auckland';
 
-    // Iterate over each item in the feed
-    feed.items.forEach(item => {
-
-		if(articleSource == "STUFF"){
-			const newsItem = {
-				displayOnFE:true,
-				articleSource: articleSource,
-				articleTitle: item.title,
-				articleDescription: item.contentSnippet,
-				articleUrl: item.link,
-				teaserImageUrl: item.enclosure.url,
-				articleAuthor:item['dc:creator'],
-				articleGuid: item.guid,
-				articlePublicationDate: new Date(item.pubDate),
-				articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-			};
+	//stuff
+	if(articleSource == "STUFF"){
+		parsedrssfeedforstuff.items.forEach(item => {
+		const newsItem = {
+			displayOnFE:true,
+			articleSource: articleSource,
+			articleTitle: item.title,
+			articleDescription: item.contentSnippet,
+			articleUrl: item.link,
+			teaserImageUrl: item.enclosure.url,
+			articleAuthor:item['dc:creator'],
+			articleGuid: item.guid,
+			articlePublicationDate: new Date(item.pubDate),
+			articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+		};
 		NewsItemsArray.push(newsItem);
-		}
+		});
+	}
 
-		if(articleSource == "NZ Herald"){
-			const newsItem = {
-				displayOnFE:true,
-				articleSource: articleSource,
-				articleTitle: item.title,
-				articleDescription: item.contentSnippet,
-				articleUrl: item.link,
-				// teaserImageUrl: item.media_content['url'],
-				articleGuid: item.guid,
-				articlePublicationDate: new Date(item.pubDate),
-				articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-				};
-			NewsItemsArray.push(newsItem);		
-		}
-		if(articleSource == "RNZ"){
-			const newsItem = {
-				displayOnFE:true,
-				articleSource: articleSource,
-				articleTitle: item.title,
-				articleDescription: item.contentSnippet,
-				articleUrl: item.link,
-				// teaserImageUrl: item.media_content['url'],
-				articleGuid: item.guid,
-				articlePublicationDate: new Date(item.pubDate),
-				articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-				};
-			NewsItemsArray.push(newsItem);		
-		}
+	//nz herald
+	if(articleSource == "NZ Herald"){
+		parserrssfeed.rss.channel[0].item.forEach(item => {
+		const newsItem = {
+			displayOnFE:true,
+			articleSource: articleSource,
+			articleTitle: item.title[0],
+			articleDescription: item.description[0],
+			articleUrl: item.link[0],
+			teaserImageUrl: item['media:content'][0]['$']['url'],
+			articleGuid: guid = item.guid[0]['_'].slice(-27),
+			// articleAuthor :item['dc:creator'],
+			articlePublicationDate: new Date(item.pubDate[0]),
+			articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+			};
+		NewsItemsArray.push(newsItem);	
+		});	
+	}
+
+	//rnz
+	if(articleSource == "RNZ"){
+		parsedrssfeedforstuff.items.forEach(item => {
+		const newsItem = {
+			displayOnFE:true,
+			articleSource: articleSource,
+			articleTitle: item.title,
+			articleDescription: item.contentSnippet,
+			articleUrl: item.link,
+			// teaserImageUrl: item.media_content['url'],
+			articleGuid: item.guid,
+			articlePublicationDate: new Date(item.pubDate),
+			articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+			};
+		NewsItemsArray.push(newsItem);	
+		});	
+	}
+
+	//the post
+	const regex = /\d+[^0-9]/
+	if(articleSource == "THE POST"){
 		
-		  
-    });
+		parserrssfeed.feed.entry.forEach(item => {
+		const newsItem = {
+			displayOnFE:true,
+			articleSource: articleSource,
+			articleTitle: item.title[0],
+			articleDescription: item.summary[0],
+			articleUrl: item.link[0]['$'].href,
+			teaserImageUrl:item['media:content'][0]['$']['url'],
+			articleAuthor:item.author[0].name[0],
+			articleGuid:item.id[0].slice(0, item.id[0].search(regex) + 10),
+			articlePublicationDate: new Date(item.published[0]),
+			articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+			};
+		NewsItemsArray.push(newsItem);	
+		});
+	}
+
+	//the press
+	if(articleSource == "THE PRESS"){
+		
+		parserrssfeed.feed.entry.forEach(item => {
+		const newsItem = {
+			displayOnFE:true,
+			articleSource: articleSource,
+			articleTitle: item.title[0],
+			articleDescription: item.summary[0],
+			articleUrl: item.link[0]['$'].href,
+			teaserImageUrl:item['media:content'][0]['$']['url'],
+			articleAuthor:item.author[0].name[0],
+			articleGuid:item.id[0].slice(0, item.id[0].search(regex) + 10),
+			articlePublicationDate: new Date(item.published[0]),
+			articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+			};
+		NewsItemsArray.push(newsItem);	
+		});
+	}
+
+	//waikato times
+	if(articleSource == "WAIKATO TIMES"){
+		
+		parserrssfeed.feed.entry.forEach(item => {
+		const newsItem = {
+			displayOnFE:true,
+			articleSource: articleSource,
+			articleTitle: item.title[0],
+			articleDescription: item.summary[0],
+			articleUrl: item.link[0]['$'].href,
+			teaserImageUrl:item['media:content'][0]['$']['url'],
+			articleAuthor:item.author[0].name[0],
+			articleGuid:item.id[0].slice(0, item.id[0].search(regex) + 10),
+			articlePublicationDate: new Date(item.published[0]),
+			articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+			};
+		NewsItemsArray.push(newsItem);	
+		});
+	}
+
 	await addNewsItemsToDB(NewsItemsArray)
   } catch (error) {
     console.error('Error fetching or parsing RSS feed:', error);
@@ -147,15 +219,15 @@ async function addNewsItemsToDB(NewsItemsArray) {
 	
 	try {
 	  for (const item of NewsItemsArray) {
-		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid });
+		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid, articleTitle: item.articleTitle });
 		if (existingItem) {
 			skippedArticlesCount ++
-		//   console.log('Skipping ' +item.articleSource);
+		  console.log('Skipping ' +item.articleSource);
 		 
 		} else {
 			addedArticlesCount ++;
 		  	await NewsData.create(item);
-		//   console.log('News Inserted '+item.articleSource);
+		  console.log('News Inserted '+item.articleSource);
 		}
 	  }
 	} catch (error) {
@@ -186,7 +258,7 @@ const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the cu
 	if(topictopulltweets == "PullAllNews"){
 		 AITweets = await NewsData.find({
 			displayOnFE: true,
-			articleImportedToTopNewsDate: {
+			articlePublicationDate: {
 				$gte: currentDate,
 				$lt: moment(currentDate).add(1, 'day').toDate()
 			  }
@@ -206,7 +278,7 @@ const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the cu
 		
 		AITweetsYesterday = await NewsData.find({
 		   displayOnFE: true,
-		   articleImportedToTopNewsDate: {
+		   articlePublicationDate: {
 			   $lt: moment(currentDate).add(0, 'day').toDate(),
 			 }
 

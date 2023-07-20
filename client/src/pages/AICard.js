@@ -7,7 +7,7 @@ return (
     <div className="card">
         {props.article.articleTitle && props.article.teaserImageUrl &&
             <div className="card-image">
-                 <img className="card-image" src={`${props.article.teaserImageUrl}?optimize=high&crop=16:9,smart&width=800&format=webp`} alt={props.article.articleTitle} />
+                 <img className="card-image" src={`${props.article.teaserImageUrl}`} alt={props.article.articleTitle} />
             </div>
         }
         <div className="card-body">
