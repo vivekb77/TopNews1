@@ -58,7 +58,7 @@ app.post('/api/cron', async (req, res) => {
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: 'ok', errormessage: 'Cron job completed successfully'})
+	return res.json({ status: 'ok', message: 'Cron job completed successfully'})
 	
 	});
 
@@ -222,12 +222,12 @@ async function addNewsItemsToDB(NewsItemsArray) {
 		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid, articleTitle: item.articleTitle });
 		if (existingItem) {
 			skippedArticlesCount ++
-		  console.log('Skipping ' +item.articleSource);
+		//   console.log('Skipping ' +item.articleSource);
 		 
 		} else {
 			addedArticlesCount ++;
 		  	await NewsData.create(item);
-		  console.log('News Inserted '+item.articleSource);
+		//   console.log('News Inserted '+item.articleSource);
 		}
 	  }
 	} catch (error) {
@@ -274,7 +274,7 @@ const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the cu
 	}
 
 	//if total news articles today are less than 20, pull yesterdays articles and add
-	if(AITweets.length < 20){
+	if(AITweets.length < 100){
 		
 		AITweetsYesterday = await NewsData.find({
 		   displayOnFE: true,
