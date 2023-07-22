@@ -19,7 +19,7 @@ const Topic = () => {
 	const [handle, setHandle] = React.useState();
 	const [dateTimeOfLastPulltoshow, setDateTimeOfLastPulltoshow] = React.useState();
 	const [errormessage, setErrormessage] = React.useState();
-	const [userName, setUserName] = React.useState();
+	const [infoMessage, setInfoMessage] = React.useState();
 
 	const [admin, setAdmin] = useState([])
 
@@ -50,6 +50,7 @@ const Topic = () => {
 	})
 	const dateTimeOfLastPull = await req.json();
 	if (dateTimeOfLastPull.status === 'ok') {
+		setDisable(false);
 		setDateTimeOfLastPulltoshow(handle => dateTimeOfLastPull.dateTimeOfLastPull);
 	}
 	} 
@@ -89,10 +90,11 @@ const Topic = () => {
 	async function GetTweets(event) {
 		// event.preventDefault()
 		setDisable(true);
+		setInfoMessage(false);
 		// setTweets(tweets => []);
 		// setUserName(userName => "");
 		// setHandle(handle => "");
-		// setErrormessage(errormessage => "");
+		setErrormessage(errormessage => "");
 		// settwitterUserID(twitterUserID => "");
 		
 
@@ -130,35 +132,25 @@ const Topic = () => {
 
 				setTweets(prevArray => [...prevArray, obj])
 				
-				setHandle(handle => data.tweets[0].tag);
-				setUserName(userName => data.tweets[0].tag);
 				setDisable(false);	
+				setInfoMessage(true);
 				
               }
 		} 
 		else if(data.status === 'error'){
 			setDisable(false);
-			setErrormessage(userName => data.error);
+			setErrormessage(data.errormessage);
 			
-			ReactGA.exception({
-				description: 'An error ocurred on Topic page',
-				fatal: true
-			  });
 		}
 	}
-
-	const chooseHandle = (twitterUserID) => {
-		settwitterUserID(twitterUserID); // id passed back from chile component
-	  };
-
 	
 	return (
 		<div className='tweetdiv'>
 		<div className='header'>
-			<h1 className='maintitle'>TOP NEWS</h1>
+			<h1 className='maintitle'>NEWS EXPRESS</h1>
 			{/* <h2 className='mainsubtitle'>Find new Tweet inspiration by analysing user's last few Tweets, and write new Tweets with AI in the same style.</h2> */}
-			<h3 className='mainsubtitle'>Just reading #Headlines can keep you up to date about the latest events</h3>
-			{dateTimeOfLastPulltoshow && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`Top NEWS updated every hour. Last updated ${dateTimeOfLastPulltoshow}`}</span></h5>}
+			{/* <h5 className='articledateandsourcetop'><span style={{color: `#808080`}}>Just reading #Headlines can keep you up to date about the latest events</span></h5> */}
+			{dateTimeOfLastPulltoshow && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`Top New Zealand NEWS updated every hour. Last updated on ${dateTimeOfLastPulltoshow}`}</span></h5>}
 			 {errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 
 			 {/* <h2 className='mainsubtitle'><a className='mainsubtitlelink' href="/handle">Search Twitter Users here</a></h2> */}
@@ -187,12 +179,12 @@ const Topic = () => {
 				{/* <input type="submit" className='button' value={disable ? `Searching...` : `Get News` } disabled={!twitterUserID}/>
 				
 			</form> */}
-			{disable && <h6>Getting NEWS just for you. Please wait..</h6>}
+			{disable && <h6 class='articledateandsourcetop'>Curating NEWS just for you. Please wait..</h6>}
 			<br/>
 			{/* {disable && <h5><a href="mailto:learn@dictionaryv2.com">Send us feedback at learn@dictionaryv2.com</a></h5>} */}
 			{/* <br/> */}
 
-			{handle && <h4 className="mainsubtitle">{`${handle}`}</h4>}
+			{/* {handle && <h4 className="mainsubtitle">{`${handle}`}</h4>} */}
 			
 			</div>
 
@@ -202,14 +194,13 @@ const Topic = () => {
 				onChange={setTweets}
 				/>
 			})}
-			{/* {handle &&  <h4 className='mainsubtitleads'><a target="_blank" href="mailto:learn@dictionaryv2.com">We CREATE a custom AI model on your/any account's Tweets, to generate high quality Tweets like you/them. Click to send us email</a></h4>}
-			{handle &&  <h2 className='mainsubtitleads'><a target="_blank" href="http://tweethunter.io/?via=vivek">To BUILD & MONETIZE YOUR TWITTER AUDIENCE... FAST. Click here.</a></h2>}
-			{handle &&  <h2 className='mainsubtitleads'><a target="_blank" href="https://twitter.com/galaxz_AI">Follow us on Twitter</a></h2>} */}
-		
-		{/* <Helmet>
-          {handle && <title>{`GALAXZAI @${handle}`}</title>}
+			{infoMessage &&  <h4 className='mainsubtitleads'>Just reading #Headlines can keep you up to date about the latest events</h4>}
+			{infoMessage &&  <h4 className='mainsubtitleads'><a target="_blank" href="newsexpress.co.nz">Curating NEWS from the best sources (STUFF, THE POST, THE PRESS, WAIKATO TIMES, RNZ, NZ HERALD) around NZ</a></h4>}
+			{/* React Helmet is a library that helps you deal with search engines and social media crawlers by adding meta tags to your pages/components on React so your site gives more valuable information to the crawlers. */}
+		<Helmet>
+          {<title>{`NEWS EXPRESS - Top NEWS updated on ${dateTimeOfLastPulltoshow}`}</title>}
 		  <meta charSet="utf-8" />
-		</Helmet> */}
+		</Helmet>
 
 		</div>
 	)
