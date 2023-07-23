@@ -9,6 +9,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.0",
     "eslint": "^7.11.0",
+    "ga-4-react": "^0.1.281",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.8.4",
     "react": "^17.0.2",

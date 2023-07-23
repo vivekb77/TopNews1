@@ -9,12 +9,10 @@ import Topic from './pages/Topic'
 import Examples from './pages/Examples'
 import Admin from './pages/Admin'
 
-import ReactGA from 'react-ga';
+import GA4React from "ga-4-react";
 
-const MEASUREMENT_ID = "G-N2T7DHCCBJ"; // YOUR_OWN_TRACKING_ID
-const TRACKIING_ID = "UA-250139782-1";
-ReactGA.initialize(TRACKIING_ID);
-
+// const ga4react = new GA4React("G-4YQR5FRQQL");
+// ga4react.initialize().then().catch()
 
 
 const App = () => {

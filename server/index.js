@@ -199,42 +199,42 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 	//the post
 	const regex = /\d+[^0-9]/
 	if(articleSource == "THE POST"){
-		
-		parserrssfeed.feed.entry.forEach(item => {
+		//only pull last 25 articles
+		for (let i = 0; i < 25; i++) {
 		const newsItem = {
 			displayOnFE:true,
 			articleSource: articleSource,
-			articleTitle: item.title[0],
-			articleDescription: item.summary[0],
-			articleUrl: item.link[0]['$'].href,
-			teaserImageUrl:item['media:content'][0]['$']['url'],
-			articleAuthor:item.author[0].name[0],
-			articleGuid:item.id[0].slice(0, item.id[0].search(regex) + 10),
-			articlePublicationDate: new Date(item.published[0]),
+			articleTitle: parserrssfeed.feed.entry[i].title[0],
+			articleDescription: parserrssfeed.feed.entry[i].summary[0],
+			articleUrl: parserrssfeed.feed.entry[i].link[0]['$'].href,
+			teaserImageUrl:parserrssfeed.feed.entry[i]['media:content'][0]['$']['url'],
+			articleAuthor:parserrssfeed.feed.entry[i].author[0].name[0],
+			articleGuid:parserrssfeed.feed.entry[i].id[0].slice(0, parserrssfeed.feed.entry[i].id[0].search(regex) + 10),
+			articlePublicationDate: new Date(parserrssfeed.feed.entry[i].published[0]),
 			articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
 			};
-		NewsItemsArray.push(newsItem);	
-		});
+		NewsItemsArray.push(newsItem);
+		};
 	}
 
 	//the press
 	if(articleSource == "THE PRESS"){
-		
-		parserrssfeed.feed.entry.forEach(item => {
+	//only pull last 25
+		for (let i = 0; i < 25; i++) {
 		const newsItem = {
 			displayOnFE:true,
 			articleSource: articleSource,
-			articleTitle: item.title[0],
-			articleDescription: item.summary[0],
-			articleUrl: item.link[0]['$'].href,
-			teaserImageUrl:item['media:content'][0]['$']['url'],
-			articleAuthor:item.author[0].name[0],
-			articleGuid:item.id[0].slice(0, item.id[0].search(regex) + 10),
-			articlePublicationDate: new Date(item.published[0]),
+			articleTitle: parserrssfeed.feed.entry[i].title[0],
+			articleDescription: parserrssfeed.feed.entry[i].summary[0],
+			articleUrl: parserrssfeed.feed.entry[i].link[0]['$'].href,
+			teaserImageUrl:parserrssfeed.feed.entry[i]['media:content'][0]['$']['url'],
+			articleAuthor:parserrssfeed.feed.entry[i].author[0].name[0],
+			articleGuid:parserrssfeed.feed.entry[i].id[0].slice(0, parserrssfeed.feed.entry[i].id[0].search(regex) + 10),
+			articlePublicationDate: new Date(parserrssfeed.feed.entry[i].published[0]),
 			articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
 			};
 		NewsItemsArray.push(newsItem);	
-		});
+		}
 	}
 
 	//waikato times

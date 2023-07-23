@@ -3,10 +3,12 @@ import jwt from 'jsonwebtoken'
 import { useHistory } from 'react-router-dom'
 import Card from './AICard'
 import AdminCard from './AdminCard'
-import ReactGA from 'react-ga';
+import GA4React from "ga-4-react";
 import { Helmet } from 'react-helmet';
 require('dotenv').config();
 
+const ga4react = new GA4React("G-4YQR5FRQQL");
+ga4react.initialize().then().catch()
 
 const baseURL = process.env.REACT_APP_BASE_URL
 
@@ -27,7 +29,6 @@ const Topic = () => {
 	useEffect(() => {
 		GetTweets();
 		dateTimeOfLastPull();
-		
 		const params = new URLSearchParams()
 		if (handle) {
 		  params.append("h", handle)
@@ -52,6 +53,9 @@ const Topic = () => {
 	if (dateTimeOfLastPull.status === 'ok') {
 		setDisable(false);
 		setDateTimeOfLastPulltoshow(handle => dateTimeOfLastPull.dateTimeOfLastPull);
+	}
+	else if (dateTimeOfLastPull.status === 'error') {
+		setDisable(false);
 	}
 	} 
 
@@ -198,7 +202,7 @@ const Topic = () => {
 			{infoMessage &&  <h4 className='mainsubtitleads'><a target="_blank" href="newsexpress.co.nz">Curating NEWS from the best sources (STUFF, THE POST, THE PRESS, WAIKATO TIMES, RNZ, NZ HERALD) around NZ</a></h4>}
 			{/* React Helmet is a library that helps you deal with search engines and social media crawlers by adding meta tags to your pages/components on React so your site gives more valuable information to the crawlers. */}
 		<Helmet>
-          {<title>{`NEWS EXPRESS - Top NEWS updated on ${dateTimeOfLastPulltoshow}`}</title>}
+          {<title>NEWS EXPRESS - Top NEWS updated every hour</title>}
 		  <meta charSet="utf-8" />
 		</Helmet>
 
