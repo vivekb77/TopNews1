@@ -45,19 +45,34 @@ let addedArticlesCount;
 let skippedArticlesCount;
 let errorAddingArticlesCount;
 // Get RSS feed from new providers whenever needed with a post request to api/cron
-app.post('/api/cronstuff', async (req, res) => {
-	console.log("Cron job via API triggered for STUFF")
+app.post('/api/cronstuffnorth', async (req, res) => {
+	console.log("Cron job via API triggered for STUFF NORTH")
 	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronStuff();
+	await runCronStuffNorth();
 	console.log("Added Articles Count "+addedArticlesCount);
 	console.log("Skipped Articles Count "+skippedArticlesCount);
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: 'ok', message: 'Cron job completed successfully for STUFF'})
+	return res.json({ status: 'ok', message: 'Cron job completed successfully for STUFF NORTH'})
+});
+
+app.post('/api/cronstuffsouth', async (req, res) => {
+	console.log("Cron job via API triggered for STUFF SOUTH")
+	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await runCronStuffSouth();
+	console.log("Added Articles Count "+addedArticlesCount);
+	console.log("Skipped Articles Count "+skippedArticlesCount);
+	console.log("Error adding Articles Count "+errorAddingArticlesCount);
+	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: 'ok', message: 'Cron job completed successfully for STUFF SOUTH'})
 });
 
 app.post('/api/cronnzherald', async (req, res) => {
@@ -90,11 +105,14 @@ app.post('/api/cronrnz', async (req, res) => {
 	return res.json({ status: 'ok', message: 'Cron job completed successfully for RNZ'})
 });
 
-async function runCronStuff() {
+async function runCronStuffNorth() {
 	await fetchDataFromRSS('https://www.stuff.co.nz/rss',"STUFF");
-	await fetchDataFromRSS('https://www.thepost.co.nz/rss',"THE POST");
-	await fetchDataFromRSS('https://www.thepress.co.nz/rss',"THE PRESS");
 	await fetchDataFromRSS('https://www.waikatotimes.co.nz/rss',"WAIKATO TIMES");
+}
+
+async function runCronStuffSouth() {
+	await fetchDataFromRSS('https://www.thepress.co.nz/rss',"THE PRESS");
+	await fetchDataFromRSS('https://www.thepost.co.nz/rss',"THE POST");
 }
 
 async function runCronNzHerald() {
