@@ -119,23 +119,35 @@ const Topic = () => {
 		if (data.status === 'ok') {
 			
 			for (let i=0;i<data.tweets.length;i++){ 
-				
+				let stuffImageUrlForBigImage
+				let teaserImageUrl
+				//images in rss for stuff are not very good so this
+				if(data.tweets[i].articleSource === "STUFF"){
+					const teaserImageUrlSpliturlArray = data.tweets[i].teaserImageUrl.split(".");
+					let teaserImageUrlSpliturlArraySliced = teaserImageUrlSpliturlArray.slice(0,4);
+					stuffImageUrlForBigImage = `${teaserImageUrlSpliturlArraySliced.join(".")}.related.StuffLandscapeSixteenByNine.1420x800.${teaserImageUrlSpliturlArray[7]}.${teaserImageUrlSpliturlArray[8]}.jpg?format=pjpg&optimize=medium`;
+					teaserImageUrl = ""
+				}
+				else{
+					teaserImageUrl = data.tweets[i].teaserImageUrl;
+					stuffImageUrlForBigImage = "";
+				}
+
 				const obj = {
 					dbid:data.tweets[i]._id,
 					articleSource: data.tweets[i].articleSource,
 					articleTitle: data.tweets[i].articleTitle,
 					articleDescription: data.tweets[i].articleDescription,
 					articleUrl: data.tweets[i].articleUrl,
-					teaserImageUrl: data.tweets[i].teaserImageUrl,
+					teaserImageUrl: teaserImageUrl,
+					stuffImageUrlForBigImage : stuffImageUrlForBigImage,
 					// articleAuthor: data.tweets[i].articleAuthor,
 					articleGuid: data.tweets[i].articleGuid,
 					articlePublicationDate: data.tweets[i].articleAuthor, //author field has formatted date so using it
 					articleImportedToTopNewsDate: data.tweets[i].articleImportedToTopNewsDate,
 					
 				}
-
 				setTweets(prevArray => [...prevArray, obj])
-				
 				setDisable(false);	
 				setInfoMessage(true);
 				
@@ -154,7 +166,7 @@ const Topic = () => {
 			<h1 className='maintitle'>NEWS EXPRESS</h1>
 			{/* <h2 className='mainsubtitle'>Find new Tweet inspiration by analysing user's last few Tweets, and write new Tweets with AI in the same style.</h2> */}
 			{/* <h5 className='articledateandsourcetop'><span style={{color: `#808080`}}>Just reading #Headlines can keep you up to date about the latest events</span></h5> */}
-			{dateTimeOfLastPulltoshow && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`Top New Zealand NEWS updated every hour. Last updated on ${dateTimeOfLastPulltoshow}`}</span></h5>}
+			{dateTimeOfLastPulltoshow && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. Last updated on ${dateTimeOfLastPulltoshow}`}</span></h5>}
 			 {errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 
 			 {/* <h2 className='mainsubtitle'><a className='mainsubtitlelink' href="/handle">Search Twitter Users here</a></h2> */}
@@ -202,7 +214,7 @@ const Topic = () => {
 			{infoMessage &&  <h4 className='mainsubtitleads'><a target="_blank" href="newsexpress.co.nz">Curating NEWS from the best sources (STUFF, THE POST, THE PRESS, WAIKATO TIMES, RNZ, NZ HERALD) around NZ</a></h4>}
 			{/* React Helmet is a library that helps you deal with search engines and social media crawlers by adding meta tags to your pages/components on React so your site gives more valuable information to the crawlers. */}
 		<Helmet>
-          {<title>NEWS EXPRESS - Top NEWS updated every hour</title>}
+          {<title>NEWS EXPRESS - NEWS on the go</title>}
 		  <meta charSet="utf-8" />
 		</Helmet>
 

@@ -7,7 +7,12 @@ return (
     <div className="card">
         {props.article.articleTitle && props.article.teaserImageUrl &&
             <div className="card-image">
-                 <img className="card-image" src={`${props.article.teaserImageUrl}`} alt={props.article.articleTitle} />
+                <img className="card-image" src={`${props.article.teaserImageUrl}`} alt={props.article.articleTitle} />      
+            </div>
+        }
+        {props.article.articleTitle && props.article.stuffImageUrlForBigImage &&
+            <div className="card-image">
+                <img className="card-image" src={`${props.article.stuffImageUrlForBigImage}`} alt={props.article.articleTitle} />      
             </div>
         }
         <div className="card-body">

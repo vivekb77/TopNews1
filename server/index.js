@@ -269,7 +269,7 @@ async function addNewsItemsToDB(NewsItemsArray) {
 	
 	try {
 	  for (const item of NewsItemsArray) {
-		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid, articleTitle: item.articleTitle });
+		const existingItem = await NewsData.findOne({ articleGuid: item.articleGuid });
 		if (existingItem) {
 			skippedArticlesCount ++
 		//   console.log('Skipping ' +item.articleSource);
