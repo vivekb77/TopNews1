@@ -151,6 +151,13 @@ code {
   margin-top: 10px;
   margin-bottom: 20px;
 }
+.card-text-readfast{
+  font-size: 1.0rem;
+  font-weight: 350;
+  color: #000000;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
 .articledateandsource{
   font-size: 0.8rem;
   margin-bottom: 20px;
@@ -487,6 +494,13 @@ a:active {
   font-size: 0.9rem;
   font-weight: 600;
   color: #000000;
+}
+.card-text-readfast{
+  font-size: 1.0rem;
+  font-weight: 350;
+  color: #000000;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 /* small screen */
 .articledateandsourcetop{
