@@ -52,7 +52,39 @@ code {
   box-shadow: 0 0 10px #ccc;
 }
 
+.scroll-to-top-button {
+  position: fixed;
+  bottom: 30px;
+  right: 100px;
+  /* display: block; */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.read-fast-button {
+  position: fixed;
+  bottom: 30px;
+  /* display: block; */
+  right: 180px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
+.scroll-to-top-button:hover {
+  background-color: #0056b3;
+}
+.read-fast-button:hover {
+  background-color: #0056b3;
+}
 .title {
   font-size: 1.3em;
   text-align: center;
@@ -496,7 +528,7 @@ a:active {
   color: #000000;
 }
 .card-text-readfast{
-  font-size: 1.0rem;
+  font-size: 0.9rem;
   font-weight: 400;
   color: #000000;
   margin-top: 10px;
@@ -580,4 +612,36 @@ a:active {
   .admincard{
     height: auto;  
   }
+
+.scroll-to-top-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.read-fast-button {
+  position: fixed;
+  bottom: 20px;
+  right: 100px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.scroll-to-top-button:hover {
+  background-color: #0056b3;
+}
+.read-fast-button:hover {
+  background-color: #0056b3;
+}
+  
 }
