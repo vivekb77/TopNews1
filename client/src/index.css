@@ -52,39 +52,47 @@ code {
   box-shadow: 0 0 10px #ccc;
 }
 
+.readfastgototop-button-container {
+
+}
 .scroll-to-top-button {
   position: fixed;
-  bottom: 30px;
-  right: 100px;
-  /* display: block; */
-  padding: 10px 20px;
-  background-color: #007bff;
+  bottom: 77px;
+  right: 120px;
+  padding: 17px 17px;
+  background-color: transparent;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
+  background-image: url('./gototop.png');
+  background-size: 30px; 
+  background-repeat: no-repeat;
 }
 .read-fast-button {
   position: fixed;
   bottom: 30px;
-  /* display: block; */
-  right: 180px;
-  padding: 10px 20px;
-  background-color: #007bff;
+  right: 120px;
+  padding: 17px 17px;
+  background-color: transparent;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  background-image: url('./readfast.png');
+  background-size: 30px; 
+  background-repeat: no-repeat;
 }
 
-.scroll-to-top-button:hover {
-  background-color: #0056b3;
-}
-.read-fast-button:hover {
-  background-color: #0056b3;
-}
+/* .scroll-to-top-button:hover {
+  background-color: rgb(124, 124, 124)
+} */
+/* .read-fast-button:hover {
+  background-color: rgb(124, 124, 124);
+} */
 .title {
   font-size: 1.3em;
   text-align: center;
@@ -615,33 +623,35 @@ a:active {
 
 .scroll-to-top-button {
   position: fixed;
-  bottom: 20px;
+  bottom: 60px;
   right: 20px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
+  padding: 22px 21px;
+  background-color: transparent;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  /* cursor: pointer; */
+  background-image: url('./gototop.png');
+  background-size: 30px; 
+  background-repeat: no-repeat;
 }
 .read-fast-button {
   position: fixed;
-  bottom: 20px;
-  right: 100px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
+  bottom: 15px;
+  right: 20px;
+  padding: 22px 21px;
+  background-color: transparent;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  /* cursor: pointer; */
+  background-image: url('./readfast.png');
+  background-size: 30px; 
+  background-repeat: no-repeat;
 }
-.scroll-to-top-button:hover {
+/* .scroll-to-top-button:hover {
   background-color: #0056b3;
 }
 .read-fast-button:hover {
   background-color: #0056b3;
-}
+} */
   
 }

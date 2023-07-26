@@ -1,14 +1,7 @@
-import React, { useContext,useState } from "react";
+import React from "react";
 import ReactHtmlParser from 'react-html-parser'; 
-import ReadFast from "./ReadFast";
-
 
 export default function Card(props) {
-    const [isToggleOn, setIsToggleOn] = useState(true);
-    
-    const handleClick = () => {
-        setIsToggleOn((prevToggle) => !prevToggle);
-    };
     
     function boldWords(seperateDescriptionFieldWords) {
       const boldedArray = [];
@@ -48,9 +41,7 @@ export default function Card(props) {
     let readfast = boldWords(props.article.articleDescription.split(" "));
 
     return (
-        
         <div className="card">
-            <ReadFast readfastorslow ={handleClick}/>
             {props.article.articleTitle && (props.article.teaserImageUrl || props.article.stuffImageUrlForBigImage) &&
                 <div className="card-image">
                     <img className="card-image" src={`${props.article.teaserImageUrl || props.article.stuffImageUrlForBigImage}`} alt={props.article.articleTitle} />      
@@ -60,9 +51,8 @@ export default function Card(props) {
             <div className="card-body">
                 {props.article.articleTitle && <a href={`${props.article.articleUrl}`} target="_blank" rel="noreferrer">
                 {props.article.articleTitle && <h5 className="card-title"><span style={{color: `#808080`}}></span>{props.article.articleTitle}</h5>}
-                {isToggleOn ? <h5 className="card-text">{props.article.articleDescription}</h5> : <h5 className="card-text-readfast">{ReactHtmlParser (readfast)}</h5>}
-                {/* {isToggleOn && props.article.articleTitle && props.article.articleDescription && <h5 className="card-text">{props.article.articleDescription}</h5>}
-                {!isToggleOn && props.article.articleTitle && props.article.articleDescription && <h5 className="card-text-readfast">{ReactHtmlParser (readfast)}</h5>} */}
+                {!props.isReadFastOn && props.article.articleTitle && props.article.articleDescription && <h5 className="card-text">{props.article.articleDescription}</h5>}
+                {props.isReadFastOn && props.article.articleTitle && props.article.articleDescription && <h5 className="card-text-readfast">{ReactHtmlParser (readfast)}</h5>}
                 {props.article.articleTitle && props.article.articleSource && <h5 className="articledateandsource"><span style={{color: `#808080`}}> </span>{`${props.article.articleSource}`}  ||   {`${props.article.articlePublicationDate}`}</h5>}         
                 </a> }
             </div>

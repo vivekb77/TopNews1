@@ -10,7 +10,7 @@ const ScrollToTopButton = () => {
 
   return (
     <button className="scroll-to-top-button" onClick={scrollToTop}>
-      TOP
+
     </button>
   );
 };

@@ -24,6 +24,7 @@ const Topic = () => {
 	const [dateTimeOfLastPulltoshow, setDateTimeOfLastPulltoshow] = React.useState();
 	const [errormessage, setErrormessage] = React.useState();
 	const [infoMessage, setInfoMessage] = React.useState();
+	const [isReadFastOn, setIsReadFastOn] = useState(false);
 
 	const [admin, setAdmin] = useState([])
 
@@ -162,6 +163,10 @@ const Topic = () => {
 		}
 	}
 	
+    const handleReadFastClick = () => {
+        setIsReadFastOn((prevToggle) => !prevToggle);
+    };
+	
 	return (
 		<div className='tweetdiv'>
 		<div className='header'>
@@ -203,13 +208,13 @@ const Topic = () => {
 			{/* <br/> */}
 
 			{/* {handle && <h4 className="mainsubtitle">{`${handle}`}</h4>} */}
-			<GoToTop />
-			<ReadFast />
+			{infoMessage && <GoToTop />}
+			{infoMessage && <ReadFast isReadFastOn ={handleReadFastClick}/>}
 			</div>
 
 			{tweets.map((article) => {
 				return <Card 
-				article={article}  key={(Math.random() + 1).toString(36).substring(7)}
+				article={article} isReadFastOn={isReadFastOn}  key={(Math.random() + 1).toString(36).substring(7)}
 				onChange={setTweets}
 				/>
 			})}
