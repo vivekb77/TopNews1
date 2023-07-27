@@ -346,7 +346,7 @@ const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the cu
 		//   }
 		//sort the array by date
 		AITweets.sort((a, b) => (a.articlePublicationDate > b.articlePublicationDate) ? -1 : 1)
-		AITweets = AITweets.slice(0, 15);
+		AITweets = AITweets.slice(0, 100);
 
 		for (let f = 0; f < AITweets.length; f++) {
 			const inputDate = new Date(AITweets[f].articlePublicationDate);
