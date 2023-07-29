@@ -223,7 +223,7 @@ const Topic = () => {
 			{infoMessage &&  <h4 className='mainsubtitleads'><a target="_blank" href="newsexpress.co.nz">Curating NEWS from the best sources (STUFF, THE POST, THE PRESS, WAIKATO TIMES, RNZ, NZ HERALD) around NZ</a></h4>}
 			{/* React Helmet is a library that helps you deal with search engines and social media crawlers by adding meta tags to your pages/components on React so your site gives more valuable information to the crawlers. */}
 			<Helmet>
-			{<title>NEWS EXPRESS - NEWS on the go</title>}
+			{<title>NEWS EXPRESS || Latest NEWS on the go</title>}
 			<meta charSet="utf-8" />
 			</Helmet>
 
