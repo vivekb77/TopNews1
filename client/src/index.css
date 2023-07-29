@@ -37,7 +37,21 @@ code {
   flex-direction: column;
   align-items: center;
 }
-
+.logoandtitle{
+  display: inline-block;
+}
+.logoimage{
+  /* position: fixed; */
+  padding: 0px 0px 0px 0px;
+  width: 55px; 
+  height: 75px; 
+  background-image: url('./toplogo.png');
+  background-repeat: no-repeat;
+  background-color: transparent;
+  color: white;
+  margin: 10px 0px -75px -60px;
+  border: none;
+}
 .header{
   width: 60%;
   height: 100%;
@@ -102,7 +116,7 @@ code {
   text-align: center;
   color: #003366;
   font-weight: 800;
-  width: 80%;
+  width: 100%;
 }
 .mainsubtitle{
   font-size: 1.0em;
@@ -402,7 +416,7 @@ a:active {
 .articledateandsourcetop{
   font-size: 0.8rem;
   margin-bottom: 0px;
-  margin-top: 0px;
+  margin-top: 15px;
   margin-left: 20px;
   margin-right: 20px;
   color: #808080
@@ -491,7 +505,7 @@ a:active {
 .articledateandsourcetop{
   font-size: 0.8rem;
   margin-bottom: 0px;
-  margin-top: 0px;
+  margin-top: 5px;
   margin-left: 20px;
   margin-right: 20px;
   color: #808080
@@ -518,6 +532,7 @@ a:active {
   
   .maintitle{
     font-size: 1.9em;
+    margin: 20px 0px 20px 5px;
   }
 
   .mainsubtitle .mainsubtitlelink{
@@ -591,6 +606,18 @@ a:active {
   background-repeat: no-repeat;
   outline: none;
   opacity: 1;
+}
+.logoimage{
+  /* position: fixed; */
+  padding: 0px 0px 0px 0px;
+  width: 55px; 
+  height: 67px; 
+  background-image: url('./toplogo.png');
+  background-repeat: no-repeat;
+  background-color: transparent;
+  color: white;
+  margin: 10px 0px -80px -54px;
+  border: none;
 }
 
 }

@@ -170,7 +170,11 @@ const Topic = () => {
 	return (
 		<div className='tweetdiv'>
 		<div className='header'>
+			<div className='logoandtitle'>
+			<div className="logoimage"></div>      
 			<h1 className='maintitle'>NEWS EXPRESS</h1>
+			</div>
+			
 			{/* <h2 className='mainsubtitle'>Find new Tweet inspiration by analysing user's last few Tweets, and write new Tweets with AI in the same style.</h2> */}
 			{/* <h5 className='articledateandsourcetop'><span style={{color: `#808080`}}>Just reading #Headlines can keep you up to date about the latest events</span></h5> */}
 			{dateTimeOfLastPulltoshow && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. Updated on ${dateTimeOfLastPulltoshow}`}</span></h5>}
