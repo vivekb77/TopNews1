@@ -44,12 +44,12 @@ export default function Card(props) {
         <div className="card">
             {props.article.articleTitle && (props.article.teaserImageUrl || props.article.stuffImageUrlForBigImage) &&
                 <div className="card-image">
-                    <img className="card-image" src={`${props.article.teaserImageUrl || props.article.stuffImageUrlForBigImage}`} alt={props.article.articleTitle} />      
+                    <img className="card-image" src={`${props.article.teaserImageUrl || props.article.stuffImageUrlForBigImage}`} alt={props.article.articleTitle} loading="lazy"/>      
                 </div>
             }
             
             <div className="card-body">
-                {props.article.articleTitle && <a href={`${props.article.articleUrl}`} target="_blank" rel="noreferrer">
+                {props.article.articleTitle && <a href={`${props.article.articleUrl}`} target="_blank" rel="noreferrer noopener">
                 {props.article.articleTitle && <h5 className="card-title"><span style={{color: `#808080`}}></span>{props.article.articleTitle}</h5>}
                 {!props.isReadFastOn && props.article.articleTitle && props.article.articleDescription && <h5 className="card-text">{props.article.articleDescription}</h5>}
                 {props.isReadFastOn && props.article.articleTitle && props.article.articleDescription && <h5 className="card-text-readfast">{ReactHtmlParser (readfast)}</h5>}

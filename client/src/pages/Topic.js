@@ -225,6 +225,7 @@ const Topic = () => {
 			<Helmet>
 			{<title>NEWS EXPRESS || Latest NEWS on the go</title>}
 			<meta charSet="utf-8" />
+			<meta name="google-site-verification" content="cuv79ZIGYHy0-AqvX463h2RqWsQXkWdSM5V2UhEer0Y" />
 			</Helmet>
 
 		</div>
