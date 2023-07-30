@@ -57,7 +57,7 @@ app.post('/api/cronstuffnorth', async (req, res) => {
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: 'ok', message: 'Cron job completed successfully for STUFF NORTH'})
+	return res.json({ status: 'ok', message: `Cron job completed successfully for STUFF NORTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
 });
 
 app.post('/api/cronstuffsouth', async (req, res) => {
@@ -72,7 +72,7 @@ app.post('/api/cronstuffsouth', async (req, res) => {
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: 'ok', message: 'Cron job completed successfully for STUFF SOUTH'})
+	return res.json({ status: 'ok', message: `Cron job completed successfully for STUFF SOUTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
 });
 
 app.post('/api/cronnzherald', async (req, res) => {
@@ -87,7 +87,7 @@ app.post('/api/cronnzherald', async (req, res) => {
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: 'ok', message: 'Cron job completed successfully for NZ Herald'})
+	return res.json({ status: 'ok', message: `Cron job completed successfully for NZ Herald. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
 });
 
 app.post('/api/cronrnz', async (req, res) => {
@@ -102,7 +102,7 @@ app.post('/api/cronrnz', async (req, res) => {
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: 'ok', message: 'Cron job completed successfully for RNZ'})
+	return res.json({ status: 'ok', message: `Cron job completed successfully for RNZ. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
 });
 
 async function runCronStuffNorth() {
