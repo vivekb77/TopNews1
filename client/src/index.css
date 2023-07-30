@@ -70,7 +70,7 @@ code {
 .scroll-to-top-button {
   position: fixed;
   bottom: 77px;
-  right: 120px;
+  right: 220px;
   padding: 17px 17px;
   background-color: transparent;
   color: white;
@@ -85,7 +85,7 @@ code {
 .read-fast-button {
   position: fixed;
   bottom: 30px;
-  right: 120px;
+  right: 220px;
   padding: 17px 17px;
   background-color: transparent;
   color: white;
@@ -146,7 +146,12 @@ code {
   color: #000033;
 }
 
-
+.laptopplaceholderdiv{
+  display: block;
+}
+.mobileplaceholderdiv{
+  display: none;
+}
 
 /* CARD */
 
@@ -619,5 +624,10 @@ a:active {
   margin: 10px 0px -80px -54px;
   border: none;
 }
-
+.laptopplaceholderdiv{
+  display: none;
+}
+.mobileplaceholderdiv{
+  display: block;
+}
 }
