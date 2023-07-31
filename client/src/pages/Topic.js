@@ -179,7 +179,7 @@ const Topic = () => {
 				
 				{/* <h2 className='mainsubtitle'>Find new Tweet inspiration by analysing user's last few Tweets, and write new Tweets with AI in the same style.</h2> */}
 				{/* <h5 className='articledateandsourcetop'><span style={{color: `#808080`}}>Just reading #Headlines can keep you up to date about the latest events</span></h5> */}
-				{dateTimeOfLastPulltoshow && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. Updated on ${dateTimeOfLastPulltoshow}`}</span></h5>}
+				{dateTimeOfLastPulltoshow && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. The fastest way to stay updated with current affairs. Updated on ${dateTimeOfLastPulltoshow}`}</span></h5>}
 				{errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 
 				{/* <h2 className='mainsubtitle'><a className='mainsubtitlelink' href="/handle">Search Twitter Users here</a></h2> */}
@@ -239,9 +239,11 @@ const Topic = () => {
 			<MobilePlaceholderCard/>
 			</div>}
 
-			{infoMessage &&  <h4 className='mainsubtitleads'>Just reading #Headlines can keep you up to date about the latest events</h4>}
-			{infoMessage &&  <h4 className='mainsubtitleads'><a target="_blank" href="newsexpress.co.nz">Curating NEWS from the best sources (STUFF, THE POST, THE PRESS, WAIKATO TIMES, RNZ, NZ HERALD) around NZ</a></h4>}
+			{infoMessage &&  <h4 className='mainsubtitleads'>The fastest way for you to stay updated with current affairs</h4>}
+			{infoMessage &&  <h4 className='mainsubtitleads'>Select latest and best news from multiple national sources (STUFF, THE POST, THE PRESS, WAIKATO TIMES, RNZ, NZ HERALD)</h4>}
+			{infoMessage &&  <h4 className='mainsubtitleads'><a href='mailto:dictionaryv2@gmail.com'>Contact</a></h4>}
 			{/* React Helmet is a library that helps you deal with search engines and social media crawlers by adding meta tags to your pages/components on React so your site gives more valuable information to the crawlers. */}
+			
 			<Helmet>
 			{/* {<title>NEWS EXPRESS || Latest NEWS on the go</title>}
 			<meta charSet="utf-8" /> */}

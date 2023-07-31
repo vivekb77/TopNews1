@@ -57,7 +57,7 @@ app.post('/api/cronstuffnorth', async (req, res) => {
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: 'ok', message: `Cron job completed successfully for STUFF NORTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
+	return res.json({ status: `Cron job completed successfully for STUFF NORTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`, message: `Cron job completed successfully for STUFF NORTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
 });
 
 app.post('/api/cronstuffsouth', async (req, res) => {
