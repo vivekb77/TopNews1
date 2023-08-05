@@ -3,7 +3,9 @@ const mongoose = require('mongoose')
 //schema validation for date time
 const DateTimeOfLastPullModel = new mongoose.Schema(
 	{
-		dateTimeOfLastPull: { type: Date, required: true },
+		dateTimeOfLastPull_NZ: { type: Date, required: false },
+		dateTimeOfLastPull_AU: { type: Date, required: false },
+		dateTimeOfLastPull_World: { type: Date, required: false },
 	},
 	{ collection: 'DateTimeOfLastPull' }
 )
