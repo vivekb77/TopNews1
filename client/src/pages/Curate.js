@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import jwt from 'jsonwebtoken'
 import { useHistory } from 'react-router-dom'
-import Card from './Card'
+import Card from './CurateCard'
 import ReactGA from 'react-ga';
 import { Helmet } from 'react-helmet';
 import AdminCard from './AdminCard'
-import TopicCard from './TopicCard'
+import TopicCard from './SectionCard'
 require('dotenv').config();
 
 ReactGA.event({

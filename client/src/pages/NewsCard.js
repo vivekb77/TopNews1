@@ -1,7 +1,7 @@
 import React from "react";
 import ReactHtmlParser from 'react-html-parser'; 
 
-export default function Card(props) {
+export default function NewsCard(props) {
     
     function boldWords(seperateDescriptionFieldWords) {
       const boldedArray = [];

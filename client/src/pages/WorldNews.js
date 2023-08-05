@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import jwt from 'jsonwebtoken'
 import { useHistory } from 'react-router-dom'
-import Card from './AICard'
+import NewsCard from './NewsCard'
 import LaptopPlaceholderCard from './LaptopPlaceholderCard'
 import MobilePlaceholderCard from './MobilePlaceholderCard'
 import GoToTop from './GoToTop'
@@ -15,33 +15,29 @@ ga4react.initialize().then().catch()
 
 const baseURL = process.env.REACT_APP_BASE_URL
 
-const Topic = () => {
+const WorldNews = () => {
 	const history = useHistory()
 	const [tweets, setTweets] = useState([])
-	const [twitterUserID, settwitterUserID] = useState('')
 	const [disable, setDisable] = React.useState(false);
 	const [disablePlaceholder, setDisablePlaceholder] = React.useState(false);
-	const [disable1, setDisable1] = React.useState(false);
-	const [handle, setHandle] = React.useState();
 	const [dateTimeOfLastPulltoshow, setDateTimeOfLastPulltoshow] = React.useState();
 	const [errormessage, setErrormessage] = React.useState();
 	const [infoMessage, setInfoMessage] = React.useState();
 	const [isReadFastOn, setIsReadFastOn] = useState(false);
-
-	const [admin, setAdmin] = useState([])
+	const [newsCountry, setNewsCountry] = useState(false);
 
 	
 	useEffect(() => {
-		GetTweets();
+		GetNews();
 		dateTimeOfLastPull();
 		const params = new URLSearchParams()
-		if (handle) {
-		  params.append("h", handle)
+		if (newsCountry) {
+		  params.append("", newsCountry)
 		} else {
-		  params.delete("h")
+		  params.delete("")
 		}
 		history.push({search: params.toString()})
-	  }, [handle, history])
+	  }, [newsCountry, history])
 
 //get date time when articles were updated from rss
 	async function dateTimeOfLastPull(event) {
@@ -64,48 +60,11 @@ const Topic = () => {
 	}
 	} 
 
-	// async function Admin(event) {
-		
-	// 	// setAdmin(admin => []);
-	// 	// setDisable1(false);
-
-	// 	const req = await fetch(`${baseURL}/api/providers`, {
-			
-	// 		method: 'POST',
-	// 		headers: {
-	// 			'Content-Type': 'application/json',
-	// 			'x-access-token': localStorage.getItem('token'),
-	// 		},
-	// 		body: JSON.stringify({
-	// 			// tweeterUserHadleToPullTweets: twitterUserID,
-	// 		}),
-		
-	// 	})
-
-	// 	const data = await req.json()
-	// 	if (data.status === 'ok') {
-
-	// 		setAdmin(admin => []); //clear them first
-
-	// 	for (let i=0;i<data.TopicArray.length;i++){ 
-		
-	// 		setAdmin(prevArray => [...prevArray, data.TopicArray[i]])
-
-	// 	}
-	// 	setDisable1(true);
-		
-	// } }  
-
-	async function GetTweets(event) {
+	async function GetNews(event) {
 		// event.preventDefault()
 		setDisable(true);
 		setInfoMessage(false);
-		// setTweets(tweets => []);
-		// setUserName(userName => "");
-		// setHandle(handle => "");
 		setErrormessage(errormessage => "");
-		// settwitterUserID(twitterUserID => "");
-		
 
 		const req = await fetch(`${baseURL}/api/GetNewsForProvider`, {
 
@@ -115,7 +74,7 @@ const Topic = () => {
 				'x-access-token': localStorage.getItem('token'),
 			},
 			body: JSON.stringify({
-				topictopuflltweets: twitterUserID || "PullAllNews",
+				topictopuflltweets: newsCountry || "PullAllNews",
 			}),
 
 		}) 
@@ -126,7 +85,7 @@ const Topic = () => {
 			for (let i=0;i<data.tweets.length;i++){ 
 				let stuffImageUrlForBigImage
 				let teaserImageUrl
-				//images in rss for stuff are not very good so this
+				//images in rss for stuff are not very good so this to modify the url to display high quality images
 				if(data.tweets[i].articleSource === "STUFF"){
 					const teaserImageUrlSpliturlArray = data.tweets[i].teaserImageUrl.split(".");
 					let teaserImageUrlSpliturlArraySliced = teaserImageUrlSpliturlArray.slice(0,4);
@@ -168,6 +127,12 @@ const Topic = () => {
     const handleReadFastClick = () => {
         setIsReadFastOn((prevToggle) => !prevToggle);
     };
+	const selectCountryNewsAU = () => {
+		history.push('/AU');
+	  };
+	const selectCountryNewsWorld = () => {
+	history.push('/World');
+	};  
 	
 	return (
 		<div className='tweetdiv'>
@@ -177,49 +142,29 @@ const Topic = () => {
 				<h1 className='maintitle'>NEWS EXPRESS</h1>
 				</div>
 				
-				{/* <h2 className='mainsubtitle'>Find new Tweet inspiration by analysing user's last few Tweets, and write new Tweets with AI in the same style.</h2> */}
-				{/* <h5 className='articledateandsourcetop'><span style={{color: `#808080`}}>Just reading #Headlines can keep you up to date about the latest events</span></h5> */}
 				{dateTimeOfLastPulltoshow && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. The fastest way to stay updated with current affairs. Updated on ${dateTimeOfLastPulltoshow}`}</span></h5>}
 				{errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
-
-				{/* <h2 className='mainsubtitle'><a className='mainsubtitlelink' href="/handle">Search Twitter Users here</a></h2> */}
-				{/* {!disable1 && <h6>Pulling NEWS...Please wait..</h6>} */}
-
-				{/* <div className='admincardmain'>
-				{admin.map((admin,index,) => {
-					return <AdminCard 
-					admin={admin}  key={index} chooseHandle={chooseHandle} handleortag={"tag"}
-					// onChange={setAdmin}
-					/>
-				})}
-				</div> */}
-
-
-				{/* <form onSubmit={GetTweets}> */}
-					{/* <input
-						type="text"
-						className='userIdTextBox'
-						maxLength={70}
-						required
-						placeholder="Twitter User handle without @"
-						onChange={(e) => settwitterUserID(e.target.value)}
-					/> */}
-
-					{/* <input type="submit" className='button' value={disable ? `Searching...` : `Get News` } disabled={!twitterUserID}/>
-					
-				</form> */}
 				{disable && <h6 class='articledateandsourcetop'>Curating NEWS just for you. Please wait..</h6>}
-				<br/>
-				{/* {disable && <h5><a href="mailto:learn@dictionaryv2.com">Send us feedback at learn@dictionaryv2.com</a></h5>} */}
-				{/* <br/> */}
+				
+				<div className='countrynewscardholder'>
+					<div  className={'countrynewscardselected'} >
+					{  <p className="card-text">NZ<span style={{color: `#808080`}}></span></p>}
+					</div>
+					
+					<div  className={'countrynewscard'} onClick={(selectCountryNewsAU)} >
+					{  <p className="card-text">AU</p>}
+					</div>
+					<div  className={'countrynewscard'} onClick={(selectCountryNewsWorld)} >
+					{  <p className="card-text">WORLD</p>}
+					</div>
+				</div>
 
-				{/* {handle && <h4 className="mainsubtitle">{`${handle}`}</h4>} */}
 				{infoMessage && <GoToTop />}
 				{infoMessage && <ReadFast isReadFastOn ={handleReadFastClick}/>}
 			</div>
 
 			{tweets.map((article) => {
-				return <Card 
+				return <NewsCard 
 				article={article} isReadFastOn={isReadFastOn}  key={(Math.random() + 1).toString(36).substring(7)}
 				onChange={setTweets}
 				/>
@@ -240,9 +185,8 @@ const Topic = () => {
 			</div>}
 
 			{infoMessage &&  <h4 className='mainsubtitleads'>The fastest way for you to stay updated with current affairs</h4>}
-			{infoMessage &&  <h4 className='mainsubtitleads'>Select latest and best news from multiple national sources (STUFF, THE POST, THE PRESS, WAIKATO TIMES, RNZ, NZ HERALD)</h4>}
+			{infoMessage &&  <h4 className='mainsubtitleads'>Selected latest and best news from multiple national sources (STUFF, THE POST, THE PRESS, WAIKATO TIMES, RNZ, NZ HERALD)</h4>}
 			{infoMessage &&  <h4 className='mainsubtitleads'><a href='mailto:dictionaryv2@gmail.com'>Contact</a></h4>}
-			{/* React Helmet is a library that helps you deal with search engines and social media crawlers by adding meta tags to your pages/components on React so your site gives more valuable information to the crawlers. */}
 			
 			<Helmet>
 			{/* {<title>NEWS EXPRESS || Latest NEWS on the go</title>}
@@ -254,5 +198,5 @@ const Topic = () => {
 	)
 }
 
-export default Topic
+export default WorldNews
 

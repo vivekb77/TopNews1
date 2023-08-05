@@ -205,8 +205,6 @@ code {
   font-size: 1.0rem;
   font-weight: 550;
   color: #000000;
-  margin-top: 10px;
-  margin-bottom: 20px;
 }
 .card-text-readfast{
   font-size: 1.0rem;
@@ -221,79 +219,56 @@ code {
   color: #808080
 }
 
-.admincardmain{
-  width: fit-content;
-  width: 90%;
-  display: flex;
-  flex-wrap: wrap;
-  height:100%;
-  background-color: #ffffff;
-  /* border: 1px solid #ccc; */
-  border-radius: 5px;
-  padding: 5px;
-  margin: 5px;
-
-  /* box-shadow: 0 0 10px #ccc; */
+.countrynewscardholder{
+  display: flex; 
+  justify-content: center;
+  padding: 1em;
 }
 
-.admincard{
-
-  width: min-content;
+.countrynewscard {
+  width: 3em;
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 20px;
-  line-height: 10px;
-  vertical-align: middle;
-  align-items: center;
+  line-height: 1; /* Set line-height to 1 to eliminate extra spacing */
+  display: flex; /* Use Flexbox to center content */
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
   text-align: center;
   margin: 3px;
   box-shadow: 0 0 10px #ccc;
-  /* height: 30px; */
-  height: auto;
-
+  height: .1em;
 }
 
-.admincardselected{
-  width: min-content;
+.countrynewscardselected {
+  width: 3em;
   background-color: #009dff;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 20px;
-  line-height: 10px;
-  vertical-align: middle;
-  align-items: center;
+  line-height: 1; /* Set line-height to 1 to eliminate extra spacing */
+  display: flex; /* Use Flexbox to center content */
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
   text-align: center;
   margin: 3px;
-  cursor: pointer;
   box-shadow: 0 0 10px #ccc;
-  /* height: 30px; */
-  height: auto;
+  height: 0.1em;
 }
 
-.admincard:hover {
+.countrynewscard:hover {
   background: #fdfdfd;
   box-shadow: 0px 2px 10px 5px #d7d7d7;
   color: #000;
   cursor: pointer;
 }
 
-.admincardselected:hover {
+.countrynewscardselected:hover {
   background: #009dff;
   box-shadow: 0px 2px 10px 5px #d7d7d7;
   color: #000;
   cursor: pointer;
-}
-
-.divselected{
-  background: #7c1515;
-  box-shadow: 0px 2px 10px 5px #d7d7d7;
-  color: #000;
-  cursor: pointer;
-}
-
-.Tweetlink{
-  font-size: 1.2rem;
 }
 
 .card-text > span {
@@ -309,8 +284,6 @@ code {
   box-shadow: 0px 2px 10px 5px #d7d7d7;
   color: #000;
 }
-
-
 
 
 hr {
@@ -387,37 +360,9 @@ hr {
 }
 
 /* COPY BUTTON END */
-
-/* unvisited link */
 a:link {
   color: #003366;
   text-decoration: none;
-}
-
-/* visited link */
-a:visited {
-  color: #003366;
-  text-decoration: none;
-}
-
-/* mouse over link */
-a:hover {
-  color: #003366;
-  text-decoration: none;
-}
-
-/* selected link */
-a:active {
-  color: #003366;
-  text-decoration: none;
-}
-
-.mainsubtitlelink{
-  font-size: 1.2em;
-  text-align: center;
-  color: #fa1534;
-  font-weight: 700;
-  width: 80%;
 }
 .articledateandsourcetop{
   font-size: 0.8rem;
@@ -428,11 +373,7 @@ a:active {
   color: #808080
 }
 
-
-
-
 @media screen and (max-width: 600px) {
-
 
 .tweetdiv{
   /* width: 100%; */
@@ -555,10 +496,6 @@ a:active {
     width: 80%;
     color: #333;
   }
- 
-
- 
-  
   
   .card-text > span {
     font-size: 0.9rem;
@@ -578,8 +515,11 @@ a:active {
     width: 80%;
   } 
 
-  .admincard{
-    height: auto;  
+  .countrynewscard{
+    height: 0.1em;  
+  }
+  .countrynewscardselected{
+    height: 0.1em;  
   }
 
 .scroll-to-top-button {
