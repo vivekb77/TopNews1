@@ -14,22 +14,40 @@ let skippedArticlesCount;
 let errorAddingArticlesCount;
 // Get RSS feed from new providers whenever needed with a post request to api/cron
 
-router.post('/crontheguardianworld', async (req, res) => {
-	console.log("Cron job via API triggered for THE GUARDIAN WORLD")
+router.post('/crontheguardianworlduk', async (req, res) => {
+	console.log("Cron job via API triggered for THE GUARDIAN WORLD UK")
 	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronTheGuardian();
+	await runCronTheGuardianUK();
 	console.log("Added Articles Count "+addedArticlesCount);
 	console.log("Skipped Articles Count "+skippedArticlesCount);
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: `Cron job completed successfully for THE GUARDIAN WORLD". Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`, message: `Cron job completed successfully for STUFF NORTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
+	return res.json({ status: `Cron job completed successfully for THE GUARDIAN WORLD UK". Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`, message: `Cron job completed successfully for STUFF NORTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
 });
-async function runCronTheGuardian() {
+async function runCronTheGuardianUK() {
 	await fetchDataFromRSS('https://www.theguardian.com/uk/rss',"THE GUARDIAN");
+}
+
+router.post('/crontheguardianworldusa', async (req, res) => {
+	console.log("Cron job via API triggered for THE GUARDIAN WORLD USA")
+	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await runCronTheGuardianUSA();
+	console.log("Added Articles Count "+addedArticlesCount);
+	console.log("Skipped Articles Count "+skippedArticlesCount);
+	console.log("Error adding Articles Count "+errorAddingArticlesCount);
+	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `Cron job completed successfully for THE GUARDIAN WORLD USA". Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`, message: `Cron job completed successfully for STUFF NORTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
+});
+async function runCronTheGuardianUSA() {
+	await fetchDataFromRSS('https://www.theguardian.com/us-news/rss',"THE GUARDIAN");
 }
 
 async function fetchDataFromRSS(sourceUrl,articleSource) {
@@ -45,7 +63,7 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 	//THE GUARDIAN
 	if(articleSource == "THE GUARDIAN"){
 		//only pull last 25 articles
-		for (let i = 0; i < 25; i++) {
+		for (let i = 0; i < 20; i++) {
 		const newsItem = {
 			displayOnFE:true,
 			articleSource: articleSource,
@@ -77,12 +95,12 @@ async function addNewsItemsToDB(NewsItemsArray) {
 		const existingItem = await NewsDataWorld.findOne({ articleGuid: item.articleGuid });
 		if (existingItem) {
 			skippedArticlesCount ++
-		  console.log('Skipping ' +item.articleSource);
+		//   console.log('Skipping ' +item.articleSource);
 		 
 		} else {
 			addedArticlesCount ++;
 		  	await NewsDataWorld.create(item);
-		  console.log('News Inserted '+item.articleSource);
+		//   console.log('News Inserted '+item.articleSource);
 		}
 	  }
 	} catch (error) {
