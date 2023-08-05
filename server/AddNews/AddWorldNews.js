@@ -14,7 +14,7 @@ let skippedArticlesCount;
 let errorAddingArticlesCount;
 // Get RSS feed from new providers whenever needed with a post request to api/cron
 
-router.post('/theguardianworld', async (req, res) => {
+router.post('/crontheguardianworld', async (req, res) => {
 	console.log("Cron job via API triggered for THE GUARDIAN WORLD")
 	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
@@ -30,9 +30,8 @@ router.post('/theguardianworld', async (req, res) => {
 });
 async function runCronTheGuardian() {
 	await fetchDataFromRSS('https://www.theguardian.com/uk/rss',"THE GUARDIAN");
-    await AddDateTimeOfLastPull(new Date().toLocaleString());
 }
-runCronTheGuardian()
+
 async function fetchDataFromRSS(sourceUrl,articleSource) {
   try {
     const response = await axios.get(sourceUrl);

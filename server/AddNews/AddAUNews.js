@@ -13,7 +13,7 @@ let addedArticlesCount;
 let skippedArticlesCount;
 let errorAddingArticlesCount;
 // Get RSS feed from new providers whenever needed with a post request to api/cron
-router.post('/skynewsau', async (req, res) => {
+router.post('/cronskynewsau', async (req, res) => {
 	console.log("Cron job via API triggered for SKY NEWS")
 	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
@@ -27,7 +27,7 @@ router.post('/skynewsau', async (req, res) => {
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `Cron job completed successfully for SKY NEWS. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`, message: `Cron job completed successfully for STUFF NORTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
 });
-router.post('/theguardianau', async (req, res) => {
+router.post('/crontheguardianau', async (req, res) => {
 	console.log("Cron job via API triggered for THE GUARDIAN")
 	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
@@ -44,6 +44,7 @@ router.post('/theguardianau', async (req, res) => {
 async function runCronSkyNews() {
 	await fetchDataFromRSS('https://www.skynews.com.au/rss',"SKY NEWS");
 }
+
 async function runCronTheGuardian() {
 	await fetchDataFromRSS('https://www.theguardian.com/au/rss',"THE GUARDIAN");
 }
@@ -68,7 +69,7 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 			articleTitle: item.title,
 			articleDescription: item.contentSnippet,
 			articleUrl: item.link,
-			articleGuid: item.post-id,
+			articleGuid: item.link,
 			articlePublicationDate: new Date(parsedrssfeedforstuff.lastBuildDate),
 			articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
 		};
