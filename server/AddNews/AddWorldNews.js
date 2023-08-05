@@ -26,7 +26,7 @@ router.post('/crontheguardianworlduk', async (req, res) => {
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: `Cron job completed successfully for THE GUARDIAN WORLD UK". Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`, message: `Cron job completed successfully for STUFF NORTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Guardian UK. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
 });
 async function runCronTheGuardianUK() {
 	await fetchDataFromRSS('https://www.theguardian.com/uk/rss',"THE GUARDIAN");
@@ -44,7 +44,7 @@ router.post('/crontheguardianworldusa', async (req, res) => {
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: `Cron job completed successfully for THE GUARDIAN WORLD USA". Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`, message: `Cron job completed successfully for STUFF NORTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Guardian USA. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
 });
 async function runCronTheGuardianUSA() {
 	await fetchDataFromRSS('https://www.theguardian.com/us-news/rss',"THE GUARDIAN");
