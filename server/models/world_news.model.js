@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
 //schema validation for rss feed data
-const NewsData = new mongoose.Schema(
+const NewsDataWorld = new mongoose.Schema(
 	{
 		displayOnFE: { type: Boolean, required: true },
         articleSource: { type: String, required: true },
-		articleTitle: { type: String, required: true,unique: true },
+		articleTitle: { type: String, required: true},
 		articleDescription: { type: String, required: false },
 		articleUrl: { type: String, required: true },
         teaserImageUrl: { type: String, required: false },
@@ -14,9 +14,9 @@ const NewsData = new mongoose.Schema(
 		articlePublicationDate: { type: Date, required: true },
 		articleImportedToTopNewsDate: { type: Date, required: true },
 	},
-	{ collection: 'NZNewsData' }
+	{ collection: 'WorldNewsData' }
 )
 
-const model = mongoose.model('NewsData', NewsData)
+const model = mongoose.model('NewsDataWorld', NewsDataWorld)
 
 module.exports = model

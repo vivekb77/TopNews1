@@ -29,6 +29,10 @@ try {
 
 app.use('/api', NZNews)
 app.use('/api', AddNZNews)
+app.use('/api', AUNews)
+app.use('/api', AddAUNews)
+app.use('/api', WorldNews)
+app.use('/api', AddWorldNews)
 
 app.listen(PORT, () => {
 	console.log(`Server started on ${PORT}`)

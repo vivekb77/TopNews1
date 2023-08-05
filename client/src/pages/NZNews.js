@@ -41,7 +41,7 @@ const NZNews = () => {
 
 //get date time when articles were updated from rss
 	async function dateTimeOfLastPull(event) {
-	const req = await fetch(`${baseURL}/api/dateTimeOfLastPull`, {
+	const req = await fetch(`${baseURL}/api/dateTimeOfLastPullNZ`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ const NZNews = () => {
 		setInfoMessage(false);
 		setErrormessage(errormessage => "");
 
-		const req = await fetch(`${baseURL}/api/GetNewsForProvider`, {
+		const req = await fetch(`${baseURL}/api/GetNewsForNZ`, {
 
 			method: 'POST',
 			headers: {

@@ -2,7 +2,7 @@ import React from "react";
 import ReactHtmlParser from 'react-html-parser'; 
 
 export default function NewsCard(props) {
-    
+    let readfast
     function boldWords(seperateDescriptionFieldWords) {
       const boldedArray = [];
       for (let i=0;i<seperateDescriptionFieldWords.length;i++) {
@@ -38,7 +38,9 @@ export default function NewsCard(props) {
       return boldedArray.join(" ");
     }
 
-    let readfast = boldWords(props.article.articleDescription.split(" "));
+    if(props.article.articleDescription){
+    readfast = boldWords(props.article.articleDescription.split(" "));
+    }
 
     return (
         <div className="card">

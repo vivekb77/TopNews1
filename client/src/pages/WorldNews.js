@@ -41,7 +41,7 @@ const WorldNews = () => {
 
 //get date time when articles were updated from rss
 	async function dateTimeOfLastPull(event) {
-	const req = await fetch(`${baseURL}/api/dateTimeOfLastPull`, {
+	const req = await fetch(`${baseURL}/api/dateTimeOfLastPullWorld`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ const WorldNews = () => {
 		setInfoMessage(false);
 		setErrormessage(errormessage => "");
 
-		const req = await fetch(`${baseURL}/api/GetNewsForProvider`, {
+		const req = await fetch(`${baseURL}/api/GetNewsForWorld`, {
 
 			method: 'POST',
 			headers: {
@@ -83,28 +83,14 @@ const WorldNews = () => {
 		if (data.status === 'ok') {
 			
 			for (let i=0;i<data.tweets.length;i++){ 
-				let stuffImageUrlForBigImage
-				let teaserImageUrl
-				//images in rss for stuff are not very good so this to modify the url to display high quality images
-				if(data.tweets[i].articleSource === "STUFF"){
-					const teaserImageUrlSpliturlArray = data.tweets[i].teaserImageUrl.split(".");
-					let teaserImageUrlSpliturlArraySliced = teaserImageUrlSpliturlArray.slice(0,4);
-					stuffImageUrlForBigImage = `${teaserImageUrlSpliturlArraySliced.join(".")}.related.StuffLandscapeSixteenByNine.1420x800.${teaserImageUrlSpliturlArray[7]}.${teaserImageUrlSpliturlArray[8]}.jpg?format=pjpg&optimize=medium`;
-					teaserImageUrl = ""
-				}
-				else{
-					teaserImageUrl = data.tweets[i].teaserImageUrl;
-					stuffImageUrlForBigImage = "";
-				}
-
+				
 				const obj = {
 					dbid:data.tweets[i]._id,
 					articleSource: data.tweets[i].articleSource,
 					articleTitle: data.tweets[i].articleTitle,
 					articleDescription: data.tweets[i].articleDescription,
 					articleUrl: data.tweets[i].articleUrl,
-					teaserImageUrl: teaserImageUrl,
-					stuffImageUrlForBigImage : stuffImageUrlForBigImage,
+					teaserImageUrl: data.tweets[i].teaserImageUrl,
 					// articleAuthor: data.tweets[i].articleAuthor,
 					articleGuid: data.tweets[i].articleGuid,
 					articlePublicationDate: data.tweets[i].articleAuthor, //author field has formatted date so using it
@@ -127,11 +113,11 @@ const WorldNews = () => {
     const handleReadFastClick = () => {
         setIsReadFastOn((prevToggle) => !prevToggle);
     };
+	const selectCountryNewsNZ = () => {
+		history.push('/NZ');
+	};
 	const selectCountryNewsAU = () => {
 		history.push('/AU');
-	  };
-	const selectCountryNewsNZ = () => {
-	history.push('/NZ');
 	};  
 	
 	return (
@@ -147,14 +133,14 @@ const WorldNews = () => {
 				{disable && <h6 class='articledateandsourcetop'>Curating NEWS just for you. Please wait..</h6>}
 				
 				<div className='countrynewscardholder'>
-					<div  className={'countrynewscard'} onClick={(selectCountryNewsNZ)} >
+					<div  className={'countrynewscard'} onClick={(selectCountryNewsNZ)}>
 					{  <p className="card-text">NZ<span style={{color: `#808080`}}></span></p>}
 					</div>
 					
-					<div  className={'countrynewscard'} onClick={(selectCountryNewsAU)} >
+					<div  className={'countrynewscard'} onClick={(selectCountryNewsAU)}>
 					{  <p className="card-text">AU</p>}
 					</div>
-					<div  className={'countrynewscardselected'}>
+					<div  className={'countrynewscardselected'} >
 					{  <p className="card-text">WORLD</p>}
 					</div>
 				</div>
