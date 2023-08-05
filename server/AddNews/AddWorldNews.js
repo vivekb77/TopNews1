@@ -68,6 +68,25 @@ async function runCronTheGuardianWorld() {
 	await fetchDataFromRSS('https://www.theguardian.com/world/rss',"THE GUARDIAN");
 }
 
+
+
+router.post('/cronthetelegraph', async (req, res) => {
+	console.log("Cron job via API triggered for THE TELEGRAPH")
+	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await runCronTheTelegraph();
+	console.log("Added Articles Count "+addedArticlesCount);
+	console.log("Skipped Articles Count "+skippedArticlesCount);
+	console.log("Error adding Articles Count "+errorAddingArticlesCount);
+	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `ok`, message: `Cron job completed successfully for TELEGRAPH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}`})
+});
+async function runCronTheTelegraph() {
+	await fetchDataFromRSS('https://www.telegraph.co.uk/rss.xml',"THE TELEGRAPH");
+}
 async function fetchDataFromRSS(sourceUrl,articleSource) {
   try {
     const response = await axios.get(sourceUrl);
@@ -80,7 +99,7 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 
 	//THE GUARDIAN
 	if(articleSource == "THE GUARDIAN"){
-		//only pull last 25 articles
+		//only pull last 20 articles
 		for (let i = 0; i < 20; i++) {
 		const newsItem = {
 			displayOnFE:true,
@@ -96,6 +115,33 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 			};
 		NewsItemsArray.push(newsItem);
 		};
+	}
+	//THE TELEGRAPH
+	if(articleSource == "THE TELEGRAPH"){
+		//only pull last 20 articles
+
+		for (let i = 0; i < 20; i++) {
+
+			//only add if image url is present
+			const enclosure = parserrssfeed.rss.channel[0].item[i].enclosure?.[0];
+    		const imageUrl = enclosure?.['$']?.['url'] ?? null;
+
+			if (imageUrl) {
+			const newsItem = {
+				displayOnFE:true,
+				articleSource: articleSource,
+				articleTitle: parserrssfeed.rss.channel[0].item[i].title[0],
+				// articleDescription: parserrssfeed.rss.channel[0].item[i].description[0], //description is too long so skipping
+				articleUrl: parserrssfeed.rss.channel[0].item[i].link[0],
+				teaserImageUrl:parserrssfeed.rss.channel[0].item[i].enclosure[0]['$']['url'],
+				articleAuthor:parserrssfeed.rss.channel[0].item[i]['dc:creator'][0],
+				articleGuid:parserrssfeed.rss.channel[0].item[i].guid[0]['_'],
+				articlePublicationDate: new Date(parserrssfeed.rss.channel[0].item[i].pubDate[0]),
+				articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+				};
+				NewsItemsArray.push(newsItem);
+			}
+		}
 	}
 
 	await addNewsItemsToDB(NewsItemsArray)
