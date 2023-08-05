@@ -127,8 +127,8 @@ const AUNews = () => {
     const handleReadFastClick = () => {
         setIsReadFastOn((prevToggle) => !prevToggle);
     };
-	const selectCountryNewsAU = () => {
-		history.push('/AU');
+	const selectCountryNewsNZ = () => {
+		history.push('/NZ');
 	  };
 	const selectCountryNewsWorld = () => {
 	history.push('/World');
@@ -147,11 +147,11 @@ const AUNews = () => {
 				{disable && <h6 class='articledateandsourcetop'>Curating NEWS just for you. Please wait..</h6>}
 				
 				<div className='countrynewscardholder'>
-					<div  className={'countrynewscardselected'} >
+					<div  className={'countrynewscard'} onClick={(selectCountryNewsNZ)}>
 					{  <p className="card-text">NZ<span style={{color: `#808080`}}></span></p>}
 					</div>
 					
-					<div  className={'countrynewscard'} onClick={(selectCountryNewsAU)} >
+					<div  className={'countrynewscardselected'} >
 					{  <p className="card-text">AU</p>}
 					</div>
 					<div  className={'countrynewscard'} onClick={(selectCountryNewsWorld)} >

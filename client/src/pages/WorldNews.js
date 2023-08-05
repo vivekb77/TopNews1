@@ -130,8 +130,8 @@ const WorldNews = () => {
 	const selectCountryNewsAU = () => {
 		history.push('/AU');
 	  };
-	const selectCountryNewsWorld = () => {
-	history.push('/World');
+	const selectCountryNewsNZ = () => {
+	history.push('/NZ');
 	};  
 	
 	return (
@@ -147,14 +147,14 @@ const WorldNews = () => {
 				{disable && <h6 class='articledateandsourcetop'>Curating NEWS just for you. Please wait..</h6>}
 				
 				<div className='countrynewscardholder'>
-					<div  className={'countrynewscardselected'} >
+					<div  className={'countrynewscard'} onClick={(selectCountryNewsNZ)} >
 					{  <p className="card-text">NZ<span style={{color: `#808080`}}></span></p>}
 					</div>
 					
 					<div  className={'countrynewscard'} onClick={(selectCountryNewsAU)} >
 					{  <p className="card-text">AU</p>}
 					</div>
-					<div  className={'countrynewscard'} onClick={(selectCountryNewsWorld)} >
+					<div  className={'countrynewscardselected'}>
 					{  <p className="card-text">WORLD</p>}
 					</div>
 				</div>

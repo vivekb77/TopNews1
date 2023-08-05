@@ -10,6 +10,7 @@ const App = () => {
 		<div className='maindiv'>
 			<BrowserRouter>
 				<Route path="/" exact component={NZNews} />
+				<Route path="/NZ" exact component={NZNews} />
 				<Route path="/AU" exact component={AUNews} />
 				<Route path="/WORLD" exact component={WorldNews} />
 			</BrowserRouter>

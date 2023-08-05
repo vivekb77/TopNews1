@@ -1,3 +1,200 @@
+// DELETE TWEET START
+app.post('/api/deleteTweet', async (req, res) => {
+
+	let dbid = req.body.dbid.trim();
+	
+	TweetData.findByIdAndDelete(dbid)
+		.then(deletedUser => {
+			// console.log(`Successfully deleted user with id ${dbid}`);
+			return res.json({ status: 'ok'})
+		})
+		.catch(err => {
+			// console.log(`Error deleting user with id ${dbid}: ${err}`);
+			return res.json({ status: 'error'})
+		});
+
+})
+// DELETE TWEET END
+
+// ADD TAG START
+app.post('/api/addtag', async (req, res) => {
+
+	let dbid = req.body.dbid.trim();
+	let tag = req.body.tag.trim();
+	
+	try{
+		TweetData.findByIdAndUpdate(dbid, {tag: tag, curationstatus: "notcurated"}, {new: false}, (err, doc) => {
+			if (err) return handleError(err);
+		});	
+		return res.json({ status: 'ok'})
+	}catch{
+		return res.json({ status: 'error'})
+	}
+})
+// ADD TAG END
+
+// PULL TWEET to show user START
+app.post('/api/ShowTweets', async (req, res) => {
+
+	let tweeterUserHadleToPullTweets = req.body.tweeterUserHadleToPullTweets.trim();
+	
+	const AITweets = await TweetData.find({
+
+		//case insensitive search on handle
+		TwitteruserName: { '$regex':tweeterUserHadleToPullTweets , '$options' : 'i'} ,
+		curationstatus:"notcurated"
+	})
+	
+	if(AITweets.length > 0){
+		//sort the array by likes to views ratio
+		AITweets.sort((a, b) => (a.likesTOviewsRatio > b.likesTOviewsRatio) ? -1 : 1)
+	return res.json({ status: 'ok', tweets: AITweets })
+	}else{
+		return res.json({ status: 'error', error: 'No Tweets found for user' })
+	}
+
+})
+// PULL TWEET to show user END
+
+// PULL TWEET  on topic to show user START
+app.post('/api/GetTweetsOnTopic', async (req, res) => {
+
+	let topictopulltweets = req.body.topictopulltweets.trim();
+	
+	const AITweets = await TweetData.find({
+		//case insensitive search on handle
+		tag: { '$regex':topictopulltweets , '$options' : 'i'} 
+
+	})
+	
+	if(AITweets.length > 0){
+		//sort the array by likes to views ratio
+		AITweets.sort((a, b) => (a.likesTOviewsRatio > b.likesTOviewsRatio) ? -1 : 1)
+	return res.json({ status: 'ok', tweets: AITweets })
+	}else{
+		return res.json({ status: 'error', error: 'No Tweets found for topic' })
+	}
+
+})
+// PULL TWEET on topic to show user END
+
+
+// CURATE TWEET  START
+app.post('/api/curate', async (req, res) => {
+
+	let tweeterUserHadleToPullTweets = req.body.tweeterUserHadleToPullTweets.trim();
+	let topicToPullTweets = req.body.topicToPullTweets.trim();
+
+	
+	
+	if(topicToPullTweets === "null"){
+
+		const AITweets = await TweetData.find({
+
+			//case insensitive search on handle
+			TwitteruserName: { '$regex':tweeterUserHadleToPullTweets , '$options' : 'i'} ,
+			curationstatus:"notcurated"
+		})
+
+		if(AITweets.length > 0){
+			//sort the array by likes to views ratio
+			AITweets.sort((a, b) => (a.likesTOviewsRatio > b.likesTOviewsRatio) ? -1 : 1)
+		return res.json({ status: 'ok', tweets: AITweets })
+		}
+		else{
+			return res.json({ status: 'error', error: 'No Tweets found for user' })
+		}
+
+	}
+
+	if(tweeterUserHadleToPullTweets === "null"){
+
+		const AITweets = await TweetData.find({
+
+			//case insensitive search on handle
+			tag: { '$regex':topicToPullTweets , '$options' : 'i'} ,
+			curationstatus:"notcurated"
+		})
+
+		if(AITweets.length > 0){
+			//sort the array by likes to views ratio
+			AITweets.sort((a, b) => (a.likesTOviewsRatio > b.likesTOviewsRatio) ? -1 : 1)
+
+		return res.json({ status: 'ok', tweets: AITweets })
+		}
+		else{
+			return res.json({ status: 'error', error: 'No Tweets found for topic' })
+		}
+	}	
+	
+})
+// CURATE TWEET END
+
+// Generate AI TWEET START
+app.post('/api/GenerateAITweet', async (req, res) => {
+
+	let neednewAITweetforthisTweet = req.body.neednewAITweetforthisTweet.trim();
+	let dbid = req.body.dbid.trim();
+	let promptforAI = `${neednewAITweetforthisTweet}${neednewAITweetforthisTweet.slice(-1)==="." ? "" : "."}` //add . if not present
+	
+	const { Configuration, OpenAIApi } = require("openai");
+
+	const configuration = new Configuration({
+		apiKey: process.env.apiKey,
+	});
+	const openai = new OpenAIApi(configuration);
+	let promptfornewtweet = `Write a new Tweet with no hashtags using the following Tweet as context. ${promptforAI}`;
+
+
+	try{
+
+	
+		const newAItweet = await openai.createCompletion({
+			"model": "text-curie-001",
+			// "model": "text-davinci-003",
+			"prompt": promptfornewtweet,
+			"temperature": 0.9,
+			"max_tokens": 100,
+			// "top_p": 1,  this with temperature 0.9 gives bad results
+			"frequency_penalty": 0.37,
+			"presence_penalty": 0,
+			// "stop": ["\n\n"]
+		});
+
+		console.log(newAItweet.data.usage.total_tokens)
+		total_tokens_used_byAI = newAItweet.data.usage.total_tokens;
+		
+
+		if(newAItweet){
+
+			//add tokens used to db
+			TweetData.findByIdAndUpdate(dbid, {$inc: {total_tokens: total_tokens_used_byAI}}, {new: true}, (err, doc) => {
+				if (err) return handleError(err);
+			});
+			// tokeuseremail = "genericuser@gmail.com"
+			// UserData.findByIdAndUpdate(tokeuseremail, {$inc: {total_tokens: total_tokens_used_byAI}}, {new: true}, (err, doc) => {
+			// 	if (err) return handleError(err);
+			// });
+
+
+			return res.json({ status: 'ok', newAItweet: newAItweet.data.choices[0].text })
+			}else{
+				return res.json({ status: 'error', error: 'Tweet Generation failed by AI' })
+		}
+	}
+	catch(error){{
+		console.log(error)
+		return res.json({ status: 'error', error: 'Tweet Generation failed by AI' })
+	}}
+	
+
+})
+// generate AI TWEET END
+
+
+
+
+
 
 
 
