@@ -25,7 +25,7 @@ router.post('/cronskynewsau', async (req, res) => {
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: `ok`, message: `Cron job completed successfully for SKY news AU. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
+	return res.json({ status: `ok`, message: `Cron job completed successfully for SKY news AU. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}`})
 });
 router.post('/crontheguardianau', async (req, res) => {
 	console.log("Cron job via API triggered for THE GUARDIAN")
@@ -39,7 +39,7 @@ router.post('/crontheguardianau', async (req, res) => {
 	console.log("Error adding Articles Count "+errorAddingArticlesCount);
 	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: `ok`, message: `Cron job completed successfully Guardian AU. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error${errorAddingArticlesCount}`})
+	return res.json({ status: `ok`, message: `Cron job completed successfully Guardian AU. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}`})
 });
 async function runCronSkyNews() {
 	await fetchDataFromRSS('https://www.skynews.com.au/rss',"SKY NEWS");
