@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const moment = require('moment-timezone');
-const NewsData = require('../models/news.model')
+const NewsData = require('../models/nz_news.model')
 const DateTimeOfLastPullModel = require('../models/datetime.model')
 const axios = require('axios');
 
@@ -86,7 +86,7 @@ try {
     const dateTimeOfLastPull = await DateTimeOfLastPullModel.find({
         _id: "64b7bd95181d90534a16cb5a"
     })
-    const inputDate = new Date(dateTimeOfLastPull[0].dateTimeOfLastPull);
+    const inputDate = new Date(dateTimeOfLastPull[0].dateTimeOfLastPull_NZ);
                 const options = { 
                     day: '2-digit', 
                     month: 'short',

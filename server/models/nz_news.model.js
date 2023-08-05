@@ -14,7 +14,7 @@ const NewsData = new mongoose.Schema(
 		articlePublicationDate: { type: Date, required: true },
 		articleImportedToTopNewsDate: { type: Date, required: true },
 	},
-	{ collection: 'NewsData' }
+	{ collection: 'NZNewsData' }
 )
 
 const model = mongoose.model('NewsData', NewsData)

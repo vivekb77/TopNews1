@@ -293,8 +293,8 @@ hr {
 
 .errormessage{
   color: red;
-  font-size: 23px;
-  margin-top: 5px;
+  font-size: 20px;
+  padding: 5px;
 }
 
 .errormessagesmall{

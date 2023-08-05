@@ -5,7 +5,7 @@ const axios = require('axios');
 const Parser = require('rss-parser');
 var cron = require('node-cron');
 const xml2js = require('xml2js');
-const NewsData = require('../models/news.model')
+const NewsData = require('../models/nz_news.model')
 const DateTimeOfLastPullModel = require('../models/datetime.model')
 
 
@@ -256,7 +256,7 @@ async function addNewsItemsToDB(NewsItemsArray) {
 
 async function AddDateTimeOfLastPull(dateTimeOfLastPull){
     try{
-        DateTimeOfLastPullModel.findByIdAndUpdate("64b7bd95181d90534a16cb5a", {dateTimeOfLastPull: new Date(dateTimeOfLastPull)}, {new: false}, (err, doc) => {
+        DateTimeOfLastPullModel.findByIdAndUpdate("64b7bd95181d90534a16cb5a", {dateTimeOfLastPull_NZ: new Date(dateTimeOfLastPull)}, {new: false}, (err, doc) => {
     });	
         console.log("dateTimeOfLastPull updated");
     }catch{

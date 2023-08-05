@@ -142,7 +142,7 @@ const WorldNews = () => {
 				<h1 className='maintitle'>NEWS EXPRESS</h1>
 				</div>
 				
-				{dateTimeOfLastPulltoshow && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. The fastest way to stay updated with current affairs. Updated on ${dateTimeOfLastPulltoshow}`}</span></h5>}
+				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. The fastest way to stay updated with current affairs. Updated on ${dateTimeOfLastPulltoshow}`}</span></h5>}
 				{errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 				{disable && <h6 class='articledateandsourcetop'>Curating NEWS just for you. Please wait..</h6>}
 				
