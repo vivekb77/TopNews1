@@ -53,7 +53,9 @@ const WorldNews = () => {
 	const dateTimeOfLastPull = await req.json();
 	if (dateTimeOfLastPull.status === 'ok') {
 		setDisable(false);
-		setDateTimeOfLastPulltoshow(handle => dateTimeOfLastPull.dateTimeOfLastPull);
+		//remove day and append "today"
+		let makedatereadable = dateTimeOfLastPull.dateTimeOfLastPull.slice(6,16);
+		setDateTimeOfLastPulltoshow(handle => "Today"+makedatereadable);
 	}
 	else if (dateTimeOfLastPull.status === 'error') {
 		setDisable(false);
@@ -128,7 +130,7 @@ const WorldNews = () => {
 				<h1 className='maintitle'>NEWS EXPRESS</h1>
 				</div>
 				
-				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. The fastest way to stay updated with current affairs. Updated on ${dateTimeOfLastPulltoshow}`}</span></h5>}
+				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. The fastest way to stay updated with current affairs. Updated ${dateTimeOfLastPulltoshow}`}</span></h5>}
 				{errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 				{disable && <h6 class='articledateandsourcetop'>Curating NEWS just for you. Please wait..</h6>}
 				
