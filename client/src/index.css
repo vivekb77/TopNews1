@@ -38,18 +38,20 @@ code {
   align-items: center;
 }
 .logoandtitle{
-  display: inline-block;
+  display: flex; 
+  justify-content: center;
+  margin-bottom: 5px;
 }
 .logoimage{
   /* position: fixed; */
-  padding: 0px 0px 0px 0px;
-  width: 55px; 
-  height: 75px; 
-  background-image: url('./toplogo.png');
+  padding: 15px;
+  width: 82px; 
+  height: 82px; 
+  background-image: url('./toplogo.svg');
   background-repeat: no-repeat;
   background-color: transparent;
   color: white;
-  margin: 10px 0px -75px -60px;
+  margin: 5px 0px -80px -100px;
   border: none;
 }
 .header{
@@ -116,7 +118,8 @@ code {
   text-align: center;
   color: #003366;
   font-weight: 800;
-  width: 100%;
+  width: auto;
+  padding: 10px;
 }
 .mainsubtitle{
   font-size: 1.0em;
@@ -367,7 +370,7 @@ a:link {
 .articledateandsourcetop{
   font-size: 0.8rem;
   margin-bottom: 0px;
-  margin-top: 15px;
+  margin-top: 5px;
   margin-left: 20px;
   margin-right: 20px;
   color: #808080
@@ -555,14 +558,14 @@ a:link {
 }
 .logoimage{
   /* position: fixed; */
-  padding: 0px 0px 0px 0px;
-  width: 55px; 
-  height: 67px; 
-  background-image: url('./toplogo.png');
+  padding: 0px;
+  width: 80px; 
+  height: 80px; 
+  background-image: url('./toplogo.svg');
   background-repeat: no-repeat;
   background-color: transparent;
   color: white;
-  margin: 10px 0px -80px -54px;
+  margin: 8px 0px 0px 0px;
   border: none;
 }
 .laptopplaceholderdiv{
