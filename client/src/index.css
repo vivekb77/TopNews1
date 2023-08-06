@@ -229,7 +229,7 @@ code {
 }
 
 .countrynewscard {
-  width: auto;
+  width: 70px;
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -245,7 +245,7 @@ code {
 }
 
 .countrynewscardselected {
-  width: auto;
+  width: 70px;
   background-color: #009dff;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -520,9 +520,11 @@ a:link {
 
   .countrynewscard{
     height: 0.1em;  
+    width: 60px;
   }
   .countrynewscardselected{
     height: 0.1em;  
+    width: 60px;
   }
 
 .scroll-to-top-button {
