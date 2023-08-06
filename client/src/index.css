@@ -226,7 +226,7 @@ code {
 }
 
 .countrynewscard {
-  width: 3em;
+  width: auto;
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -242,7 +242,7 @@ code {
 }
 
 .countrynewscardselected {
-  width: 3em;
+  width: auto;
   background-color: #009dff;
   border: 1px solid #ccc;
   border-radius: 5px;

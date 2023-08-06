@@ -138,7 +138,7 @@ const WorldNews = () => {
 					</div>
 					
 					<div  className={'countrynewscard'} onClick={(selectCountryNewsAU)}>
-					{  <p className="card-text">AU</p>}
+					{  <p className="card-text">AU & UK</p>}
 					</div>
 					<div  className={'countrynewscardselected'} >
 					{  <p className="card-text">WORLD</p>}
