@@ -98,11 +98,14 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 
 	//NEWSCOMAU
 	if(articleSource == "SKY NEWS"){
-
-		//there are links to sections in the feed , don't pull that
-		if(!item.title.contains("World") || !item.title.contains("Australia") || !item.title.contains("Homepage")){
-
-			parsedrssfeedforstuff.items.forEach(item => {
+		
+		parsedrssfeedforstuff.items.forEach(item => {
+			
+			//there are links to sections in the feed , don't pull that
+			if(item.title == "World" || item.title == "Australia" || item.title == "Homepage Tops Mid Collection"){
+			//skip
+			}
+			else{
 				const newsItem = {
 					displayOnFE:true,
 					articleSource: articleSource,
@@ -113,9 +116,9 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 					articlePublicationDate: new Date(parsedrssfeedforstuff.lastBuildDate),
 					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
 				};
-				NewsItemsArray.push(newsItem);
-				})
-		}
+					NewsItemsArray.push(newsItem);
+			}
+		})
 	}
 
 	//THE GUARDIAN
