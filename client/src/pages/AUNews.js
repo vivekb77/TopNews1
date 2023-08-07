@@ -133,7 +133,7 @@ const AUNews = () => {
 				</div>
 				
 				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. The fastest way to stay updated with current affairs.`}</span></h5>}
-				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`Updated ${dateTimeOfLastPulltoshow}`}</span></h5>}
+				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`Last updated ${dateTimeOfLastPulltoshow}`}</span></h5>}
 				{errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 				{disable && <h6 class='articledateandsourcetop'>Curating NEWS just for you. Please wait..</h6>}
 				
