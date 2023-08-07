@@ -126,8 +126,9 @@ const WorldNews = () => {
 		<div className='tweetdiv'>
 			<div className='header'>
 				<div className='logoandtitle'>
-				<div className="logoimage"></div>      
-				<h1 className='maintitle'>NEWS EXPRESS</h1>
+				<div className="logoimage"></div>    
+				<div className="logonameimage"></div>    
+				{/* <h1 className='maintitle'>NEWS EXPRESS</h1> */}
 				</div>
 				
 				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. The fastest way to stay updated with current affairs.`}</span></h5>}

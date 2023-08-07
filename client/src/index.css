@@ -40,18 +40,30 @@ code {
 .logoandtitle{
   display: flex; 
   justify-content: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 .logoimage{
   /* position: fixed; */
-  padding: 15px;
+  /* padding: 15px; */
   width: 82px; 
   height: 82px; 
   background-image: url('./toplogo.svg');
   background-repeat: no-repeat;
   background-color: transparent;
   color: white;
-  margin: 5px 0px -80px -100px;
+  margin: 4px 20px 0px -75px;
+  border: none;
+}
+.logonameimage{
+  /* position: fixed; */
+  /* padding: 15px; */
+  width: 260px; 
+  height: 60px; 
+  background-image: url('./logonameimage.svg');
+  background-repeat: no-repeat;
+  background-color: transparent;
+  color: white;
+  margin: 26px 0px 0px 0px;
   border: none;
 }
 .header{
@@ -116,7 +128,7 @@ code {
 .maintitle {
   font-size: 1.6em;
   text-align: center;
-  color: #003366;
+  color: #323232;
   font-weight: 800;
   width: auto;
   padding: 10px;
@@ -394,7 +406,7 @@ a:link {
 /* small screen */
 .card{
   justify-content: center;
-  width: 92%;
+  width: 94%;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -467,7 +479,7 @@ a:link {
 }
   
   .header{
-    width: 92%;
+    width: 94%;
     height: 100%;
     background-color: #ffffff;
     border: 1px solid #ccc;
@@ -568,6 +580,18 @@ a:link {
   background-color: transparent;
   color: white;
   margin: 8px 0px 0px 0px;
+  border: none;
+}
+.logonameimage{
+  /* position: fixed; */
+  /* padding: 0px; */
+  width: 250px; 
+  height: 60px; 
+  background-image: url('./logonameimage.svg');
+  background-repeat: no-repeat;
+  background-color: transparent;
+  color: white;
+  margin: 30px -10px 0px 10px;
   border: none;
 }
 .laptopplaceholderdiv{

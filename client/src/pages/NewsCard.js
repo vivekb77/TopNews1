@@ -46,7 +46,7 @@ export default function NewsCard(props) {
         <div className="card">
             {props.article.articleTitle && (props.article.teaserImageUrl || props.article.stuffImageUrlForBigImage) &&
                 <div className="card-image">
-                    <img className="card-image" src={`${props.article.teaserImageUrl || props.article.stuffImageUrlForBigImage}`} alt={props.article.articleTitle} loading="lazy"/>      
+                    <img className="card-image" src={`${props.article.teaserImageUrl || props.article.stuffImageUrlForBigImage}`} alt={props.article.articleTitle}/>      
                 </div>
             }
             
