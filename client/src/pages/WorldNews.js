@@ -54,8 +54,9 @@ const WorldNews = () => {
 	if (dateTimeOfLastPull.status === 'ok') {
 		setDisable(false);
 		//remove day and append "today"
-		let makedatereadable = dateTimeOfLastPull.dateTimeOfLastPull.slice(6,16);
-		setDateTimeOfLastPulltoshow(handle => "Today"+makedatereadable);
+		// let makedatereadable = dateTimeOfLastPull.dateTimeOfLastPull.slice(6,16);
+		// setDateTimeOfLastPulltoshow(handle => "Today"+makedatereadable);
+		setDateTimeOfLastPulltoshow(handle => dateTimeOfLastPull.dateTimeOfLastPull);
 	}
 	else if (dateTimeOfLastPull.status === 'error') {
 		setDisable(false);
