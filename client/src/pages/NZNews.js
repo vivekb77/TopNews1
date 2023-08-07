@@ -131,10 +131,10 @@ const NZNews = () => {
         setIsReadFastOn((prevToggle) => !prevToggle);
     };
 	const selectCountryNewsAU = () => {
-		history.push('/AU');
+		history.push('/australia-uk-news');
 	  };
 	const selectCountryNewsWorld = () => {
-	history.push('/World');
+	history.push('/world-news');
 	};  
 	
 	return (

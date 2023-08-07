@@ -117,10 +117,10 @@ const AUNews = () => {
         setIsReadFastOn((prevToggle) => !prevToggle);
     };
 	const selectCountryNewsNZ = () => {
-		history.push('/NZ');
+		history.push('/newzealand-news');
 	  };
 	const selectCountryNewsWorld = () => {
-	history.push('/World');
+	history.push('/world-news');
 	};  
 	
 	return (
