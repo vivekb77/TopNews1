@@ -25,7 +25,11 @@ code {
     monospace;
 }
 
-
+.page-404-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .tweetdiv{
   height: 100%;
