@@ -30,6 +30,11 @@ code {
   justify-content: center;
   align-items: center;
 }
+.bottommenuholder{
+  display: flex; 
+  justify-content: center;
+  margin-bottom: 15px;
+}
 
 .tweetdiv{
   height: 100%;
@@ -155,6 +160,8 @@ code {
   width: 80%;
   margin-bottom: 10px;
   margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 

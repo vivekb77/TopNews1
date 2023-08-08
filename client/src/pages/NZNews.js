@@ -146,7 +146,7 @@ const NZNews = () => {
 				{/* <h1 className='maintitle'>NEWS EXPRESS</h1> */}
 				</div>
 				
-				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`NEWS on the go. The fastest way to stay updated with current affairs.`}</span></h5>}
+				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`The fastest way to stay updated with current affairs.`}</span></h5>}
 				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`Last updated ${dateTimeOfLastPulltoshow}`}</span></h5>}
 				{errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 				{disable && <h6 class='articledateandsourcetop'>Curating NEWS just for you. Please wait..</h6>}
@@ -189,10 +189,12 @@ const NZNews = () => {
 			<MobilePlaceholderCard/>
 			</div>}
 
-			{infoMessage &&  <h4 className='mainsubtitleads'>The fastest way for you to stay updated with current affairs</h4>}
+			{/* {infoMessage &&  <h4 className='mainsubtitleads'>The fastest way for you to stay updated with current affairs</h4>} */}
 			{infoMessage &&  <h4 className='mainsubtitleads'>Selected latest and best news from multiple national sources (STUFF, THE POST, THE PRESS, WAIKATO TIMES, RNZ, NZ HERALD)</h4>}
-			{infoMessage &&  <h4 className='mainsubtitleads'><a href='mailto:dictionaryv2@gmail.com'>Contact</a></h4>}
-			
+			<div className='bottommenuholder'>
+			{infoMessage &&  <h4 className='mainsubtitleads'><a href='https://twitter.com/NewsExpressNZ'>Twitter</a></h4>}
+			{infoMessage &&  <h4 className='mainsubtitleads'><a href='mailto:newsexpressnz@gmail.com'>Contact</a></h4>}
+			</div>
 			<Helmet>
 			{/* {<title>NEWS EXPRESS || Latest NEWS on the go</title>}
 			<meta charSet="utf-8" /> */}

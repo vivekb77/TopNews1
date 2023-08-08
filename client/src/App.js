@@ -14,7 +14,7 @@ const App = () => {
 				<Route path="/newzealand-news" exact component={NZNews} />
 				<Route path="/australia-uk-news" exact component={AUNews} />
 				<Route path="/world-news" exact component={WorldNews} />
-				<Route component={NotFoundPage} />
+				<Route path="*" component={NotFoundPage} />
 			</BrowserRouter>
 		</div>
 	)
