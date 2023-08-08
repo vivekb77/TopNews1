@@ -5,6 +5,7 @@ import NZNews from './pages/NZNews'
 import AUNews from './pages/AUNews'
 import WorldNews from './pages/WorldNews'
 import NotFoundPage from './pages/404'
+import Terms from './pages/terms'
 
 const App = () => {
 	return (
@@ -15,6 +16,7 @@ const App = () => {
 					<Route path="/newzealand-news" exact component={NZNews} />
 					<Route path="/australia-uk-news" exact component={AUNews} />
 					<Route path="/world-news" exact component={WorldNews} />
+					<Route path="/terms" exact component={Terms} />
 					<Route component={NotFoundPage} />
 				</Switch>
 			</Router>

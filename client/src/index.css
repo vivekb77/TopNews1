@@ -35,6 +35,13 @@ code {
   justify-content: center;
   margin-bottom: 15px;
 }
+.terms-para{
+  margin-left: 30px;
+  margin-right: 20px;
+  text-align: left;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
 
 .tweetdiv{
   height: 100%;
@@ -611,5 +618,10 @@ a:link {
 .mobileplaceholderdiv{
   display: block;
   width: 100%;
+}
+.terms-para{
+  margin-left: 15px;
+  margin-right: 15px;
+  text-align: left;
 }
 }
