@@ -146,7 +146,7 @@ const NZNews = () => {
 				{/* <h1 className='maintitle'>NEWS EXPRESS</h1> */}
 				</div>
 				
-				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`The fastest way to stay updated with current affairs.`}</span></h5>}
+				{errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`The fastest way to stay updated with current affairs.`}</span></h5>}
 				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`Last updated ${dateTimeOfLastPulltoshow}`}</span></h5>}
 				{errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 				{disable && <h6 class='articledateandsourcetop'>Curating NEWS just for you. Please wait..</h6>}
@@ -194,6 +194,7 @@ const NZNews = () => {
 			<div className='bottommenuholder'>
 			{infoMessage &&  <h4 className='mainsubtitleads'><a href='https://twitter.com/NewsExpressNZ'>Twitter</a></h4>}
 			{infoMessage &&  <h4 className='mainsubtitleads'><a href='mailto:newsexpressnz@gmail.com'>Contact</a></h4>}
+			{infoMessage &&  <h4 className='mainsubtitleads'><a href='/terms'>Terms</a></h4>}
 			</div>
 			<Helmet>
 			{/* {<title>NEWS EXPRESS || Latest NEWS on the go</title>}
