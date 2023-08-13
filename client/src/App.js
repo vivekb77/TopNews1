@@ -6,6 +6,7 @@ import AUNews from './pages/AUNews'
 import WorldNews from './pages/WorldNews'
 import NotFoundPage from './pages/404'
 import Terms from './pages/terms'
+import Curate from './pages/Curate'
 
 const App = () => {
 	return (
@@ -17,6 +18,7 @@ const App = () => {
 					<Route path="/australia-uk-news" exact component={AUNews} />
 					<Route path="/world-news" exact component={WorldNews} />
 					<Route path="/terms" exact component={Terms} />
+					<Route path="/curate" exact component={Curate} />
 					<Route component={NotFoundPage} />
 				</Switch>
 			</Router>

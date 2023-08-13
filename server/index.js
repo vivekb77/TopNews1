@@ -13,6 +13,7 @@ const WorldNews = require('./GetNews/WorldNews')
 const AddNZNews = require('./AddNews/AddNZNews')
 const AddAUNews = require('./AddNews/AddAUNews')
 const AddWorldNews = require('./AddNews/AddWorldNews')
+const CurateNews = require('./Curate/Curate')
 
 const MONGO_URL = process.env.MONGO_URL
 const PORT = process.env.PORT || 1337
@@ -33,6 +34,7 @@ app.use('/api', AUNews)
 app.use('/api', AddAUNews)
 app.use('/api', WorldNews)
 app.use('/api', AddWorldNews)
+app.use('/api', CurateNews)
 
 app.listen(PORT, () => {
 	console.log(`Server started on ${PORT}`)
