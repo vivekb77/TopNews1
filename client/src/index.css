@@ -50,6 +50,17 @@ code {
   flex-direction: column;
   align-items: center;
 }
+.mainsubtitleads{
+  font-size: 0.7em;
+  text-align: center;
+  color: #003366;
+  font-weight: 600;
+  width: 80%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 .logindiv{
   width: 70%;
   height: 100%;
@@ -606,7 +617,7 @@ a:link {
 /* small screen */
 .card{
   justify-content: center;
-  width: 94%;
+  width: 97%;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -616,7 +627,7 @@ a:link {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 5px;
-  margin: 2px;
+  margin: 1px;
   box-shadow: 0 0 10px #ccc;
 }
 /* small screen */
@@ -628,8 +639,8 @@ a:link {
   margin-left: auto;
   margin-right: auto;
    /* change this along with .card-body width to adjust horizontal space */
-  width:95%; 
-  max-width: 95%;
+  width:97%; 
+  max-width: 97%;
 }
 /* small screen */
 .card-body{
@@ -639,8 +650,8 @@ a:link {
   margin-left: 20px;
   margin-right: 20px;
    /* change this along with .card-image width to adjust horizontal space */
-  width: 90%;
-  max-width: 90%;
+  width: 93%;
+  max-width: 93%;
 }
 /* small screen */
 .card-title{
@@ -679,7 +690,7 @@ a:link {
 }
   
   .header{
-    width: 94%;
+    width: 97%;
     height: 100%;
     background-color: #ffffff;
     border: 1px solid #ccc;
@@ -688,7 +699,7 @@ a:link {
     flex-direction: column;
     /* display: block; */
     text-align: center;
-    margin: 2px;
+    margin: 1px;
     box-shadow: 0 0 10px #ccc;
   }
   

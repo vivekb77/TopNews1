@@ -190,7 +190,7 @@ const NZNews = () => {
 			</div>}
 
 			{/* {infoMessage &&  <h4 className='mainsubtitleads'>The fastest way for you to stay updated with current affairs</h4>} */}
-			{infoMessage &&  <h4 className='mainsubtitleads'>Selected latest and best news from multiple national sources (STUFF, THE POST, THE PRESS, WAIKATO TIMES, RNZ, NZ HERALD)</h4>}
+			{/* {infoMessage &&  <h4 className='mainsubtitleads'>Selected latest and best news from multiple national sources (STUFF, THE POST, THE PRESS, WAIKATO TIMES, RNZ, NZ HERALD)</h4>} */}
 			<div className='bottommenuholder'>
 			{infoMessage &&  <h4 className='mainsubtitleads'><a href='https://twitter.com/NewsExpressNZ'>Twitter</a></h4>}
 			{infoMessage &&  <h4 className='mainsubtitleads'><a href='mailto:newsexpressnz@gmail.com'>Contact</a></h4>}
