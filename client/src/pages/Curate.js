@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import CurateCard from './CurateCard'
 import { Helmet } from 'react-helmet';
 import NewsProvidersCard from './NewsProvidersCard'
+import GoToTop from './GoToTop'
 require('dotenv').config();
 
 const baseURL = process.env.REACT_APP_BASE_URL
@@ -143,7 +144,7 @@ const Curate = () => {
 				onChange={setNews}
 				/>
 			})}
-
+			{!disable && <GoToTop />}	
 			<Helmet>
 				{/* {<title>{`Curate admin`}</title>} */}
 			</Helmet>
