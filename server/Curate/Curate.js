@@ -161,50 +161,76 @@ router.post('/deleteNews', async (req, res) => {
 
 })
 
-router.post('/login', async (req, res) => {
 
-	const user = await UserData.findOne({
-		email: req.body.email,
-	})
-	if (!user) {
-		console.log('no user')
-		return { status: 'error', error: 'Invalid Email' }
+//auto remove duplicate titled articles
+router.post('/cronremoveDuplicateTitles', async (req, res) => {
+    
+    const updatedDisplayOnFE = "false";
+    let removedDuplicateArticlesCount = 0;
+    let skippedDuplicateArticlesCount = 0;
 
-	}
-	const isPasswordValid = await bcrypt.compare(
-		req.body.password,
-		user.password
-	)
+    let DBsToCheckArticles = ["NZ","AU","WORLD"];
+    const timeZone = 'Pacific/Auckland';
+    const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the current date in the specified time zone
+    let ArticlesArray = [];
 
-	if (isPasswordValid) {
-		const token = jwt.sign(
-			{
-				name: user.name,
-				email: user.email,
-			},
-			'secret123'
-		)
+    for(i=0;i<DBsToCheckArticles.length;i++)
+    {
+        if(DBsToCheckArticles[i] == "NZ"){
+            console.log("in NZ")
+            ArticlesArray = await NewsData.find({
+                displayOnFE: true,
+                articlePublicationDate: {
+                    $gte: currentDate,
+                    $lt: moment(currentDate).add(1, 'day').toDate()
+                    }
+            })
+        }
+        if(DBsToCheckArticles[i] == "AU"){
+            console.log("in AU")
+            ArticlesArray = await NewsDataAU.find({
+                displayOnFE: true,
+                articlePublicationDate: {
+                    $gte: currentDate,
+                    $lt: moment(currentDate).add(1, 'day').toDate()
+                    }
+            })
+        }
+        if(DBsToCheckArticles[i] == "WORLD"){
+            console.log("in world")
+            ArticlesArray = await NewsDataWorld.find({
+                displayOnFE: true,
+                articlePublicationDate: {
+                    $gte: currentDate,
+                    $lt: moment(currentDate).add(1, 'day').toDate()
+                    }
+            })
+        }
+        //remove duplicates
+        const uniqueTitles = new Set();
+        const duplicateTitles = [];
 
-		return res.json({ status: 'ok', user: token })
-	} else {
-		return res.json({ status: 'error', user: false })
-	}
+        await ArticlesArray.forEach(article => {
+            if (uniqueTitles.has(article.articleTitle)) {
+            duplicateTitles.push(article._id); // Store the _id of the duplicate document
+            removedDuplicateArticlesCount++;
+            } else {
+            uniqueTitles.add(article.articleTitle);
+            skippedDuplicateArticlesCount++; 
+            }
+        });
+        
+        if (duplicateTitles.length > 0) {
+            try{
+                await NewsData.updateMany({ _id: { $in: duplicateTitles } }, { $set: { displayOnFE: updatedDisplayOnFE } }, { new: true });
+                return res.json({ status: 'ok', removedDuplicateArticlesCount:removedDuplicateArticlesCount, skippedDuplicateArticlesCount:skippedDuplicateArticlesCount });
+            }
+            catch(err){
+                return res.json({ status: 'error' , message : "Error in removing duplicates"})
+            }
+        }
+        
+    }
+
 })
-
-
 module.exports = router;
-
-// async function register(){
-//     try {
-//         const newPassword = await bcrypt.hash("", 10)
-//         await UserData.create({
-//             name: "Vivek",
-//             email: "newexpressnz@gmail.com",
-//             password: newPassword,
-//             CreatedDate: new Date()
-//         })
-//         console.log("User created")
-//         } catch (err) {
-//             console.log("err" + err)
-//         }
-// }
