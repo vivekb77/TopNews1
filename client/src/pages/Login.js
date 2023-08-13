@@ -38,7 +38,7 @@ function Login() {
 	}
 
 	return (
-		<div className='logindiv'>
+		<div className='tweetdiv'>
 			<h1>News Express Login</h1>
 			<form onSubmit={loginUser} className="formlogin">
 				<input 

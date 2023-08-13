@@ -169,7 +169,9 @@ router.post('/cronremoveDuplicateTitles', async (req, res) => {
     let removedDuplicateArticlesCount = 0;
     let skippedDuplicateArticlesCount = 0;
 
-    let DBsToCheckArticles = ["NZ","AU","WORLD"];
+    // let DBsToCheckArticles = ["NZ","AU","WORLD"];
+    let DBsToCheckArticles = ["NZ"]; //lets do for NZ now as cron job times out
+    
     const timeZone = 'Pacific/Auckland';
     const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the current date in the specified time zone
     let ArticlesArray = [];
