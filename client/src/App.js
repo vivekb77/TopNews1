@@ -7,6 +7,7 @@ import WorldNews from './pages/WorldNews'
 import NotFoundPage from './pages/404'
 import Terms from './pages/terms'
 import Curate from './pages/Curate'
+import Login from './pages/Login'
 
 const App = () => {
 	return (
@@ -19,6 +20,7 @@ const App = () => {
 					<Route path="/world-news" exact component={WorldNews} />
 					<Route path="/terms" exact component={Terms} />
 					<Route path="/curate" exact component={Curate} />
+					<Route path="/login" exact component={Login} />
 					<Route component={NotFoundPage} />
 				</Switch>
 			</Router>

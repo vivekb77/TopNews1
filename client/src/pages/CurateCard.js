@@ -6,9 +6,10 @@ export default function CurateCard(props) {
 
     const [isDeleted, setIsDeleted] = React.useState(props.article.displayOnFE);
     const [errmessage, setErrmessage] = React.useState("");
+    const [disable, setDisable] = React.useState(false);
 
     async function deleteNews(id,displayOnFE) {
-       
+        setDisable(true);
 		const req = await fetch(`${baseURL}/api/deleteNews`, {
 
 			method: 'POST',
@@ -27,9 +28,10 @@ export default function CurateCard(props) {
 		if (data.status === 'ok') {
             setIsDeleted(!isDeleted);
             // console.log(data.displayOnFE) this has updated status
-
+            setDisable(false);
         } else {
             setIsDeleted(isDeleted);
+            setDisable(false);
             setErrmessage(errormessage => "Some error occured");
         }
     }
@@ -93,8 +95,8 @@ export default function CurateCard(props) {
                 </a> }
             </div>  
         </div>
-            {isDeleted && <button className="showarticlebutton" onClick={() => deleteNews(props.article.dbid,props.article.displayOnFE)}>Hide Article</button>}
-            {!isDeleted && <button className="hidearticlebutton" onClick={() => deleteNews(props.article.dbid,props.article.displayOnFE)}>Show Article</button>}
+            {isDeleted && <button className="showarticlebutton" onClick={() => deleteNews(props.article.dbid,props.article.displayOnFE)} disabled={disable}>Hide Article</button>}
+            {!isDeleted && <button className="hidearticlebutton" onClick={() => deleteNews(props.article.dbid,props.article.displayOnFE)} disabled={disable}>Show Article</button>}
             {errmessage && <h4 className="errormessagesmall">{`${errmessage}`}</h4>}
        </div>
     );

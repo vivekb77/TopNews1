@@ -7,7 +7,7 @@ import NewsProvidersCard from './NewsProvidersCard'
 require('dotenv').config();
 
 const baseURL = process.env.REACT_APP_BASE_URL
-
+ 
 const Curate = () => {
 	const history = useHistory()
 	const [news, setNews] = useState([])
@@ -19,10 +19,22 @@ const Curate = () => {
 	const [buttondisable, setButtondisable] = React.useState(false);
 
 	useEffect(() => {
-		SetProviders();
-		const params = new URLSearchParams()
-		history.push({ search: params.toString() })
-	}, [history])
+		const token = localStorage.getItem('token')
+
+		if (token) {
+			const user = jwt.decode(token)
+			if (!user) {
+				console.log('no user')
+				localStorage.removeItem('token')
+				history.replace('/login')
+			} else {
+				SetProviders();
+			}
+		}else{
+			history.replace('/login')
+		}
+
+	},[])
 
 	async function SetProviders(event) {
 		setProviders(providers => []);
@@ -106,9 +118,9 @@ const Curate = () => {
 	return (
 		<div className='tweetdiv'>
 			<div className='header'>
-				<h1 className='maintitle'>NEWS EXPRESS - ADMIN</h1>
+				<h1 className='mainsubtitle'>NEWS EXPRESS - ADMIN</h1>
 				{errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
-				{selectedProvider && <h4 className="mainsubtitle">{`Curate NEWS for ${selectedProvider}`}</h4>}
+				{/* {selectedProvider && <h5 className="card-text">{`Curate NEWS for ${selectedProvider}`}</h5>} */}
 
 				<div className='listnewsprovidercardholder'>
 					{providers.map((providers, index,) => {

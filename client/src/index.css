@@ -43,6 +43,70 @@ code {
   margin-bottom: 10px;
 }
 
+.formlogin{
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logindiv{
+  width: 70%;
+  height: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 50px;
+  margin: 100px;
+  box-shadow: 0 0 10px #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.emaillogin{
+  width: 90%;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  align-self: center;
+  margin-top: 5px;
+}
+
+.buttonlogin {
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 15px;
+  letter-spacing: 4px;
+  position: relative;
+  background-color: #009dff;
+  border: none;
+  color: #fff;
+  padding: 0px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  transition-duration: 0.4s;
+  overflow: hidden;
+  box-shadow: 0 5px 15px #193047;
+  border-radius: 4px;
+  height: 50px;
+  width: 130px;
+
+}
+.buttonlogin:disabled {
+  background: #3e3e3e;
+  box-shadow: 0px 2px 10px 5px #1abc9c;
+  color: #000;
+}
+.buttonlogin:hover {
+  background: #fff;
+  box-shadow: 0px 2px 10px 5px #1abc9c;
+  color: #000;
+}
+
 .tweetdiv{
   height: 100%;
   border: 1px solid #ccc;
@@ -475,9 +539,14 @@ a:link {
 }
 
 .showarticlebutton:hover {
-  background: #f25757;
+  /* background: #f25757; */
   box-shadow: 0px 2px 10px 5px #1abc9c;
   color: #000;
+}
+.getnewstocuratebutton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #707070;
 }
 .hidearticlebutton {
   text-align: center;
@@ -503,9 +572,14 @@ a:link {
 }
 
 .hidearticlebutton:hover {
-  background: #00a738;
+  /* background: #00a738; */
   box-shadow: 0px 2px 10px 5px #1abc9c;
   color: #000;
+}
+.hidearticlebutton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #707070;
 }
 /* Show / hide BUTTON end */
 
