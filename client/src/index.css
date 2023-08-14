@@ -294,12 +294,12 @@ code {
 }
 /* big screen */
 .card-title{
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 700;
   margin-top: 10px;
   margin-bottom: 15px;
   color: #000000;
-  line-height: 26px;
+  line-height: 28px;
   letter-spacing: 0;
   font-family: sohne-var, "Helvetica Neue", Arial, sans-serif;
 }
@@ -670,7 +670,7 @@ a:link {
 }
 /* small screen */
 .card-title{
-  line-height: 22px;
+  line-height: 24px;
   letter-spacing: 0;
   margin-top: 10px;
   margin-bottom: 10px;
