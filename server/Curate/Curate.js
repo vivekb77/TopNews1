@@ -207,7 +207,7 @@ router.post('/cronremoveDuplicateTitles', async (req, res) => {
         }
         //remove duplicates
         // do for only top 100 articles
-        ArticlesArray = ArticlesArray.slice(0, 100);
+        ArticlesArray = ArticlesArray.slice(0, 50);
         const uniqueTitles = new Set();
         const duplicateTitles = [];
 

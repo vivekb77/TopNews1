@@ -301,7 +301,7 @@ code {
   color: #000000;
   line-height: 28px;
   letter-spacing: 0;
-  font-family: sohne-var, "Helvetica Neue", Arial, sans-serif;
+  /* font-family: sohne-var, "Helvetica Neue", Arial, sans-serif; */
 }
 /* big screen */
 .textofcountrybuttontext{
@@ -670,12 +670,12 @@ a:link {
 }
 /* small screen */
 .card-title{
-  line-height: 24px;
+  line-height: 23px;
   letter-spacing: 0;
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 22px;
-  font-weight: 800;
+  font-weight: 750;
   color: #000000;
   
 }
