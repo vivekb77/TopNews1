@@ -3,9 +3,13 @@ import jwt from 'jsonwebtoken'
 import { useHistory } from 'react-router-dom'
 import CurateCard from './CurateCard'
 import { Helmet } from 'react-helmet';
+import GA4React from "ga-4-react";
 import NewsProvidersCard from './NewsProvidersCard'
 import GoToTop from './GoToTop'
 require('dotenv').config();
+
+const ga4react = new GA4React("G-4YQR5FRQQL");
+ga4react.initialize().then().catch()
 
 const baseURL = process.env.REACT_APP_BASE_URL
  
@@ -151,7 +155,7 @@ const Curate = () => {
 			})}
 			{!disable && <GoToTop />}	
 			<Helmet>
-				{/* {<title>{`Curate admin`}</title>} */}
+			{<title>NEWS EXPRESS | NEWS on the go | The fastest way to stay updated with latest NZ NEWS | Curate</title>}
 			</Helmet>
 
 		</div>

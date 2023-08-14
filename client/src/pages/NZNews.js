@@ -197,8 +197,7 @@ const NZNews = () => {
 			{infoMessage &&  <h4 className='mainsubtitleads'><a href='/terms'>Terms</a></h4>}
 			</div>
 			<Helmet>
-			{/* {<title>NEWS EXPRESS || Latest NEWS on the go</title>}
-			<meta charSet="utf-8" /> */}
+			{<title>NEWS EXPRESS | NEWS on the go | The fastest way to stay updated with latest NZ NEWS | NZ News</title>}
 			</Helmet>
 
 		</div>
