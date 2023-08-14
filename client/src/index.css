@@ -285,17 +285,16 @@ code {
 /* //big screen */
 .card-body{
   display: flex;
-  align-items: left;
   margin-top: 10px;
   margin-bottom: auto;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 20px;
    /* change this along with .card-image width to adjust horizontal space */
   width: 90%;
 }
 /* big screen */
 .card-title{
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   margin-top: 10px;
   margin-bottom: 15px;
@@ -307,7 +306,7 @@ code {
 /* big screen */
 .textofcountrybuttontext{
   font-size: 1.0rem;
-  font-weight: 550;
+  font-weight: 700;
   color: #000000;
 }
 
@@ -331,7 +330,7 @@ code {
 }
 .articledateandsource{
   font-size: 0.8rem;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   color: #808080
 }
 
@@ -675,7 +674,7 @@ a:link {
   letter-spacing: 0;
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #242424;
   
