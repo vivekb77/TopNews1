@@ -139,14 +139,14 @@ const WorldNews = () => {
 				
 				<div className='countrynewscardholder'>
 					<div  className={'countrynewscard'} onClick={(selectCountryNewsNZ)}>
-					{  <p className="card-text">NZ<span style={{color: `#808080`}}></span></p>}
+					{  <p className="textofcountrybuttontext">NZ<span style={{color: `#808080`}}></span></p>}
 					</div>
 					
 					<div  className={'countrynewscard'} onClick={(selectCountryNewsAU)}>
-					{  <p className="card-text">AU & UK</p>}
+					{  <p className="textofcountrybuttontext">AU & UK</p>}
 					</div>
 					<div  className={'countrynewscardselected'} >
-					{  <p className="card-text">WORLD</p>}
+					{  <p className="textofcountrybuttontext">WORLD</p>}
 					</div>
 				</div>
 

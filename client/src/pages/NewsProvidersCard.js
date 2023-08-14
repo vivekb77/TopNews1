@@ -11,7 +11,7 @@ export default function NewsProvidersCard(props) {
 
     return (
         <div id={props.providers} className={!disable ? 'providerlistcard' : 'providerlistcardselected'} onClick={() => { SelectedProvider(props.providers) }} >
-            {props.providers && <p className="card-text"><span style={{ color: `#808080` }}>  </span>{props.providers}</p>}
+            {props.providers && <p className="textofcountrybuttontext"><span style={{ color: `#808080` }}>  </span>{props.providers}</p>}
         </div>
     );
 }

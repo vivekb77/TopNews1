@@ -119,7 +119,12 @@ const Curate = () => {
 	return (
 		<div className='tweetdiv'>
 			<div className='header'>
-				<h1 className='mainsubtitle'>NEWS EXPRESS - ADMIN</h1>
+
+				<div className='logoandtitle'>
+					<div className="logoimage"></div>    
+					<div className="logonameimage"></div>    
+				</div>
+				{/* <h1 className='mainsubtitle'>ADMIN</h1> */}
 				{errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 				{/* {selectedProvider && <h5 className="card-text">{`Curate NEWS for ${selectedProvider}`}</h5>} */}
 

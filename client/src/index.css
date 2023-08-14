@@ -265,7 +265,7 @@ code {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 2px;
-  margin: 2px;
+  margin: 1px;
   box-shadow: 0 0 10px #ccc;
 }
 /* //big screen */
@@ -294,24 +294,36 @@ code {
 }
 /* big screen */
 .card-title{
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
   margin-top: 10px;
-  margin-bottom: 30px;
-  color: #000000;
+  margin-bottom: 15px;
+  color: #242424;
+  line-height: 26px;
+  letter-spacing: 0;
 }
 /* big screen */
-.card-text{
+.textofcountrybuttontext{
   font-size: 1.0rem;
   font-weight: 550;
   color: #000000;
 }
-.card-text-readfast{
-  font-size: 1.0rem;
-  font-weight: 350;
-  color: #000000;
-  margin-top: 10px;
+
+.card-text{
+  margin-top: 0px;
   margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #353535;
+}
+.card-text-readfast{
+  margin-top: 0px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #353535;
 }
 .articledateandsource{
   font-size: 0.8rem;
@@ -487,7 +499,7 @@ a:link {
   box-shadow: 0 5px 15px #193047;
   border-radius: 4px;
   height: 50px;
-  width: 130px;
+  width: 150px;
 }
 
 .getnewstocuratebutton:hover {
@@ -655,11 +667,14 @@ a:link {
 }
 /* small screen */
 .card-title{
+  line-height: 28px;
+  letter-spacing: 0;
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 1.4rem;
   font-weight: 700;
-  color: #000000;
+  color: #242424;
+  
 }
 /* small screen */
 .card-text{
@@ -740,11 +755,11 @@ a:link {
 
   .countrynewscard{
     height: 0.1em;  
-    width: 60px;
+    width: 70px;
   }
   .countrynewscardselected{
     height: 0.1em;  
-    width: 60px;
+    width: 70px;
   }
 
 .scroll-to-top-button {
@@ -818,7 +833,7 @@ a:link {
   width: 94%;
 }
 .showarticlebutton {
-  width: 94%;
+  width: 100%;
 }
 .logindiv{
   width: 99%;
