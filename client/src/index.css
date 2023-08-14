@@ -164,10 +164,11 @@ code {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 2px;
+  padding-top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 2px;
+  margin: 0px;
   box-shadow: 0 0 10px #ccc;
 }
 
@@ -288,7 +289,7 @@ code {
   margin-top: 10px;
   margin-bottom: auto;
   margin-left: auto;
-  margin-right: 30px;
+  margin-right: auto;
    /* change this along with .card-image width to adjust horizontal space */
   width: 90%;
 }
@@ -301,6 +302,7 @@ code {
   color: #242424;
   line-height: 26px;
   letter-spacing: 0;
+  font-family: sohne-var, "Helvetica Neue", Arial, sans-serif;
 }
 /* big screen */
 .textofcountrybuttontext{
@@ -312,22 +314,24 @@ code {
 .card-text{
   margin-top: 0px;
   margin-bottom: 20px;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 20px;
-  font-weight: 400;
-  color: #353535;
+  font-weight: 500;
+  color: #2b2b2b;
+  font-family: sohne-var, "Helvetica Neue", Arial, sans-serif;
 }
 .card-text-readfast{
   margin-top: 0px;
   margin-bottom: 20px;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 20px;
   font-weight: 400;
-  color: #353535;
+  color: #2b2b2b;
+  font-family: sohne-var, "Helvetica Neue", Arial, sans-serif;
 }
 .articledateandsource{
   font-size: 0.8rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: #808080
 }
 
@@ -659,8 +663,8 @@ a:link {
   align-items: left;
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left:auto;
+  margin-right: auto;
    /* change this along with .card-image width to adjust horizontal space */
   width: 93%;
   max-width: 93%;
@@ -679,13 +683,13 @@ a:link {
 /* small screen */
 .card-text{
   font-size: 0.9rem;
-  font-weight: 600;
-  color: #000000;
+  font-weight: 500;
+  color: #2b2b2b;
 }
 .card-text-readfast{
   font-size: 0.9rem;
   font-weight: 400;
-  color: #000000;
+  color: #2b2b2b;
   margin-top: 10px;
   margin-bottom: 20px;
 }
@@ -700,7 +704,7 @@ a:link {
 }
 .articledateandsource{
   font-size: 0.6rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: #808080
 }
   
@@ -711,10 +715,11 @@ a:link {
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 5px;
+    padding-top: 0;
     flex-direction: column;
     /* display: block; */
     text-align: center;
-    margin: 1px;
+    margin: 0px;
     box-shadow: 0 0 10px #ccc;
   }
   
@@ -830,7 +835,7 @@ a:link {
   text-align: left;
 }
 .hidearticlebutton {
-  width: 94%;
+  width: 100%;
 }
 .showarticlebutton {
   width: 100%;
