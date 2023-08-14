@@ -674,18 +674,20 @@ a:link {
   letter-spacing: 0;
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
   color: #000000;
   
 }
 /* small screen */
 .card-text{
+  margin-top: 20px;
   font-size: 16px;
   font-weight: 500;
   color: #494949;
 }
 .card-text-readfast{
+  margin-top: 20px;
   font-size: 16px;
   font-weight: 340;
   color: #494949;
