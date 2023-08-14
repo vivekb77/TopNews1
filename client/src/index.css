@@ -298,7 +298,7 @@ code {
   font-weight: 700;
   margin-top: 10px;
   margin-bottom: 15px;
-  color: #242424;
+  color: #000000;
   line-height: 26px;
   letter-spacing: 0;
   font-family: sohne-var, "Helvetica Neue", Arial, sans-serif;
@@ -316,7 +316,7 @@ code {
   font-size: 15px;
   line-height: 20px;
   font-weight: 500;
-  color: #2b2b2b;
+  color: #494949;
   font-family: sohne-var, "Helvetica Neue", Arial, sans-serif;
 }
 .card-text-readfast{
@@ -670,20 +670,20 @@ a:link {
 }
 /* small screen */
 .card-title{
-  line-height: 28px;
+  line-height: 22px;
   letter-spacing: 0;
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #242424;
+  font-size: 20px;
+  font-weight: 800;
+  color: #000000;
   
 }
 /* small screen */
 .card-text{
   font-size: 0.9rem;
   font-weight: 500;
-  color: #2b2b2b;
+  color: #494949;
 }
 .card-text-readfast{
   font-size: 0.9rem;
