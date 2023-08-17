@@ -206,8 +206,6 @@ router.post('/cronremoveDuplicateTitles', async (req, res) => {
             })
         }
         //remove duplicates
-        // do for only top 100 articles
-        ArticlesArray = ArticlesArray.slice(0, 50);
         const uniqueTitles = new Set();
         const duplicateTitles = [];
 
@@ -224,12 +222,12 @@ router.post('/cronremoveDuplicateTitles', async (req, res) => {
         if (duplicateTitles.length > 0) {
             try{
                 await NewsData.updateMany({ _id: { $in: duplicateTitles } }, { $set: { displayOnFE: updatedDisplayOnFE } }, { new: true });
-                return res.json({ status: 'ok', removedDuplicateArticlesCount:removedDuplicateArticlesCount, skippedDuplicateArticlesCount:skippedDuplicateArticlesCount });
             }
             catch(err){
                 return res.json({ status: 'error' , message : "Error in removing duplicates"})
             }
         }
+        return res.json({ status: 'ok', removedDuplicateArticlesCount:removedDuplicateArticlesCount, skippedDuplicateArticlesCount:skippedDuplicateArticlesCount });
         
     }
 
