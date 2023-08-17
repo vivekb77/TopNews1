@@ -19,7 +19,7 @@ export default function CurateCard(props) {
 			},
 			body: JSON.stringify({
 				dbid: id,
-                displayOnFE :displayOnFE,
+                displayOnFE :isDeleted,
                 whichcontinent : props.whichcontinent,
 			}),
 
@@ -27,7 +27,6 @@ export default function CurateCard(props) {
         const data = await req.json()
 		if (data.status === 'ok') {
             setIsDeleted(!isDeleted);
-            // console.log(data.displayOnFE) this has updated status
             setDisable(false);
         } else {
             setIsDeleted(isDeleted);
@@ -95,8 +94,8 @@ export default function CurateCard(props) {
                 </a> }
             </div>  
         </div>
-            {isDeleted && <button className="showarticlebutton" onClick={() => deleteNews(props.article.dbid,props.article.displayOnFE)} disabled={disable}>Hide Article</button>}
-            {!isDeleted && <button className="hidearticlebutton" onClick={() => deleteNews(props.article.dbid,props.article.displayOnFE)} disabled={disable}>Show Article</button>}
+            {isDeleted && <button className="showarticlebutton" onClick={() => deleteNews(props.article.dbid)} disabled={disable}>Hide Article</button>}
+            {!isDeleted && <button className="hidearticlebutton" onClick={() => deleteNews(props.article.dbid)} disabled={disable}>Show Article</button>}
             {errmessage && <h4 className="errormessagesmall">{`${errmessage}`}</h4>}
        </div>
     );

@@ -134,7 +134,7 @@ router.post('/deleteNews', async (req, res) => {
     let dbid = req.body.dbid.trim();
     let displayOnFE = req.body.displayOnFE;
     let whichcontinent = req.body.whichcontinent;
-    
+
     try {
         const updatedDisplayOnFE = !displayOnFE;
         let updatedDoc = "";
@@ -169,8 +169,7 @@ router.post('/cronremoveDuplicateTitles', async (req, res) => {
     let removedDuplicateArticlesCount = 0;
     let skippedDuplicateArticlesCount = 0;
 
-    // let DBsToCheckArticles = ["NZ","AU","WORLD"];
-    let DBsToCheckArticles = ["NZ"]; //lets do for NZ now as cron job times out
+    let DBsToCheckArticles = ["NZ","AU","WORLD"];
     
     const timeZone = 'Pacific/Auckland';
     const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the current date in the specified time zone
@@ -227,9 +226,7 @@ router.post('/cronremoveDuplicateTitles', async (req, res) => {
                 return res.json({ status: 'error' , message : "Error in removing duplicates"})
             }
         }
-        return res.json({ status: 'ok', removedDuplicateArticlesCount:removedDuplicateArticlesCount, skippedDuplicateArticlesCount:skippedDuplicateArticlesCount });
-        
     }
-
+    return res.json({ status: 'ok', removedDuplicateArticlesCount:removedDuplicateArticlesCount, skippedDuplicateArticlesCount:skippedDuplicateArticlesCount });
 })
 module.exports = router;
