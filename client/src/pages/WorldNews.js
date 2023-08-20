@@ -132,10 +132,9 @@ const WorldNews = () => {
 				{/* <h1 className='maintitle'>NEWS EXPRESS</h1> */}
 				</div>
 				
-				{!errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`The fastest way to stay updated with current affairs.`}</span></h5>}
 				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`Last updated ${dateTimeOfLastPulltoshow}`}</span></h5>}
 				{errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
-				{disable && <h6 class='articledateandsourcetop'>Curating NEWS just for you. Please wait..</h6>}
+				{disable && <div class="articledateandsourcetoploading-placeholder"></div>}
 				
 				<div className='countrynewscardholder'>
 					<div  className={'countrynewscard'} onClick={(selectCountryNewsNZ)}>
@@ -175,7 +174,6 @@ const WorldNews = () => {
 			<MobilePlaceholderCard/>
 			</div>}
 
-			{/* {infoMessage &&  <h4 className='mainsubtitleads'>The fastest way for you to stay updated with current affairs</h4>} */}
 			<div className='bottommenuholder'>
 			{infoMessage &&  <h4 className='mainsubtitleads'><a href='https://twitter.com/NewsExpressNZ'>Twitter</a></h4>}
 			{infoMessage &&  <h4 className='mainsubtitleads'><a href='mailto:newsexpressnz@gmail.com'>Contact</a></h4>}

@@ -329,7 +329,7 @@ code {
   margin-bottom: 20px;
   font-size: 14px;
   line-height: 20px;
-  font-weight: 400;
+  font-weight: 500;
   color: #494949;
   font-family: sohne-var, "Helvetica Neue", Arial, sans-serif;
 }
@@ -434,6 +434,26 @@ a:link {
   margin-left: 20px;
   margin-right: 20px;
   color: #808080
+}
+
+.articledateandsourcetoploading-placeholder {
+  margin-bottom: 0px;
+  margin-top: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 30%;
+  height: 15px;
+  background-color: #f0f0f0; 
+  animation: loadingAnimation 1s infinite alternate;
+}
+
+@keyframes loadingAnimation {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* curate */
@@ -694,7 +714,7 @@ a:link {
 .card-text-readfast{
   margin-top: 20px;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
   color: #494949;
 }
 .card-text-readfast > b {
@@ -852,5 +872,8 @@ a:link {
 }
 .formlogin{
   width: 90%;
+}
+.articledateandsourcetoploading-placeholder {
+  width: 60%;
 }
 }
