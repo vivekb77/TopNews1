@@ -55,7 +55,7 @@ router.post('/GetNotNews', async (req, res) => {
         }
         //sort the array by date
         // NotNewsArray.sort((a, b) => (a.articlePublicationDate > b.articlePublicationDate) ? -1 : 1)
-        NotNewsArray = NotNewsArray.slice(0, 20);
+        NotNewsArray = NotNewsArray.slice(0, 25);
 
         for (let f = 0; f < NotNewsArray.length; f++) {
             const inputDate = new Date(NotNewsArray[f].articlePublicationDate);
