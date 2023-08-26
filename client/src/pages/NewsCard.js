@@ -1,5 +1,6 @@
 import React from "react";
 import ReactHtmlParser from 'react-html-parser'; 
+const baseURL = process.env.REACT_APP_BASE_URL
 
 export default function NewsCard(props) {
     let readfast
@@ -42,6 +43,27 @@ export default function NewsCard(props) {
     readfast = boldWords(props.article.articleDescription.split(" "));
     }
 
+    async function addClickCount(id,whichcontinent) {
+		const req = await fetch(`${baseURL}/api/addClickCount`, {
+
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				// 'x-access-token': localStorage.getItem('token'),
+			},
+			body: JSON.stringify({
+				dbid: id,
+                whichcontinent : whichcontinent,
+			}),
+
+		})
+        // const data = await req.json()
+		// if (data.status === 'ok') {
+        //    console.log(data.clickCount)
+        // } else {
+        //     console.log(data.error)
+        // }
+    }
     return (
         <div className="card">
             {props.article.articleTitle && (props.article.teaserImageUrl || props.article.stuffImageUrlForBigImage) &&
@@ -51,7 +73,7 @@ export default function NewsCard(props) {
             }
             
             <div className="card-body">
-                {props.article.articleTitle && <a href={`${props.article.articleUrl}`} target="_blank" rel="noreferrer noopener">
+                {props.article.articleTitle && <a href={`${props.article.articleUrl}`} target="_blank" rel="noreferrer noopener" onClick={() => addClickCount(props.article.dbid,props.article.whichcontinent)}>
                 {props.article.articleTitle && <h5 className="card-title"><span style={{color: `#808080`}}></span>{props.article.articleTitle}</h5>}
                 {!props.isReadFastOn && props.article.articleTitle && props.article.articleDescription && <h5 className="card-text">{props.article.articleDescription}</h5>}
                 {props.isReadFastOn && props.article.articleTitle && props.article.articleDescription && <h5 className="card-text-readfast">{ReactHtmlParser (readfast)}</h5>}

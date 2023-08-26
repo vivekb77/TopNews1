@@ -43,7 +43,7 @@ const Curate = () => {
 
 	async function SetProviders(event) {
 		setProviders(providers => []);
-		setProviders(prevArray => [...prevArray, 'NZ', 'AU', 'WORLD'])
+		setProviders(prevArray => [...prevArray, 'NZ', 'AU', 'WORLD','!NEWS'])
 	}
 
 
@@ -99,6 +99,7 @@ const Curate = () => {
 					articleGuid: data.news[i].articleGuid,
 					articlePublicationDate: data.news[i].articleAuthor, //author field has formatted date so using it
 					articleImportedToTopNewsDate: data.news[i].articleImportedToTopNewsDate,
+					clickCount:data.news[i].clickCount
 					
 				}
 				setNews(prevArray => [...prevArray, obj])

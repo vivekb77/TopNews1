@@ -4,6 +4,7 @@ const moment = require('moment-timezone');
 const NewsData = require('../models/nz_news.model')
 const NewsDataAU = require('../models/au_news.model')
 const NewsDataWorld = require('../models/world_news.model')
+const NotNewsModel = require('../models/not_news.model')
 const UserData = require('../models/user.model')
 const axios = require('axios');
 const jwt = require('jsonwebtoken')
@@ -101,6 +102,32 @@ router.post('/curateNews', async (req, res) => {
     }
     }
 
+     //NOT NEWS
+     if (providerToPullNews === "!NEWS") {
+        NewsToday = await NotNewsModel.find({
+            // displayOnFE: true,
+            articlePublicationDate: {
+                $gte: currentDate,
+                $lt: moment(currentDate).add(1, 'day').toDate()
+            }
+    
+        })
+    
+        //if total news articles today are less than 20, pull yesterdays articles and add
+        if (NewsToday.length < 100) {
+    
+            NewsYesterday = await NotNewsModel.find({
+                //    displayOnFE: true,
+                articlePublicationDate: {
+                    $lt: moment(currentDate).add(0, 'day').toDate(),
+                }
+    
+            })
+            for (let z = 0; z < NewsYesterday.length; z++) {
+                NewsToday.push(NewsYesterday[z]);
+            }
+        }
+        }
 
     if (NewsToday.length > 0) {
         //sort the array by date
@@ -148,12 +175,47 @@ router.post('/deleteNews', async (req, res) => {
         if(whichcontinent === "WORLD"){
             updatedDoc = await NewsDataWorld.findByIdAndUpdate(dbid, { $set: { displayOnFE: updatedDisplayOnFE } }, { new: true });
         }
+        if(whichcontinent === "!NEWS"){
+            updatedDoc = await NotNewsModel.findByIdAndUpdate(dbid, { $set: { displayOnFE: updatedDisplayOnFE } }, { new: true });
+        }
        
         if (!updatedDoc) {
             return res.json({ status: 'error', message: 'Article not found' });
         }
 
         return res.json({ status: 'ok', displayOnFE: updatedDoc.displayOnFE });
+    } catch (error) {
+        console.log(error)
+        return res.json({ status: 'error', message: 'An error occurred' });
+    }
+
+})
+router.post('/addClickCount', async (req, res) => {
+
+    let dbid = req.body.dbid.trim();
+    let whichcontinent = req.body.whichcontinent;
+
+    try {
+        let updatedDoc = "";
+
+        if(whichcontinent === "NZ"){
+            updatedDoc = await NewsData.findByIdAndUpdate(dbid, { $inc: { clickCount: 1 } }, { new: true });
+        }
+        if(whichcontinent === "AU"){
+            updatedDoc = await NewsDataAU.findByIdAndUpdate(dbid, { $inc: { clickCount: 1 } }, { new: true });
+        }
+        if(whichcontinent === "WORLD"){
+            updatedDoc = await NewsDataWorld.findByIdAndUpdate(dbid, { $inc: { clickCount: 1 } }, { new: true });
+        }
+        if(whichcontinent === "NOTNEWS"){
+            updatedDoc = await NotNewsModel.findByIdAndUpdate(dbid, { $inc: { clickCount: 1 } }, { new: true });
+        }
+       
+        if (!updatedDoc) {
+            return res.json({ status: 'error', message: 'Article not found' });
+        }
+
+        return res.json({ status: 'ok', clickCount: updatedDoc.clickCount });
     } catch (error) {
         console.log(error)
         return res.json({ status: 'error', message: 'An error occurred' });

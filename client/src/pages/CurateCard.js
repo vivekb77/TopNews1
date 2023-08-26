@@ -8,7 +8,7 @@ export default function CurateCard(props) {
     const [errmessage, setErrmessage] = React.useState("");
     const [disable, setDisable] = React.useState(false);
 
-    async function deleteNews(id,displayOnFE) {
+    async function deleteNews(id) {
         setDisable(true);
 		const req = await fetch(`${baseURL}/api/deleteNews`, {
 
@@ -90,7 +90,8 @@ export default function CurateCard(props) {
                 {props.article.articleTitle && <h5 className="card-title"><span style={{color: `#808080`}}></span>{props.article.articleTitle}</h5>}
                 {!props.isReadFastOn && props.article.articleTitle && props.article.articleDescription && <h5 className="card-text">{props.article.articleDescription}</h5>}
                 {props.isReadFastOn && props.article.articleTitle && props.article.articleDescription && <h5 className="card-text-readfast">{ReactHtmlParser (readfast)}</h5>}
-                {props.article.articleTitle && props.article.articleSource && <h5 className="articledateandsource"><span style={{color: `#808080`}}> </span>{`${props.article.articleSource}`}  ||   {`${props.article.articlePublicationDate}`}</h5>}         
+                {props.article.articleTitle && props.article.clickCount && <h5 className="articledateandsource"><span style={{color: `#808080`}}> </span>{`${props.article.articleSource}`}  ||   {`${props.article.articlePublicationDate}`} || {`Clicks ${props.article.clickCount}`}</h5>}         
+                {props.article.articleTitle && !props.article.clickCount && <h5 className="articledateandsource"><span style={{color: `#808080`}}> </span>{`${props.article.articleSource}`}  ||   {`${props.article.articlePublicationDate}`} || {`Clicks 0`}</h5>}         
                 </a> }
             </div>  
         </div>

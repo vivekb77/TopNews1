@@ -13,6 +13,7 @@ const NewsDataWorld = new mongoose.Schema(
         articleGuid: { type: String, required: true, unique: true },
 		articlePublicationDate: { type: Date, required: true },
 		articleImportedToTopNewsDate: { type: Date, required: true },
+		clickCount: { type: Number, required: false },
 	},
 	{ collection: 'WorldNewsData' }
 )

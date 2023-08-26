@@ -118,6 +118,7 @@ const NZNews = () => {
 					articleGuid: data.tweets[i].articleGuid,
 					articlePublicationDate: data.tweets[i].articleAuthor, //author field has formatted date so using it
 					articleImportedToTopNewsDate: data.tweets[i].articleImportedToTopNewsDate,
+					whichcontinent : "NZ"
 
 				}
 				newsArray.push(obj);
@@ -153,7 +154,7 @@ const NZNews = () => {
 		const data = await req.json()
 		if (data.status === 'ok') {
 			const notNewsArray = [];
-			for (let i = 0; i < 20; i++) {
+			for (let i = 0; i < data.notnews.length; i++) {
 
 				const obj = {
 					dbid: data.notnews[i]._id,
@@ -163,6 +164,7 @@ const NZNews = () => {
 					articleGuid: data.notnews[i].articleGuid,
 					articlePublicationDate: data.notnews[i].articleAuthor, //author field has formatted date so using it
 					articleImportedToTopNewsDate: data.notnews[i].articleImportedToTopNewsDate,
+					whichcontinent : "NOTNEWS"
 				}
 				notNewsArray.push(obj);
 			}
@@ -228,7 +230,9 @@ const NZNews = () => {
 
 			{news.map((article) => {
 				return <NewsCard
-					article={article} isReadFastOn={isReadFastOn} key={(Math.random() + 1).toString(36).substring(7)}
+					article={article} 
+					isReadFastOn={isReadFastOn} 
+					key={(Math.random() + 1).toString(36).substring(7)}
 					onChange={setNews}
 				/>
 			})}

@@ -98,6 +98,7 @@ const WorldNews = () => {
 					articleGuid: data.tweets[i].articleGuid,
 					articlePublicationDate: data.tweets[i].articleAuthor, //author field has formatted date so using it
 					articleImportedToTopNewsDate: data.tweets[i].articleImportedToTopNewsDate,
+					whichcontinent : "WORLD"
 					
 				}
 				setTweets(prevArray => [...prevArray, obj])
@@ -155,7 +156,9 @@ const WorldNews = () => {
 
 			{tweets.map((article) => {
 				return <NewsCard 
-				article={article} isReadFastOn={isReadFastOn}  key={(Math.random() + 1).toString(36).substring(7)}
+				article={article} 
+				isReadFastOn={isReadFastOn}  
+				key={(Math.random() + 1).toString(36).substring(7)}
 				onChange={setTweets}
 				/>
 			})}
