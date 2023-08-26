@@ -15,94 +15,49 @@ let errorAddingArticlesCount;
 
 
 router.post('/cronnotnewsthespinoff', async (req, res) => {
-	console.log("Cron job via API triggered for NOT NEWS SPINOFF")
-	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronSpinOff();
-	console.log("Added Articles Count " + addedArticlesCount);
-	console.log("Skipped Articles Count " + skippedArticlesCount);
-	console.log("Error adding Articles Count " + errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
-	AddDateTimeOfLastPull(new Date().toLocaleString());
+	await fetchDataFromRSS('https://thespinoff.co.nz/feed', "THESPINOFF");
+	// AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News SpinOFF. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
 router.post('/cronnotnewsgreenpeace', async (req, res) => {
-	console.log("Cron job via API triggered for NOT NEWS Greenpeace")
-	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronGreenPeace();
-	console.log("Added Articles Count " + addedArticlesCount);
-	console.log("Skipped Articles Count " + skippedArticlesCount);
-	console.log("Error adding Articles Count " + errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
-	AddDateTimeOfLastPull(new Date().toLocaleString());
+	await fetchDataFromRSS('https://www.greenpeace.org/aotearoa/feed', "GREENPEACE");
+	// AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News Greenpeace. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
 router.post('/cronnotnewsysb', async (req, res) => {
-	console.log("Cron job via API triggered for NOT NEWS YSB")
-	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronYSB();
-	console.log("Added Articles Count " + addedArticlesCount);
-	console.log("Skipped Articles Count " + skippedArticlesCount);
-	console.log("Error adding Articles Count " + errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
-	AddDateTimeOfLastPull(new Date().toLocaleString());
+	await fetchDataFromRSS('https://ysb.co.nz/feed', "YSB");
+	// AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News YSB. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
 router.post('/cronnotnewsdailyblog', async (req, res) => {
-	console.log("Cron job via API triggered for NOT NEWS daily blog")
-	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronDailyBlog();
-	console.log("Added Articles Count " + addedArticlesCount);
-	console.log("Skipped Articles Count " + skippedArticlesCount);
-	console.log("Error adding Articles Count " + errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
-	AddDateTimeOfLastPull(new Date().toLocaleString());
+	await fetchDataFromRSS('https://thedailyblog.co.nz/feed', "DAILYBLOG");
+	// AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News daily blog. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
 router.post('/cronnotnewskiwiblog', async (req, res) => {
-	console.log("Cron job via API triggered for NOT NEWS kiwi blog")
-	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronKiwiBlog();
-	console.log("Added Articles Count " + addedArticlesCount);
-	console.log("Skipped Articles Count " + skippedArticlesCount);
-	console.log("Error adding Articles Count " + errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	await fetchDataFromRSS('https://www.kiwiblog.co.nz/feed', "KIWIBLOG");
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News kiwi blog. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
-async function runCronSpinOff() {
-	await fetchDataFromRSS('https://thespinoff.co.nz/feed', "THESPINOFF");
-}
-async function runCronGreenPeace() {
-	await fetchDataFromRSS('https://www.greenpeace.org/aotearoa/feed', "GREENPEACE");
-}
-async function runCronYSB() {
-	await fetchDataFromRSS('https://ysb.co.nz/feed', "YSB");
-}
-async function runCronDailyBlog() {
-	await fetchDataFromRSS('https://thedailyblog.co.nz/feed', "DAILYBLOG");
-}
-async function runCronKiwiBlog() {
-	await fetchDataFromRSS('https://www.kiwiblog.co.nz/feed', "KIWIBLOG");
-}
 
 async function fetchDataFromRSS(sourceUrl, articleSource) {
 	try {
