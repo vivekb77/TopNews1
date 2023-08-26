@@ -9,12 +9,16 @@ require('dotenv').config();
 const NZNews = require('./GetNews/NZNews')
 const AUNews = require('./GetNews/AUNews')
 const WorldNews = require('./GetNews/WorldNews')
+const NotNews = require('./GetNews/NotNews')
 
 const AddNZNews = require('./AddNews/AddNZNews')
 const AddAUNews = require('./AddNews/AddAUNews')
 const AddWorldNews = require('./AddNews/AddWorldNews')
+const AddNotNews = require('./AddNews/AddNotNews')
+
 const CurateNews = require('./Curate/Curate')
 const Login = require('./Curate/Login')
+
 
 const MONGO_URL = process.env.MONGO_URL
 const PORT = process.env.PORT || 1337
@@ -37,6 +41,8 @@ app.use('/api', WorldNews)
 app.use('/api', AddWorldNews)
 app.use('/api', CurateNews)
 app.use('/api', Login)
+app.use('/api', AddNotNews)
+app.use('/api', NotNews)
 
 app.listen(PORT, () => {
 	console.log(`Server started on ${PORT}`)
