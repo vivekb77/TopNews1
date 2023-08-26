@@ -179,7 +179,7 @@ const NZNews = () => {
 	const MergeNewsAndNotNews = () => {
 		let newsplusnotnewsarray = [...news];
 		for (let i = 0; i < notNews.length; i++) {
-			newsplusnotnewsarray.splice((i * 6), 0, notNews[i]);
+			newsplusnotnewsarray.splice((i * 4), 0, notNews[i]);
 		}
 		setNews(newsplusnotnewsarray);
 		// console.log(notNews)
