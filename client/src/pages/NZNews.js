@@ -8,6 +8,7 @@ import GoToTop from './GoToTop'
 import ReadFast from './ReadFast';
 import GA4React from "ga-4-react";
 import { Helmet } from 'react-helmet';
+import RockPaper from './RockPaper'
 require('dotenv').config();
 
 const ga4react = new GA4React("G-4YQR5FRQQL");
@@ -223,7 +224,7 @@ const NZNews = () => {
 						{<p className="textofcountrybuttontext">WORLD</p>}
 					</div>
 				</div>
-
+				
 				{infoMessage && <GoToTop />}
 				{infoMessage && <ReadFast isReadFastOn={handleReadFastClick} />}
 			</div>
@@ -250,7 +251,7 @@ const NZNews = () => {
 				<MobilePlaceholderCard />
 				<MobilePlaceholderCard />
 			</div>}
-
+			{infoMessage && <RockPaper />}
 			<div className='bottommenuholder'>
 				{infoMessage && <h4 className='mainsubtitleads'><a href='https://twitter.com/NewsExpressNZ'>Twitter</a></h4>}
 				{infoMessage && <h4 className='mainsubtitleads'><a href='mailto:newsexpressnz@gmail.com'>Contact</a></h4>}
