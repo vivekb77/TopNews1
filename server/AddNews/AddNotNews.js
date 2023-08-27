@@ -59,13 +59,40 @@ router.post('/cronnotnewskiwiblog', async (req, res) => {
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News kiwi blog. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
+router.post('/cronnotnewsinterest', async (req, res) => {
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await fetchDataFromRSS('https://www.interest.co.nz/rss', "INTEREST.CO.NZ");
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News interest.co.nz. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+});
+
+router.post('/cronnotnewsgreaterauckland', async (req, res) => {
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await fetchDataFromRSS('https://www.greaterauckland.org.nz/feed', "GREATERAUCKLAND");
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News greater auckland. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+});
+
+router.post('/cronnotnewsnztech', async (req, res) => {
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await fetchDataFromRSS('https://nztech.org.nz/news/feed', "NZTECH.ORG");
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News NZTech.org. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+});
+
 async function fetchDataFromRSS(sourceUrl, articleSource) {
 	try {
 		const response = await axios.get(sourceUrl);
 		const parser = new Parser();
 		const parsedrssfeednoimage = await parser.parseString(response.data); //using rss parser , this does not parse image url
 		const parserrssfeed = await xml2js.parseStringPromise(response.data) //this parses image url
-
+		// console.log(parsedrssfeednoimage)
 		let NotNewsItemsArray = [];
 		const timeZone = 'Pacific/Auckland';
 
@@ -149,7 +176,53 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 				NotNewsItemsArray.push(notNewsItem);
 			};
 		}
+		// INTEREST
+		if (articleSource == "INTEREST.CO.NZ") {
+			for (let i = 0; i < 10; i++) {
+				const notNewsItem = {
+					displayOnFE: true,
+					articleSource: articleSource,
+					articleTitle: parsedrssfeednoimage.items[i].title,
+					articleUrl: parsedrssfeednoimage.items[i].link,
+					articleGuid: parsedrssfeednoimage.items[i].guid,
+					articlePublicationDate: moment().tz(timeZone).toDate(), //because this feed has clean readable date
+					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+				};
+				NotNewsItemsArray.push(notNewsItem);
+			};
+		}
 
+		// GREATERAUCKLAND
+		if (articleSource == "GREATERAUCKLAND") {
+			for (let i = 0; i < 10; i++) {
+				const notNewsItem = {
+					displayOnFE: true,
+					articleSource: articleSource,
+					articleTitle: parsedrssfeednoimage.items[i].title,
+					articleUrl: parsedrssfeednoimage.items[i].link,
+					articleGuid: parsedrssfeednoimage.items[i].guid,
+					articlePublicationDate: new Date(parsedrssfeednoimage.items[i].isoDate),
+					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+				};
+				NotNewsItemsArray.push(notNewsItem);
+			};
+		}
+
+		// NZTECH
+		if (articleSource == "NZTECH.ORG") {
+			for (let i = 0; i < 10; i++) {
+				const notNewsItem = {
+					displayOnFE: true,
+					articleSource: articleSource,
+					articleTitle: parsedrssfeednoimage.items[i].title,
+					articleUrl: parsedrssfeednoimage.items[i].link,
+					articleGuid: parsedrssfeednoimage.items[i].guid,
+					articlePublicationDate: new Date(parsedrssfeednoimage.items[i].isoDate),
+					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+				};
+				NotNewsItemsArray.push(notNewsItem);
+			};
+		}
 		await addNewsItemsToDB(NotNewsItemsArray)
 	} catch (error) {
 		console.error('Error fetching or parsing RSS feed:', error);
