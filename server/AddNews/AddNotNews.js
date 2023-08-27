@@ -46,7 +46,7 @@ router.post('/cronnotnewsdailyblog', async (req, res) => {
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
 	await fetchDataFromRSS('https://thedailyblog.co.nz/feed', "DAILYBLOG");
-	// AddDateTimeOfLastPull(new Date().toLocaleString());
+	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News daily blog. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
@@ -55,7 +55,7 @@ router.post('/cronnotnewskiwiblog', async (req, res) => {
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
 	await fetchDataFromRSS('https://www.kiwiblog.co.nz/feed', "KIWIBLOG");
-	AddDateTimeOfLastPull(new Date().toLocaleString());
+	// AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News kiwi blog. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
@@ -64,7 +64,7 @@ router.post('/cronnotnewsinterest', async (req, res) => {
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
 	await fetchDataFromRSS('https://www.interest.co.nz/rss', "INTEREST.CO.NZ");
-	AddDateTimeOfLastPull(new Date().toLocaleString());
+	// AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News interest.co.nz. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
@@ -73,7 +73,7 @@ router.post('/cronnotnewsgreaterauckland', async (req, res) => {
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
 	await fetchDataFromRSS('https://www.greaterauckland.org.nz/feed', "GREATERAUCKLAND");
-	AddDateTimeOfLastPull(new Date().toLocaleString());
+	// AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News greater auckland. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 

@@ -310,8 +310,8 @@ code {
   font-weight: 700;
   margin-top: 10px;
   margin-bottom: 15px;
-  color: #000000;
-  line-height: 1.33;
+  color: #000096;
+  line-height: 1.4;
   letter-spacing: 0;
   /* font-family: "Google Sans",sans-serif; */
   /* font-family: sohne-var, "Helvetica Neue", Arial, sans-serif; */
@@ -715,13 +715,13 @@ a:link {
   color: #000000;
 }
 .card-title-notnews{
-  line-height: 22px;
+  line-height: 24px;
   letter-spacing: 0;
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 25px;
   font-weight: 750;
-  color: #000000;
+  color: #000096;
 }
 /* small screen */
 .card-text{
