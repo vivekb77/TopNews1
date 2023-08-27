@@ -188,21 +188,6 @@ code {
   background-size: 30px; 
   background-repeat: no-repeat;
 }
-.read-fast-button {
-  position: fixed;
-  bottom: 30px;
-  right: 220px;
-  padding: 17px 17px;
-  background-color: transparent;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  /* transition: background-color 0.3s ease; */
-  background-image: url('./readfast.png');
-  background-size: 30px; 
-  background-repeat: no-repeat;
-}
 
 /* .scroll-to-top-button:hover {
   background-color: rgb(124, 124, 124)
@@ -310,7 +295,7 @@ code {
   font-weight: 700;
   margin-top: 10px;
   margin-bottom: 15px;
-  color: #000096;
+  color: #000000;
   line-height: 1.4;
   letter-spacing: 0;
   /* font-family: "Google Sans",sans-serif; */
@@ -646,6 +631,49 @@ a:link {
 /* Show / hide BUTTON end */
 
 
+/* scroll circle */
+.read-fast-button {
+  position: fixed;
+  bottom: 30px;
+  right: 220px;
+  padding: 17px 17px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  /* transition: background-color 0.3s ease; */
+  background-image: url('./readfast.png');
+  background-size: 30px; 
+  background-repeat: no-repeat;
+}
+
+#progress {
+  bottom: 80px;
+  right: 216px;
+  position: fixed;
+  height: 50px;
+  width: 50px;
+  display: none;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+#progress-value {
+  display: block;
+  height: calc(100% - 15px);
+  width: calc(100% - 15px);
+  /* background-color: #ffffff; */
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background-image: url('./gototop.png');
+  background-size: 33px; 
+  background-repeat: no-repeat;
+}
 
 
 
@@ -721,7 +749,7 @@ a:link {
   margin-bottom: 10px;
   font-size: 25px;
   font-weight: 750;
-  color: #000096;
+  color: #000000;
 }
 /* small screen */
 .card-text{
@@ -844,6 +872,33 @@ a:link {
   outline: none;
   opacity: 1;
 }
+#progress {
+  bottom: 70px;
+  right: 26px;
+  position: fixed;
+  height: 40px;
+  width: 40px;
+  display: none;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+#progress-value {
+  display: block;
+  height: calc(100% - 15px);
+  width: calc(100% - 15px);
+  /* background-color: #ffffff; */
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background-image: url('./gototop.png');
+  background-size: 24px; 
+  background-repeat: no-repeat;
+}
+
 .logoimage{
   /* position: fixed; */
   padding: 0px;
