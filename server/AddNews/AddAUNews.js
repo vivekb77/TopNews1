@@ -14,77 +14,39 @@ let skippedArticlesCount;
 let errorAddingArticlesCount;
 // Get RSS feed from new providers whenever needed with a post request to api/cron
 router.post('/cronskynewsau', async (req, res) => {
-	console.log("Cron job via API triggered for SKY NEWS")
-	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronSkyNews();
-	console.log("Added Articles Count "+addedArticlesCount);
-	console.log("Skipped Articles Count "+skippedArticlesCount);
-	console.log("Error adding Articles Count "+errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	await fetchDataFromRSS('https://www.skynews.com.au/rss',"SKY NEWS");
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for SKY news AU. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}`})
 });
 router.post('/crontheguardianau', async (req, res) => {
-	console.log("Cron job via API triggered for THE GUARDIAN")
-	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronTheGuardian();
-	console.log("Added Articles Count "+addedArticlesCount);
-	console.log("Skipped Articles Count "+skippedArticlesCount);
-	console.log("Error adding Articles Count "+errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	await fetchDataFromRSS('https://www.theguardian.com/au/rss',"THE GUARDIAN");
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully Guardian AU. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}`})
 });
-async function runCronSkyNews() {
-	await fetchDataFromRSS('https://www.skynews.com.au/rss',"SKY NEWS");
-}
-
-async function runCronTheGuardian() {
-	await fetchDataFromRSS('https://www.theguardian.com/au/rss',"THE GUARDIAN");
-}
 
 router.post('/crontheguardianuk', async (req, res) => {
-	console.log("Cron job via API triggered for THE GUARDIAN WORLD UK")
-	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronTheGuardianUK();
-	console.log("Added Articles Count "+addedArticlesCount);
-	console.log("Skipped Articles Count "+skippedArticlesCount);
-	console.log("Error adding Articles Count "+errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	await fetchDataFromRSS('https://www.theguardian.com/uk/rss',"THE GUARDIAN");
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Guardian UK. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}`})
 });
 
-async function runCronTheGuardianUK() {
-	await fetchDataFromRSS('https://www.theguardian.com/uk/rss',"THE GUARDIAN");
-}
-
 router.post('/cronthetelegraph', async (req, res) => {
-	console.log("Cron job via API triggered for THE TELEGRAPH")
-	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronTheTelegraph();
-	console.log("Added Articles Count "+addedArticlesCount);
-	console.log("Skipped Articles Count "+skippedArticlesCount);
-	console.log("Error adding Articles Count "+errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	await fetchDataFromRSS('https://www.telegraph.co.uk/rss.xml',"THE TELEGRAPH");
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for TELEGRAPH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}`})
 });
-async function runCronTheTelegraph() {
-	await fetchDataFromRSS('https://www.telegraph.co.uk/rss.xml',"THE TELEGRAPH");
-}
 
 async function fetchDataFromRSS(sourceUrl,articleSource) {
   try {

@@ -2,7 +2,6 @@ const { schedule } = require("@netlify/functions");
 const axios = require('axios')
 
 const handler = async function(event, context) {
-  console.log("Added articles STUFF all:");
   
   //stuff north
   await axios

@@ -231,7 +231,7 @@ router.post('/cronremoveDuplicateTitles', async (req, res) => {
     let removedDuplicateArticlesCount = 0;
     let skippedDuplicateArticlesCount = 0;
 
-    let DBsToCheckArticles = ["NZ","AU","WORLD"];
+    let DBsToCheckArticles = ["NZ","AU","WORLD","!NEWS"];
     
     const timeZone = 'Pacific/Auckland';
     const currentDate = moment().tz(timeZone).startOf('day').toDate(); // Get the current date in the specified time zone
@@ -259,6 +259,15 @@ router.post('/cronremoveDuplicateTitles', async (req, res) => {
         }
         if(DBsToCheckArticles[i] == "WORLD"){
             ArticlesArray = await NewsDataWorld.find({
+                displayOnFE: true,
+                articlePublicationDate: {
+                    $gte: currentDate,
+                    $lt: moment(currentDate).add(1, 'day').toDate()
+                    }
+            })
+        }
+        if(DBsToCheckArticles[i] == "!NEWS"){
+            ArticlesArray = await NotNewsModel.find({
                 displayOnFE: true,
                 articlePublicationDate: {
                     $gte: currentDate,

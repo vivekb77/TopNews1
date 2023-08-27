@@ -16,40 +16,22 @@ let errorAddingArticlesCount;
 
 
 router.post('/crontheguardianworldusa', async (req, res) => {
-	console.log("Cron job via API triggered for THE GUARDIAN WORLD USA")
-	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronTheGuardianUSA();
-	console.log("Added Articles Count "+addedArticlesCount);
-	console.log("Skipped Articles Count "+skippedArticlesCount);
-	console.log("Error adding Articles Count "+errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	await fetchDataFromRSS('https://www.theguardian.com/us-news/rss',"THE GUARDIAN");
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Guardian USA. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}`})
 });
-async function runCronTheGuardianUSA() {
-	await fetchDataFromRSS('https://www.theguardian.com/us-news/rss',"THE GUARDIAN");
-}
 
 router.post('/crontheguardianworld', async (req, res) => {
-	console.log("Cron job via API triggered for THE GUARDIAN WORLD World")
-	console.log(`Running cron job to fetch latest articles at [${new Date().toLocaleString()}]`);
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await runCronTheGuardianWorld();
-	console.log("Added Articles Count "+addedArticlesCount);
-	console.log("Skipped Articles Count "+skippedArticlesCount);
-	console.log("Error adding Articles Count "+errorAddingArticlesCount);
-	console.log(`Cron job finished at [${new Date().toLocaleString()}]`);
+	await fetchDataFromRSS('https://www.theguardian.com/world/rss',"THE GUARDIAN");
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Guardian World. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}`})
 });
-async function runCronTheGuardianWorld() {
-	await fetchDataFromRSS('https://www.theguardian.com/world/rss',"THE GUARDIAN");
-}
 
 async function fetchDataFromRSS(sourceUrl,articleSource) {
   try {

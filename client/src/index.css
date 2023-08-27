@@ -305,6 +305,17 @@ code {
   /* font-family: "Google Sans",sans-serif; */
   /* font-family: sohne-var, "Helvetica Neue", Arial, sans-serif; */
 }
+.card-title-notnews{
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  color: #000000;
+  line-height: 1.33;
+  letter-spacing: 0;
+  /* font-family: "Google Sans",sans-serif; */
+  /* font-family: sohne-var, "Helvetica Neue", Arial, sans-serif; */
+}
 /* big screen */
 .textofcountrybuttontext{
   font-size: 1.0rem;
@@ -702,7 +713,15 @@ a:link {
   font-size: 22px;
   font-weight: 750;
   color: #000000;
-  
+}
+.card-title-notnews{
+  line-height: 22px;
+  letter-spacing: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 25px;
+  font-weight: 750;
+  color: #000000;
 }
 /* small screen */
 .card-text{
@@ -875,5 +894,11 @@ a:link {
 }
 .articledateandsourcetoploading-placeholder {
   width: 60%;
+}
+.providerlistcard{
+  width: 45px;
+}
+.providerlistcardselected{
+  width: 45px;
 }
 }
