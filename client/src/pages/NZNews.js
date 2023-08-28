@@ -251,7 +251,6 @@ const NZNews = () => {
 				<MobilePlaceholderCard />
 				<MobilePlaceholderCard />
 			</div>}
-			{infoMessage && <RockPaper />}
 			<div className='bottommenuholder'>
 				{infoMessage && <h4 className='mainsubtitleads'><a href='https://twitter.com/NewsExpressNZ'>Twitter</a></h4>}
 				{infoMessage && <h4 className='mainsubtitleads'><a href='mailto:newsexpressnz@gmail.com'>Contact</a></h4>}
