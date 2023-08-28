@@ -27,6 +27,18 @@ const handler = async function(event, context) {
     console.error(e)
   })
 
+   //googlenews
+   await axios
+   .post('https://topnews7.vercel.app/api/cronrgooglenews')
+   .then((response) => {
+     if (response.status === 200) {
+       console.log('Google news: ', response.data)
+     }
+   })
+   .catch((e) => {
+     console.error(e)
+   })
+
 
 
 return {

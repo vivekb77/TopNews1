@@ -57,6 +57,15 @@ router.post('/cronrnz', async (req, res) => {
 	return res.json({ status: 'ok', message: `Cron job completed successfully for RNZ. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}`})
 });
 
+router.post('/cronrgooglenews', async (req, res) => {
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await fetchDataFromRSS('https://news.google.com/rss?hl=en-NZ&gl=NZ&ceid=NZ:en',"GOOGLENEWS")
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: 'ok', message: `Cron job completed successfully for google news. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}`})
+});
+
 async function fetchDataFromRSS(sourceUrl,articleSource) {
   try {
     const response = await axios.get(sourceUrl);
@@ -66,6 +75,24 @@ async function fetchDataFromRSS(sourceUrl,articleSource) {
 
 	let NewsItemsArray= [];
 	const timeZone = 'Pacific/Auckland';
+
+		//google news for 1news, newshub , newszb
+		if(articleSource == "GOOGLENEWS"){
+			parserrssfeed.rss.channel[0].item.forEach(item => {
+				const newsItem = {
+					displayOnFE:true,
+					articleSource: item.source[0]['_'],
+					articleTitle: item.title[0],
+					articleUrl: item.link[0],
+					articleGuid: guid = item.guid[0]['_'],
+					articlePublicationDate: new Date(item.pubDate[0]),
+					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+					};
+					if(newsItem.articleSource === "Newshub" || newsItem.articleSource === "1News" || newsItem.articleSource === "Newstalk ZB"){
+						NewsItemsArray.push(newsItem);
+					}
+				});	
+		}
 
 	//stuff
 	if(articleSource == "STUFF"){
