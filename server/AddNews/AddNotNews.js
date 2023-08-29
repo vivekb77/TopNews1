@@ -86,13 +86,31 @@ router.post('/cronnotnewsnztech', async (req, res) => {
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News NZTech.org. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
+router.post('/cronnotnewstimes', async (req, res) => {
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await fetchDataFromRSS('https://www.times.co.nz/feed/', "TIMES")
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News TIMES Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+});
+
+router.post('/cronnotnewslocalmatters', async (req, res) => {
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await fetchDataFromRSS('https://www.localmatters.co.nz/feed/', "LOCALMATTERS")
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News Local matters Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+});
+
 async function fetchDataFromRSS(sourceUrl, articleSource) {
 	try {
 		const response = await axios.get(sourceUrl);
 		const parser = new Parser();
 		const parsedrssfeednoimage = await parser.parseString(response.data); //using rss parser , this does not parse image url
 		const parserrssfeed = await xml2js.parseStringPromise(response.data) //this parses image url
-		// console.log(parsedrssfeednoimage)
+
 		let NotNewsItemsArray = [];
 		const timeZone = 'Pacific/Auckland';
 
@@ -223,7 +241,47 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 				NotNewsItemsArray.push(notNewsItem);
 			};
 		}
+
+		//TIMES
+		if (articleSource == "TIMES") {
+			parserrssfeed.rss.channel[0].item.forEach(item => {
+				// don't pull if title is weird , here a lot of titles are bad with no content 
+				if (item.title[0].includes("Gallery")) {
+					//skip
+				}
+				else {
+					const newsItem = {
+						displayOnFE: true,
+						articleSource: articleSource,
+						articleTitle: item.title[0],
+						articleUrl: item.link[0],
+						articleGuid: guid = item.guid[0]['_'],
+						articlePublicationDate: new Date(item.pubDate[0]),
+						articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+					};
+					NotNewsItemsArray.push(newsItem);
+				}
+			});
+		}
+
+		//LOCALMATTERS
+		if (articleSource == "LOCALMATTERS") {
+			for (let i = 0; i < 10; i++) {
+				const notNewsItem = {
+					displayOnFE: true,
+					articleSource: articleSource,
+					articleTitle: parsedrssfeednoimage.items[i].title,
+					articleUrl: parsedrssfeednoimage.items[i].link,
+					articleGuid: parsedrssfeednoimage.items[i].guid,
+					articlePublicationDate: new Date(parsedrssfeednoimage.items[i].isoDate),
+					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+				};
+				NotNewsItemsArray.push(notNewsItem);
+			};
+		}
+
 		await addNewsItemsToDB(NotNewsItemsArray)
+
 	} catch (error) {
 		console.error('Error fetching or parsing RSS feed:', error);
 	}

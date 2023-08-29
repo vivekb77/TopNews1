@@ -3,36 +3,36 @@ const axios = require('axios')
 
 const handler = async function(event, context) {
   
-  //rnz
+  //NEWSTALKZB
   await axios
-  .post('https://topnews7.vercel.app/api/cronrnz')
+  .post('https://topnews7.vercel.app/api/cronnewstalkzb')
   .then((response) => {
     if (response.status === 200) {
-      console.log('RNZ: ', response.data)
+      console.log('NEWSTALKZB: ', response.data)
     }
   })
   .catch((e) => {
     console.error(e)
   })
 
-  //nz herald
+  //BUSINESS DESK
   await axios
-  .post('https://topnews7.vercel.app/api/cronnzherald')
+  .post('https://topnews7.vercel.app/api/cronbusinessdesk')
   .then((response) => {
     if (response.status === 200) {
-      console.log('NZ HERALD: ', response.data)
+      console.log('BUSINESS DESK: ', response.data)
     }
   })
   .catch((e) => {
     console.error(e)
   })
 
-   //googlenews
+   //TP PLUS
    await axios
-   .post('https://topnews7.vercel.app/api/crongooglenews')
+   .post('https://topnews7.vercel.app/api/crontpplus')
    .then((response) => {
      if (response.status === 200) {
-       console.log('Google news: ', response.data)
+       console.log('TP PLUS: ', response.data)
      }
    })
    .catch((e) => {
