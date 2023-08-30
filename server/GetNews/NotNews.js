@@ -38,7 +38,7 @@ router.post('/GetNotNews', async (req, res) => {
         NotNewsArrayYesterday = await NotNewsModel.find({
             displayOnFE: true,
             articlePublicationDate: {
-                $lt: moment(currentDate).add(0, 'day').toDate(),
+                $gte: moment(currentDate).add(-1, 'day').toDate(),
             }
 
         })
@@ -48,15 +48,15 @@ router.post('/GetNotNews', async (req, res) => {
     }
 
     if (NotNewsArray.length > 0) {
+        //sort the array by date
+        NotNewsArray.sort((a, b) => (a.articlePublicationDate > b.articlePublicationDate) ? -1 : 1)
         NotNewsArray = NotNewsArray.slice(0, 25);
         //shuffle array
-        for (let i = NotNewsArray.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [NotNewsArray[i], NotNewsArray[j]] = [NotNewsArray[j], NotNewsArray[i]];
-        }
-        //sort the array by date
-        // NotNewsArray.sort((a, b) => (a.articlePublicationDate > b.articlePublicationDate) ? -1 : 1)
-
+        // for (let i = NotNewsArray.length - 1; i > 0; i--) {
+        //     const j = Math.floor(Math.random() * (i + 1));
+        //     [NotNewsArray[i], NotNewsArray[j]] = [NotNewsArray[j], NotNewsArray[i]];
+        // }
+        
         for (let f = 0; f < NotNewsArray.length; f++) {
             const inputDate = new Date(NotNewsArray[f].articlePublicationDate);
 

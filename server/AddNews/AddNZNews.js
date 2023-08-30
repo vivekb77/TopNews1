@@ -167,7 +167,7 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 				const newsItem = {
 					displayOnFE: true,
 					articleSource: item.source[0]['_'],
-					articleTitle: item.title[0],
+					articleTitle: item.title[0].split(' - ')[0], //google news add source at the end of title, remove it
 					articleUrl: item.link[0],
 					articleGuid: guid = item.guid[0]['_'],
 					articlePublicationDate: new Date(item.pubDate[0]),
