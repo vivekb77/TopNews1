@@ -39,6 +39,7 @@ router.post('/GetNotNews', async (req, res) => {
             displayOnFE: true,
             articlePublicationDate: {
                 $gte: moment(currentDate).add(-1, 'day').toDate(),
+                $lt: currentDate  //these 2 for only yesterday's not news
             }
 
         })
