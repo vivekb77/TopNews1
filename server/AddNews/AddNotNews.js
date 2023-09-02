@@ -113,6 +113,42 @@ router.post('/cronnotnewsaucklandcouncil', async (req, res) => {
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News auckland council Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
+router.post('/cronnotnewsinsidegovernmentnz', async (req, res) => {
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await fetchDataFromRSS('https://insidegovernment.co.nz/feed/', "INSIDEGOVERNMENTNZ")
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News INSIDEGOVERNMENTNZ Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+});
+
+router.post('/cronnotnewsnorightturn', async (req, res) => {
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await fetchDataFromRSS('https://norightturn.blogspot.com/feeds/posts/default?alt=rss', "NORIGHTTURN")
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News NoRightTurn Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+});
+
+router.post('/cronnotnewsthestandardorgnz', async (req, res) => {
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await fetchDataFromRSS('https://thestandard.org.nz/feed/', "THESTANDARD.ORG.NZ")
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News thestandardorgnz Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+});
+
+router.post('/cronnotnewsbeehivegovtnz', async (req, res) => {
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await fetchDataFromRSS('https://www.beehive.govt.nz/rss.xml', "BEEHIVE.GOVT.NZ")
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News beehivegovtnz Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+});
+
 async function fetchDataFromRSS(sourceUrl, articleSource) {
 	try {
 		const response = await axios.get(sourceUrl);
@@ -122,7 +158,39 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 
 		let NotNewsItemsArray = [];
 		const timeZone = 'Pacific/Auckland';
-	
+
+	// BEEHIVE.GOVT.NZ
+	if (articleSource == "BEEHIVE.GOVT.NZ") {
+		for (let i = 0; i < 10; i++) {
+			const notNewsItem = {
+				displayOnFE: true,
+				articleSource: articleSource,
+				articleTitle: parsedrssfeednoimage.items[i].title,
+				articleUrl: parsedrssfeednoimage.items[i].link,
+				articleGuid: parsedrssfeednoimage.items[i].guid,
+				articlePublicationDate: new Date(parsedrssfeednoimage.items[i].isoDate),
+				articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+			};
+			NotNewsItemsArray.push(notNewsItem);
+		};
+	}
+
+		// THESTANDARD.ORG.NZ
+		if (articleSource == "THESTANDARD.ORG.NZ") {
+			for (let i = 0; i < 10; i++) {
+				const notNewsItem = {
+					displayOnFE: true,
+					articleSource: articleSource,
+					articleTitle: parsedrssfeednoimage.items[i].title,
+					articleUrl: parsedrssfeednoimage.items[i].link,
+					articleGuid: parsedrssfeednoimage.items[i].guid,
+					articlePublicationDate: new Date(parsedrssfeednoimage.items[i].isoDate),
+					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+				};
+				NotNewsItemsArray.push(notNewsItem);
+			};
+		}
+
 		// AUCKLANDCOUNCIL
 		if (articleSource == "AUCKLANDCOUNCIL") {
 			for (let i = 0; i < 10; i++) {
@@ -132,6 +200,38 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 					articleTitle: parsedrssfeednoimage.items[i].title,
 					articleUrl: parsedrssfeednoimage.items[i].link,
 					articleGuid: parsedrssfeednoimage.items[i].link,
+					articlePublicationDate: new Date(parsedrssfeednoimage.items[i].isoDate),
+					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+				};
+				NotNewsItemsArray.push(notNewsItem);
+			};
+		}
+
+		// INSIDEGOVERNMENTNZ
+		if (articleSource == "INSIDEGOVERNMENTNZ") {
+			for (let i = 0; i < 10; i++) {
+				const notNewsItem = {
+					displayOnFE: true,
+					articleSource: articleSource,
+					articleTitle: parsedrssfeednoimage.items[i].title,
+					articleUrl: parsedrssfeednoimage.items[i].link,
+					articleGuid: parsedrssfeednoimage.items[i].guid,
+					articlePublicationDate: new Date(parsedrssfeednoimage.items[i].isoDate),
+					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+				};
+				NotNewsItemsArray.push(notNewsItem);
+			};
+		}
+
+		// NORIGHTTURN
+		if (articleSource == "NORIGHTTURN") {
+			for (let i = 0; i < 10; i++) {
+				const notNewsItem = {
+					displayOnFE: true,
+					articleSource: articleSource,
+					articleTitle: parsedrssfeednoimage.items[i].title,
+					articleUrl: parsedrssfeednoimage.items[i].link,
+					articleGuid: parsedrssfeednoimage.items[i].guid,
 					articlePublicationDate: new Date(parsedrssfeednoimage.items[i].isoDate),
 					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
 				};
