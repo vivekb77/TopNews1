@@ -27,6 +27,18 @@ const handler = async function (event, context) {
       console.error(e)
     })
 
+    //aucklancouncil
+    await axios
+    .post('https://topnews7.vercel.app/api/cronnotnewsaucklandcouncil')
+    .then((response) => {
+      if (response.status === 200) {
+        console.log('AUCKLAND COUNCIL: ', response.data)
+      }
+    })
+    .catch((e) => {
+      console.error(e)
+    })
+
   return {
     statusCode: 200,
   };

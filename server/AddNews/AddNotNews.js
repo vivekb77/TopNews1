@@ -104,6 +104,15 @@ router.post('/cronnotnewslocalmatters', async (req, res) => {
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News Local matters Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
+router.post('/cronnotnewsaucklandcouncil', async (req, res) => {
+	addedArticlesCount = 0;
+	skippedArticlesCount = 0;
+	errorAddingArticlesCount = 0;
+	await fetchDataFromRSS('https://ourauckland.aucklandcouncil.govt.nz/rss', "AUCKLANDCOUNCIL")
+	AddDateTimeOfLastPull(new Date().toLocaleString());
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News auckland council Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+});
+
 async function fetchDataFromRSS(sourceUrl, articleSource) {
 	try {
 		const response = await axios.get(sourceUrl);
@@ -113,6 +122,22 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 
 		let NotNewsItemsArray = [];
 		const timeZone = 'Pacific/Auckland';
+	
+		// AUCKLANDCOUNCIL
+		if (articleSource == "AUCKLANDCOUNCIL") {
+			for (let i = 0; i < 10; i++) {
+				const notNewsItem = {
+					displayOnFE: true,
+					articleSource: articleSource,
+					articleTitle: parsedrssfeednoimage.items[i].title,
+					articleUrl: parsedrssfeednoimage.items[i].link,
+					articleGuid: parsedrssfeednoimage.items[i].link,
+					articlePublicationDate: new Date(parsedrssfeednoimage.items[i].isoDate),
+					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+				};
+				NotNewsItemsArray.push(notNewsItem);
+			};
+		}
 
 		// THESPINOFF
 		if (articleSource == "THESPINOFF") {
