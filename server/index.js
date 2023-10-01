@@ -18,6 +18,8 @@ const AddNotNews = require('./AddNews/AddNotNews')
 
 const CurateNews = require('./Curate/Curate')
 const Login = require('./Curate/Login')
+const CreateAd = require('./Ads/CreateAd')
+const PostAd = require('./Ads/PostAd')
 
 
 const MONGO_URL = process.env.MONGO_URL
@@ -43,6 +45,8 @@ app.use('/api', CurateNews)
 app.use('/api', Login)
 app.use('/api', AddNotNews)
 app.use('/api', NotNews)
+app.use('/api', CreateAd)
+app.use('/api', PostAd)
 
 app.listen(PORT, () => {
 	console.log(`Server started on ${PORT}`)
