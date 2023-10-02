@@ -27,7 +27,7 @@ router.post('/PostTextTweet', async (req, res) => {
 async function postTextTweet() {
     let NotNewsArray = await getNotNews();
     const randomNum = Math.floor(Math.random() * 18);
-    let TweetText = `${NotNewsArray[randomNum].articleTitle} || Article by ${NotNewsArray[randomNum].articleSource} || #NewZealand #latestNEWS #AucklandNews #WellingtonNews Read more #NEWS at https://newsexpress.co.nz ${NotNewsArray[randomNum].articleUrl}`
+    let TweetText = `${NotNewsArray[randomNum].articleTitle} || Article by ${NotNewsArray[randomNum].articleSource} || #NewZealand #latestNEWS #AucklandNews #WellingtonNews ${NotNewsArray[randomNum].articleUrl} Read more #NEWS at https://newsexpress.co.nz`
     try {
         await rwClient.v2.tweet(
             TweetText);
