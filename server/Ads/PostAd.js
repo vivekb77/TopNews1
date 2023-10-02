@@ -29,7 +29,7 @@ async function postAd() {
         );
         await rwClient.v2.tweet({
             text:
-                "#NZNews #latestNEWS #AucklandNews Read more #NEWS @ https://newsexpress.co.nz",
+                "#NewZealand #latestNEWS #AucklandNews #WellingtonNews Read more #NEWS at https://newsexpress.co.nz",
             media: { media_ids: [mediaId] },
         });
         console.log("Media Tweet posted successfully");
