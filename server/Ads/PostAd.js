@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const { TwitterApi } = require("twitter-api-v2");
 
-
 const client = new TwitterApi({
     appKey: "cISfV86E8UFutenkbehxznw0V",
     appSecret: "Z5uAHCmleWjVfWvZKknA1JPNkc0zHnE4PMTqW5r5Ki6xqSJX0w",
@@ -18,6 +17,7 @@ router.post('/PostAd', async (req, res) => {
         // await postTextTweet();
         return res.json({ status: 'ok' })
     } catch (err) {
+        console.log(err);
         return res.json({ status: 'error' })
     }
 })
