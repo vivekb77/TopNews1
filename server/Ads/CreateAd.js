@@ -141,6 +141,7 @@ async function createAd() {
 
     const randomNum = Math.floor(Math.random() * 18);
     await downloadImage(NZNewsArray[randomNum].teaserImageUrl, '/tmp/teaserimage.png');
+    await downloadImage('https://i.ibb.co/f1VMLDh/Screenshot-2023-10-01-at-11-18-05-PM.png', '/tmp/adlogo.png');
 
     //LOGO
     const logoImagePosition = {
@@ -225,7 +226,7 @@ async function createAd() {
         fs.writeFileSync("/tmp/twitteradimage.png", buffer);
     })
 
-    loadImage("/adlogo.png").then((image) => {
+    loadImage("/tmp/adlogo.png").then((image) => {
         const { w, h, x, y } = logoImagePosition;
         context.drawImage(image, x, y, w, h);
         const buffer = canvas.toBuffer("image/png");
