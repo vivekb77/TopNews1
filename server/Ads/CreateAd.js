@@ -139,8 +139,10 @@ async function createAd() {
     let Yposition = 250;
     const lineHeight = 70;
 
-    const randomNum = Math.floor(Math.random() * 18);
-    await downloadImage(NZNewsArray[randomNum].teaserImageUrl, '/tmp/teaserimage.png');
+    const randomNumNZNews = Math.floor(Math.random() * NZNewsArray.length);
+    const randomNumNotNews = Math.floor(Math.random() * NotNewsArray.length);
+
+    await downloadImage(NZNewsArray[randomNumNZNews].teaserImageUrl, '/tmp/teaserimage.png');
     await downloadImage('https://i.ibb.co/f1VMLDh/Screenshot-2023-10-01-at-11-18-05-PM.png', '/tmp/adlogo.png');
 
     //LOGO
@@ -158,7 +160,7 @@ async function createAd() {
     context.fillStyle = "#000000";
 
     //!NEWS
-    const NotNews = formatTitle(NotNewsArray[randomNum].articleTitle);
+    const NotNews = formatTitle(NotNewsArray[randomNumNotNews].articleTitle);
     // const NotNews = formatTitle(post.testTitle);
     context.fillText(NotNews[0], 80, Yposition, 900);
     if (NotNews[1]) context.fillText(NotNews[1], 80, Yposition + (lineHeight * 1), 900);
@@ -167,15 +169,15 @@ async function createAd() {
     context.font = "bold 30pt 'PT Sans'";
     context.fillStyle = "#808080";
     if (NotNews[0] && !NotNews[1] && !NotNews[2]) {
-        context.fillText(`${NotNewsArray[randomNum].articleSource} || ${NotNewsArray[randomNum].articleAuthor}`, 80, Yposition + (lineHeight * 1) + 30);
+        context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, 80, Yposition + (lineHeight * 1) + 30);
         Yposition = Yposition + (lineHeight * 1) + 90;
     }
     if (NotNews[0] && NotNews[1] && !NotNews[2]) {
-        context.fillText(`${NotNewsArray[randomNum].articleSource} || ${NotNewsArray[randomNum].articleAuthor}`, 80, Yposition + (lineHeight * 2) + 30);
+        context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, 80, Yposition + (lineHeight * 2) + 30);
         Yposition = Yposition + (lineHeight * 2) + 90;
     }
     if (NotNews[0] && NotNews[1] && NotNews[2]) {
-        context.fillText(`${NotNewsArray[randomNum].articleSource} || ${NotNewsArray[randomNum].articleAuthor}`, 80, Yposition + (lineHeight * 3) + 30);
+        context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, 80, Yposition + (lineHeight * 3) + 30);
         Yposition = Yposition + (lineHeight * 3) + 90;
     }
 
@@ -194,7 +196,7 @@ async function createAd() {
         y2: Yposition,
     };
     Yposition = Yposition + 600;
-    const NZNews = formatTitle(NZNewsArray[randomNum].articleTitle);
+    const NZNews = formatTitle(NZNewsArray[randomNumNZNews].articleTitle);
     context.fillText(NZNews[0], 80, Yposition, 900);
     if (NZNews[1]) context.fillText(NZNews[1], 80, Yposition + (lineHeight * 1), 900);
     if (NZNews[2]) context.fillText(NZNews[2], 80, Yposition + (lineHeight * 2), 900);
@@ -202,15 +204,15 @@ async function createAd() {
     context.font = "bold 30pt 'PT Sans'";
     context.fillStyle = "#808080";
     if (NZNews[0] && !NZNews[1] && !NZNews[2]) {
-        context.fillText(`${NZNewsArray[randomNum].articleSource} || ${NZNewsArray[randomNum].articleAuthor}`, 80, Yposition + (lineHeight * 1) + 30);
+        context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, 80, Yposition + (lineHeight * 1) + 30);
         Yposition = Yposition + (lineHeight * 1) + 100;
     }
     if (NZNews[0] && NZNews[1] && !NZNews[2]) {
-        context.fillText(`${NZNewsArray[randomNum].articleSource} || ${NZNewsArray[randomNum].articleAuthor}`, 80, Yposition + (lineHeight * 2) + 30);
+        context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, 80, Yposition + (lineHeight * 2) + 30);
         Yposition = Yposition + (lineHeight * 2) + 100;
     }
     if (NZNews[0] && NZNews[1] && NZNews[2]) {
-        context.fillText(`${NZNewsArray[randomNum].articleSource} || ${NZNewsArray[randomNum].articleAuthor}`, 80, Yposition + (lineHeight * 3) + 30);
+        context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, 80, Yposition + (lineHeight * 3) + 30);
         Yposition = Yposition + (lineHeight * 3) + 100;
     }
 
