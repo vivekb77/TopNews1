@@ -140,7 +140,7 @@ async function createAd() {
     const lineHeight = 70;
 
     const randomNum = Math.floor(Math.random() * 18);
-    await downloadImage(NZNewsArray[randomNum].teaserImageUrl, './teaserimage.png');
+    await downloadImage(NZNewsArray[randomNum].teaserImageUrl, '/tmp/teaserimage.png');
 
     //LOGO
     const logoImagePosition = {
@@ -218,18 +218,18 @@ async function createAd() {
     context.font = "bold 15pt 'PT Sans'";
     context.fillText(`@NewsExpressNZ || ${formattedDate}`, 700, Yposition);
 
-    loadImage("./teaserimage.png").then((image) => {
+    loadImage("/tmp/teaserimage.png").then((image) => {
         const { w2, h2, x2, y2 } = teaserImagePosition;
         context.drawImage(image, x2, y2, w2, h2);
         const buffer = canvas.toBuffer("image/png");
-        fs.writeFileSync("./twitteradimage.png", buffer);
+        fs.writeFileSync("/tmp/twitteradimage.png", buffer);
     })
 
     loadImage("./adlogo.png").then((image) => {
         const { w, h, x, y } = logoImagePosition;
         context.drawImage(image, x, y, w, h);
         const buffer = canvas.toBuffer("image/png");
-        fs.writeFileSync("./twitteradimage.png", buffer);
+        fs.writeFileSync("/tmp/twitteradimage.png", buffer);
     });
     console.log('Twitter Ad image created');
 }

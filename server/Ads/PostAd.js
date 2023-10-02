@@ -25,7 +25,7 @@ router.post('/PostAd', async (req, res) => {
 async function postAd() {
     try {
         const mediaId = await client.v1.uploadMedia(
-            "./twitteradimage.png"
+            "/tmp/twitteradimage.png"
         );
         await rwClient.v2.tweet({
             text:
