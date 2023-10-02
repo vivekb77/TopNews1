@@ -11,7 +11,6 @@
     "axios": "^1.5.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.3",
-    "canvas": "^2.11.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.17.1",
@@ -25,7 +24,9 @@
     "openai": "^3.1.0",
     "request": "^2.88.2",
     "rss-parser": "^3.13.0",
-    "xml2js": "^0.6.0"
+    "twitter-api-v2": "^1.15.1",
+    "xml2js": "^0.6.0",
+    "canvas": "^2.11.2"
   },
   "author": "",
   "description": ""

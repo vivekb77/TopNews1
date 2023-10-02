@@ -3,11 +3,9 @@ const router = express.Router()
 const moment = require('moment-timezone');
 const NotNewsModel = require('../models/not_news.model')
 const NewsData = require('../models/nz_news.model')
-const DateTimeOfLastPullModel = require('../models/datetime.model')
 const axios = require('axios');
 const { createCanvas, loadImage } = require("canvas");
 const fs = require("fs");
-const fspromise = require('fs').promises;
 const util = require('util');
 
 async function getNotNews() {
