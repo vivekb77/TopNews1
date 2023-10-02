@@ -63,9 +63,9 @@ router.post('/cronnotnewsinterest', async (req, res) => {
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await fetchDataFromRSS('https://www.interest.co.nz/rss', "INTEREST.CO.NZ");
+	await fetchDataFromRSS('https://www.interest.co.nz/rss', "INTEREST CO NZ");
 	// AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News interest.co.nz. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News INTEREST CO NZ. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
 router.post('/cronnotnewsgreaterauckland', async (req, res) => {
@@ -81,9 +81,9 @@ router.post('/cronnotnewsnztech', async (req, res) => {
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await fetchDataFromRSS('https://nztech.org.nz/news/feed', "NZTECH.ORG");
+	await fetchDataFromRSS('https://nztech.org.nz/news/feed', "NZTECH ORG");
 	AddDateTimeOfLastPull(new Date().toLocaleString());
-	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News NZTech.org. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
+	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News NZTECH ORG. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
 
 router.post('/cronnotnewstimes', async (req, res) => {
@@ -135,7 +135,7 @@ router.post('/cronnotnewsthestandardorgnz', async (req, res) => {
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await fetchDataFromRSS('https://thestandard.org.nz/feed/', "THESTANDARD.ORG.NZ")
+	await fetchDataFromRSS('https://thestandard.org.nz/feed/', "THESTANDARD ORG NZ")
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News thestandardorgnz Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
@@ -144,7 +144,7 @@ router.post('/cronnotnewsbeehivegovtnz', async (req, res) => {
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await fetchDataFromRSS('https://www.beehive.govt.nz/rss.xml', "BEEHIVE.GOVT.NZ")
+	await fetchDataFromRSS('https://www.beehive.govt.nz/rss.xml', "BEEHIVE GOVT NZ")
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for Not News beehivegovtnz Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
@@ -159,8 +159,8 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 		let NotNewsItemsArray = [];
 		const timeZone = 'Pacific/Auckland';
 
-	// BEEHIVE.GOVT.NZ
-	if (articleSource == "BEEHIVE.GOVT.NZ") {
+	// BEEHIVE GOVT NZ
+	if (articleSource == "BEEHIVE GOVT NZ") {
 		for (let i = 0; i < 10; i++) {
 			const notNewsItem = {
 				displayOnFE: true,
@@ -175,8 +175,8 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 		};
 	}
 
-		// THESTANDARD.ORG.NZ
-		if (articleSource == "THESTANDARD.ORG.NZ") {
+		// THESTANDARD ORG NZ
+		if (articleSource == "THESTANDARD ORG NZ") {
 			for (let i = 0; i < 10; i++) {
 				const notNewsItem = {
 					displayOnFE: true,
@@ -320,7 +320,7 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 			};
 		}
 		// INTEREST
-		if (articleSource == "INTEREST.CO.NZ") {
+		if (articleSource == "INTEREST CO NZ") {
 			for (let i = 0; i < 10; i++) {
 				const notNewsItem = {
 					displayOnFE: true,
@@ -352,7 +352,7 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 		}
 
 		// NZTECH
-		if (articleSource == "NZTECH.ORG") {
+		if (articleSource == "NZTECH ORG") {
 			for (let i = 0; i < 10; i++) {
 				const notNewsItem = {
 					displayOnFE: true,
