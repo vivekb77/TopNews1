@@ -225,7 +225,7 @@ async function createAd() {
         fs.writeFileSync("/tmp/twitteradimage.png", buffer);
     })
 
-    loadImage("./adlogo.png").then((image) => {
+    loadImage("/adlogo.png").then((image) => {
         const { w, h, x, y } = logoImagePosition;
         context.drawImage(image, x, y, w, h);
         const buffer = canvas.toBuffer("image/png");
