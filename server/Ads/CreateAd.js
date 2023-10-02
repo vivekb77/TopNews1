@@ -216,7 +216,7 @@ async function createAd() {
 
     //Credits
     context.fillStyle = "#808080";
-    context.font = "bold 15pt 'PT Sans'";
+    context.font = "bold 10pt 'PT Sans'";
     context.fillText(`@NewsExpressNZ || ${formattedDate}`, 700, Yposition);
 
     loadImage("/tmp/teaserimage.png").then((image) => {

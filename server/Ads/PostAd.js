@@ -14,7 +14,6 @@ const rwClient = client.readWrite;
 router.post('/PostAd', async (req, res) => {
     try {
         await postAd();
-        // await postTextTweet();
         return res.json({ status: 'ok' })
     } catch (err) {
         console.log(err);
@@ -33,16 +32,6 @@ async function postAd() {
             media: { media_ids: [mediaId] },
         });
         console.log("Media Tweet posted successfully");
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-async function postTextTweet() {
-    try {
-        await rwClient.v2.tweet(
-            "https://newsexpress.co.nz/");
-        console.log("Text Tweet posted successfully");
     } catch (error) {
         console.log(error);
     }
