@@ -13,8 +13,21 @@ const rwClient = client.readWrite;
 
 router.post('/PostAd', async (req, res) => {
     try {
-        await postAd();
-        return res.json({ status: 'ok' })
+        //only post Media Tweet from 7am to 11pm
+        const currentTime = new Date();
+        const startTime = new Date();
+        startTime.setHours(6, 55, 0);
+        const endTime = new Date();
+        endTime.setHours(23, 5, 0);
+
+        if (currentTime >= startTime && currentTime <= endTime) {
+            console.log("Posting Media Tweet: " + currentTime);
+            await postAd();
+            return res.json({ status: 'ok' })
+        } else {
+            console.log("Skipping Media Tweet: " + currentTime);
+            return res.json({ status: 'ok' })
+        }
     } catch (err) {
         console.log(err);
         return res.json({ status: 'error' })
@@ -28,7 +41,7 @@ async function postAd() {
         );
         await rwClient.v2.tweet({
             text:
-                "#NewZealand #latestNEWS #AucklandNews #WellingtonNews Read more #NEWS at https://newsexpress.co.nz",
+                "#NewZealand #LatestNEWS #NZNews #AucklandNews #WellingtonNews Read more #NEWS at https://newsexpress.co.nz",
             media: { media_ids: [mediaId] },
         });
         console.log("Media Tweet posted successfully");

@@ -16,8 +16,21 @@ const rwClient = client.readWrite;
 
 router.post('/PostTextTweet', async (req, res) => {
     try {
-        await postTextTweet();
-        return res.json({ status: 'ok' })
+        //only post Text Tweet from 7am to 11pm
+        const currentTime = new Date();
+        const startTime = new Date();
+        startTime.setHours(6, 55, 0);
+        const endTime = new Date();
+        endTime.setHours(23, 5, 0);
+
+        if (currentTime >= startTime && currentTime <= endTime) {
+            console.log("Posting Text Tweet: " + currentTime);
+            await postTextTweet();
+            return res.json({ status: 'ok' })
+        } else {
+            console.log("Skipping Text Tweet: " + currentTime);
+            return res.json({ status: 'ok' })
+        }
     } catch (err) {
         console.log(err);
         return res.json({ status: 'error' })
@@ -27,7 +40,7 @@ router.post('/PostTextTweet', async (req, res) => {
 async function postTextTweet() {
     let NotNewsArray = await getNotNews();
     const randomNum = Math.floor(Math.random() * NotNewsArray.length);
-    let TweetText = `${NotNewsArray[randomNum].articleTitle} || Article by ${NotNewsArray[randomNum].articleSource} || #NewZealand #latestNEWS #AucklandNews #WellingtonNews ${NotNewsArray[randomNum].articleUrl}`
+    let TweetText = `${NotNewsArray[randomNum].articleTitle} || Article by ${NotNewsArray[randomNum].articleSource} || #NewZealand #LatestNews #NZNews #AucklandNews #WellingtonNews ${NotNewsArray[randomNum].articleUrl}`
     try {
         await rwClient.v2.tweet(
             TweetText);
