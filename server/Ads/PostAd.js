@@ -16,9 +16,9 @@ router.post('/PostAd', async (req, res) => {
         //only post Media Tweet from 7am to 11pm
         const currentTime = new Date();
         const startTime = new Date();
-        startTime.setHours(6, 55, 0);
+        startTime.setHours(17, 55, 0); //UTC time
         const endTime = new Date();
-        endTime.setHours(23, 5, 0);
+        endTime.setHours(10, 5, 0);
 
         if (currentTime >= startTime && currentTime <= endTime) {
             console.log("Posting Media Tweet: " + currentTime);
