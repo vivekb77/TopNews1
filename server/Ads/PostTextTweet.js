@@ -26,10 +26,10 @@ router.post('/PostTextTweet', async (req, res) => {
         if (currentTime >= startTime && currentTime <= endTime) {
             console.log("Posting Text Tweet: " + currentTime);
             await postTextTweet();
-            return res.json({ status: 'ok' })
+            return res.json({ status: 'ok', message: "Posted Text Tweet: " + currentTime })
         } else {
             console.log("Skipping Text Tweet: " + currentTime);
-            return res.json({ status: 'ok' })
+            return res.json({ status: 'ok', message: "Skipped Text Tweet: " + currentTime })
         }
     } catch (err) {
         console.log(err);

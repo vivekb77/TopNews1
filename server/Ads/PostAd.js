@@ -23,10 +23,10 @@ router.post('/PostAd', async (req, res) => {
         if (currentTime >= startTime && currentTime <= endTime) {
             console.log("Posting Media Tweet: " + currentTime);
             await postAd();
-            return res.json({ status: 'ok' })
+            return res.json({ status: 'ok', message: "Posted Media Tweet: " + currentTime })
         } else {
             console.log("Skipping Media Tweet: " + currentTime);
-            return res.json({ status: 'ok' })
+            return res.json({ status: 'ok', message: "Skipped Media Tweet: " + currentTime })
         }
     } catch (err) {
         console.log(err);
