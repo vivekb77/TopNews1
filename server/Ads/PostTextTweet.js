@@ -17,19 +17,21 @@ const rwClient = client.readWrite;
 router.post('/PostTextTweet', async (req, res) => {
     try {
         //only post Text Tweet from 7am to 11pm
-        const currentTime = new Date();
-        const startTime = new Date();
-        startTime.setHours(17, 55, 0); //UTC time
-        const endTime = new Date();
-        endTime.setHours(10, 5, 0);
+        const currentTimeUTC = new Date();
+        const nztOffset = 13 * 60;
+        const currentTimeNZT = new Date(currentTimeUTC.getTime() + nztOffset * 60 * 1000);
+        const startTimeNZT = new Date(currentTimeNZT);
+        startTimeNZT.setHours(6, 55, 0);
+        const endTimeNZT = new Date(currentTimeNZT);
+        endTimeNZT.setHours(23, 5, 0);
 
-        if (currentTime >= startTime && currentTime <= endTime) {
-            console.log("Posting Text Tweet: " + currentTime);
+        if (currentTimeNZT >= startTimeNZT && currentTimeNZT <= endTimeNZT) {
+            console.log("Posting Text Tweet: " + currentTimeNZT);
             await postTextTweet();
-            return res.json({ status: 'ok', message: "Posted Text Tweet: " + currentTime })
+            return res.json({ status: 'ok', message: "Posted Text Tweet: " + currentTimeNZT })
         } else {
-            console.log("Skipping Text Tweet: " + currentTime);
-            return res.json({ status: 'ok', message: "Skipped Text Tweet: " + currentTime })
+            console.log("Skipping Text Tweet: " + currentTimeNZT);
+            return res.json({ status: 'ok', message: "Skipped Text Tweet: " + currentTimeNZT })
         }
     } catch (err) {
         console.log(err);

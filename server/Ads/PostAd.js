@@ -14,19 +14,21 @@ const rwClient = client.readWrite;
 router.post('/PostAd', async (req, res) => {
     try {
         //only post Media Tweet from 7am to 11pm
-        const currentTime = new Date();
-        const startTime = new Date();
-        startTime.setHours(17, 55, 0); //UTC time
-        const endTime = new Date();
-        endTime.setHours(10, 5, 0);
+        const currentTimeUTC = new Date();
+        const nztOffset = 13 * 60;
+        const currentTimeNZT = new Date(currentTimeUTC.getTime() + nztOffset * 60 * 1000);
+        const startTimeNZT = new Date(currentTimeNZT);
+        startTimeNZT.setHours(6, 55, 0);
+        const endTimeNZT = new Date(currentTimeNZT);
+        endTimeNZT.setHours(23, 5, 0);
 
-        if (currentTime >= startTime && currentTime <= endTime) {
-            console.log("Posting Media Tweet: " + currentTime);
+        if (currentTimeNZT >= startTimeNZT && currentTimeNZT <= endTimeNZT) {
+            console.log("Posting Media Tweet: " + currentTimeNZT);
             await postAd();
-            return res.json({ status: 'ok', message: "Posted Media Tweet: " + currentTime })
+            return res.json({ status: 'ok', message: "Posted Media Tweet: " + currentTimeNZT })
         } else {
-            console.log("Skipping Media Tweet: " + currentTime);
-            return res.json({ status: 'ok', message: "Skipped Media Tweet: " + currentTime })
+            console.log("Skipping Media Tweet: " + currentTimeNZT);
+            return res.json({ status: 'ok', message: "Skipped Media Tweet: " + currentTimeNZT })
         }
     } catch (err) {
         console.log(err);
