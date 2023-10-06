@@ -52,6 +52,88 @@ async function postTextTweet() {
     }
 }
 
+router.post('/PostPollTweet', async (req, res) => {
+    try {
+        //only post Poll Tweet from 7am to 11pm
+        const currentTimeUTC = new Date();
+        const nztOffset = 13 * 60;
+        const currentTimeNZT = new Date(currentTimeUTC.getTime() + nztOffset * 60 * 1000);
+        const startTimeNZT = new Date(currentTimeNZT);
+        startTimeNZT.setHours(6, 55, 0);
+        const endTimeNZT = new Date(currentTimeNZT);
+        endTimeNZT.setHours(23, 5, 0);
+
+        if (currentTimeNZT >= startTimeNZT && currentTimeNZT <= endTimeNZT) {
+            console.log("Posting Poll Tweet: " + currentTimeNZT);
+            await postPollTweet();
+            return res.json({ status: 'ok', message: "Posted Poll Tweet: " + currentTimeNZT })
+        } else {
+            console.log("Skipping Poll Tweet: " + currentTimeNZT);
+            return res.json({ status: 'ok', message: "Skipped Poll Tweet: " + currentTimeNZT })
+        }
+    } catch (err) {
+        console.log(err);
+        return res.json({ status: 'error' })
+    }
+})
+
+async function postPollTweet() {
+    let PollsArray = await getPolls();
+    let PollAnswersArray = [];
+    const randomNum = Math.floor(Math.random() * PollsArray.length);
+
+    let PollTweetText = `${PollsArray[randomNum].question.text}`
+    let correctAnswer = PollsArray[randomNum].correctAnswer;
+    //hint for correct answer, make last letter of answer caps
+    var lastLetter = correctAnswer.slice(-1).toLowerCase();
+    var capitalizedLastLetter = lastLetter.toUpperCase();
+    let correctAnswerHint = correctAnswer.slice(0, -1) + capitalizedLastLetter;
+
+    PollAnswersArray.push(correctAnswerHint)
+    PollAnswersArray.push(PollsArray[randomNum].incorrectAnswers[0])
+    PollAnswersArray.push(PollsArray[randomNum].incorrectAnswers[1])
+    PollAnswersArray.push(PollsArray[randomNum].incorrectAnswers[2])
+
+    //shuffle answers
+    for (let i = PollAnswersArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [PollAnswersArray[i], PollAnswersArray[j]] = [PollAnswersArray[j], PollAnswersArray[i]];
+    }
+
+    try {
+        const { data: createdTweet } = await client.v2.tweet(PollTweetText, {
+            poll: { duration_minutes: 120, options: [PollAnswersArray[0], PollAnswersArray[1], PollAnswersArray[2], PollAnswersArray[3]] },
+        });
+        // console.log('Tweet', createdTweet.id, ':', createdTweet.text);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function getPolls() {
+    let PollsArray = [];
+
+    try {
+        const response = await axios.get("https://the-trivia-api.com/v2/questions?limit=10&difficulties=hard,medium&region=NZ&types=text_choice");
+        for (let i = 0; i < response.data.length; i++) {
+            const pollsItem = {
+                question: response.data[i].question,
+                correctAnswer: response.data[i].correctAnswer,
+                incorrectAnswers: response.data[i].incorrectAnswers,
+                category: response.data[i].category,
+                difficulty: response.data[i].difficulty,
+                regions: response.data[i].regions
+            };
+            PollsArray.push(pollsItem);
+        };
+    }
+    catch (error) {
+        console.log(error);
+    }
+
+    return PollsArray;
+}
+
 async function getNotNews() {
     const timeZone = 'Pacific/Auckland';
     const currentDate = moment().tz(timeZone).startOf('day').toDate();
@@ -84,3 +166,5 @@ async function getNotNews() {
     return NotNewsArray;
 }
 module.exports = router;
+// https://github.com/plhery/node-twitter-api-v2/blob/HEAD/doc/v2.md#create-a-tweet
+// https://the-trivia-api.com/docs/v2/#tag/Questions/operation/getRandomQuestions

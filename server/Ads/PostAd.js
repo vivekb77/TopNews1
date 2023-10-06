@@ -54,3 +54,4 @@ async function postAd() {
 
 module.exports = router;
 // https://www.geeksforgeeks.org/tweet-using-node-js-and-twitter-api/
+// https://www.npmjs.com/package/twitter-api-v2
