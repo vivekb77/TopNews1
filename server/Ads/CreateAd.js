@@ -138,7 +138,7 @@ async function createAd() {
         const formattedDate = new Date().toLocaleDateString('en-US', options);
 
         const width = 1080;
-        let height = 1650;
+        let height = 1800;
 
         const canvas = createCanvas(width, height);
         const context = canvas.getContext("2d");
@@ -170,7 +170,7 @@ async function createAd() {
         Yposition = Yposition + 100;
         context.fillStyle = "#000000";
 
-        context.font = "bold 40pt 'PT Sans'";
+        context.font = "bold 50pt 'PT Sans'";
         context.textAlign = "left";
         context.fillStyle = "#000000";
 
@@ -178,7 +178,7 @@ async function createAd() {
             // testTitle: "Subnational Ethnic Population Projections: 2018(base)–2043 Update – Statistics New Zealand",
             // testTitle: "NZ crew who spent winter in Antarctica stuck for few more days after plane fault",
             // testTitle: "NZ crew who ",
-            testTitle: "Remembering the life of Jason Wynyard with",
+            testTitle: "Wellington defend 32 phases, hold on for thrilling NPC quarterfinal win over Waikato",
         }
 
         //!NEWS
@@ -188,21 +188,26 @@ async function createAd() {
         context.fillText(NotNews[0], Xposition, Yposition, 935);
         if (NotNews[1]) context.fillText(NotNews[1], Xposition, Yposition + (lineHeight * 1), 935);
         if (NotNews[2]) context.fillText(NotNews[2], Xposition, Yposition + (lineHeight * 2), 935);
+        if (NotNews[3]) context.fillText(NotNews[3], Xposition, Yposition + (lineHeight * 3), 935);
 
         //display source as per lines of text
-        context.font = "bold 20pt 'PT Sans'";
+        context.font = "bold 23pt 'PT Sans'";
         context.fillStyle = "#808080";
-        if (NotNews[0] && !NotNews[1] && !NotNews[2]) {
+        if (NotNews[0] && !NotNews[1] && !NotNews[2] && !NotNews[3]) {
             context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 1) + 30);
             Yposition = Yposition + (lineHeight * 1) + 90;
         }
-        if (NotNews[0] && NotNews[1] && !NotNews[2]) {
+        if (NotNews[0] && NotNews[1] && !NotNews[2] && !NotNews[3]) {
             context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 2) + 30);
             Yposition = Yposition + (lineHeight * 2) + 90;
         }
-        if (NotNews[0] && NotNews[1] && NotNews[2]) {
+        if (NotNews[0] && NotNews[1] && NotNews[2] && !NotNews[3]) {
             context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 3) + 30);
             Yposition = Yposition + (lineHeight * 3) + 90;
+        }
+        if (NotNews[0] && NotNews[1] && NotNews[2] && NotNews[3]) {
+            context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 4) + 30);
+            Yposition = Yposition + (lineHeight * 4) + 90;
         }
 
         //horizontal line
@@ -212,7 +217,7 @@ async function createAd() {
 
         //NZ NEWS
         context.fillStyle = "#000000";
-        context.font = "bold 40pt 'PT Sans'";
+        context.font = "bold 50pt 'PT Sans'";
         const teaserImagePosition = {
             w2: 935,
             h2: 500,
@@ -221,23 +226,29 @@ async function createAd() {
         };
         Yposition = Yposition + 600;
         const NZNews = formatTitle(NZNewsArray[randomNumNZNews].articleTitle);
+        // const NZNews = formatTitle(post.testTitle);
         context.fillText(NZNews[0], Xposition, Yposition, 935);
         if (NZNews[1]) context.fillText(NZNews[1], Xposition, Yposition + (lineHeight * 1), 935);
         if (NZNews[2]) context.fillText(NZNews[2], Xposition, Yposition + (lineHeight * 2), 935);
+        if (NZNews[3]) context.fillText(NZNews[3], Xposition, Yposition + (lineHeight * 3), 935);
         //display source as per lines of text
-        context.font = "bold 20pt 'PT Sans'";
+        context.font = "bold 23pt 'PT Sans'";
         context.fillStyle = "#808080";
-        if (NZNews[0] && !NZNews[1] && !NZNews[2]) {
+        if (NZNews[0] && !NZNews[1] && !NZNews[2] && !NZNews[3]) {
             context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 1) + 30);
             Yposition = Yposition + (lineHeight * 1) + 100;
         }
-        if (NZNews[0] && NZNews[1] && !NZNews[2]) {
+        if (NZNews[0] && NZNews[1] && !NZNews[2] && !NZNews[3]) {
             context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 2) + 30);
             Yposition = Yposition + (lineHeight * 2) + 100;
         }
-        if (NZNews[0] && NZNews[1] && NZNews[2]) {
+        if (NZNews[0] && NZNews[1] && NZNews[2] && !NZNews[3]) {
             context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 3) + 30);
             Yposition = Yposition + (lineHeight * 3) + 100;
+        }
+        if (NZNews[0] && NZNews[1] && NZNews[2] && NZNews[3]) {
+            context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 4) + 30);
+            Yposition = Yposition + (lineHeight * 4) + 100;
         }
 
         //Credits
@@ -256,8 +267,8 @@ async function createAd() {
             const { w, h, x, y } = logoImagePosition;
             context.drawImage(image, x, y, w, h);
             const buffer = canvas.toBuffer("image/png");
-            // fs.writeFileSync("/tmp/twitteradimage.png", buffer);
-            fs.writeFileSync("../twitteradimage.png", buffer);
+            fs.writeFileSync("/tmp/twitteradimage.png", buffer);
+            // fs.writeFileSync("../twitteradimage.png", buffer);
         });
         console.log('Twitter Ad image created');
     } else {
@@ -274,18 +285,20 @@ async function downloadImage(url, filename) {
 
 function formatTitle(title) {
     let output = [];
-    if (title.length >= 28) {
+    if (title.length >= 27) {
         const firstLine = getMaxNextLine(title);
         const secondLine = getMaxNextLine(firstLine.remainingChars);
         const thirdLine = getMaxNextLine(secondLine.remainingChars);
+        const fourthLine = getMaxNextLine(thirdLine.remainingChars);
         output = [firstLine.line];
         let fmSecondLine = secondLine.line;
         output.push(fmSecondLine);
+        output.push(thirdLine.line);
 
-        let fmThirdLine = thirdLine.line;
+        let fmFourthLine = fourthLine.line;
         //if title is longer than x characters, add the ... character
-        if (thirdLine.remainingChars.length > 0) fmThirdLine += " ...";
-        output.push(fmThirdLine);
+        if (fourthLine.remainingChars.length > 0) fmFourthLine += " ...";
+        output.push(fmFourthLine);
     }
 
     // else if (title.length >= 10) {
@@ -299,13 +312,19 @@ function formatTitle(title) {
     return output;
 };
 
-function getMaxNextLine(input, maxChars = 28) {
+function getMaxNextLine(input, maxChars = 27) {
+
+    // const totalwords = input.split(" ");
+    // const totalchars = input.length;
+    // const lengthbywords = totalchars/totalwords.length;
+    // console.log(totalwords.length,totalchars,"---------",lengthbywords)
+
     const allWords = input.split(" ");
     const lineIndex = allWords.reduce((prev, cur, index) => {
         if (prev?.done) return prev;
         const endLastWord = prev?.position || 0;
         const position = endLastWord + 1 + cur.length; //+1 is to exclude space
-        if (position >= maxChars + 5) { //issue - if last word is too long , text is squeezed. Fix -select 1 word less if last word is too long
+        if (position >= maxChars + 3) { //issue - if last word is too long , text is squeezed. Fix -select 1 word less if last word is too long
             index = index - 1;
             return { done: true, index };
         } else if (position >= maxChars) {
