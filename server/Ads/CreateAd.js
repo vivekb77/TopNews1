@@ -29,6 +29,13 @@ async function getNotNews() {
             $lt: moment(currentDate).add(1, 'day').toDate()
         }
     })
+    //remove articles with long titles
+    for (let k = 0; k < NotNewsArray.length; k++) {
+        if (NotNewsArray[k].articleTitle.length > 100) {
+            NotNewsArray.splice(k, 1);
+        }
+    }
+
     NotNewsArray.sort((a, b) => (a.articlePublicationDate > b.articlePublicationDate) ? -1 : 1)
     NotNewsArray = NotNewsArray.slice(0, 20);
 
@@ -71,6 +78,14 @@ async function getNZNews() {
             NZNewsArray2.push(NZNewsArray1[f]);
         }
     }
+
+    //remove articles with long title
+    for (let k = 0; k < NZNewsArray2.length; k++) {
+        if (NZNewsArray2[k].articleTitle.length > 100) {
+            NZNewsArray2.splice(k, 1);
+        }
+    }
+
     NZNewsArray2 = NZNewsArray2.slice(0, 20);
 
     //get HD image for stuff
@@ -117,133 +132,144 @@ router.post('/CreateAd', async (req, res) => {
 async function createAd() {
     let NZNewsArray = await getNZNews();
     let NotNewsArray = await getNotNews();
-    const formattedDate = new Date().toLocaleDateString('en-US', options);
 
-    const width = 1080;
-    let height = 1650;
+    if (NZNewsArray && NotNewsArray) {
 
-    const canvas = createCanvas(width, height);
-    const context = canvas.getContext("2d");
+        const formattedDate = new Date().toLocaleDateString('en-US', options);
 
-    context.fillStyle = "#ffffff";
-    context.fillRect(0, 0, width, height);
+        const width = 1080;
+        let height = 1650;
 
-    const post = {
-        testTitle: "Labour still protecting the status quo",
+        const canvas = createCanvas(width, height);
+        const context = canvas.getContext("2d");
+
+        context.fillStyle = "#ffffff";
+        context.fillRect(0, 0, width, height);
+
+        let Xposition = 70;
+        let Yposition = 250;
+        const lineHeight = 70;
+
+        const randomNumNZNews = Math.floor(Math.random() * NZNewsArray.length);
+        const randomNumNotNews = Math.floor(Math.random() * NotNewsArray.length);
+
+        await downloadImage(NZNewsArray[randomNumNZNews].teaserImageUrl, '/tmp/teaserimage.png');
+        await downloadImage('https://i.ibb.co/f1VMLDh/Screenshot-2023-10-01-at-11-18-05-PM.png', '/tmp/adlogo.png');
+
+        //LOGO
+        const logoImagePosition = {
+            w: 900,
+            h: 220,
+            x: 90,
+            y: 20,
+        };
+
+        //horizontal line
+        context.fillStyle = "#d5d5d5";
+        context.fillRect(30, Yposition, 1020, 10);
+        Yposition = Yposition + 100;
+        context.fillStyle = "#000000";
+
+        context.font = "bold 45pt 'PT Sans'";
+        context.textAlign = "left";
+        context.fillStyle = "#000000";
+
+        const post = {
+            // testTitle: "Subnational Ethnic Population Projections: 2018(base)–2043 Update – Statistics New Zealand",
+            // testTitle: "NZ crew who spent winter in Antarctica stuck for few more days after plane fault",
+            // testTitle: "NZ crew who ",
+            testTitle: "Remembering the life of Jason Wynyard with",
+        }
+
+        //!NEWS
+        const NotNews = formatTitle(NotNewsArray[randomNumNotNews].articleTitle);
+        // const NotNews = formatTitle(post.testTitle);
+
+        context.fillText(NotNews[0], Xposition, Yposition, 900);
+        if (NotNews[1]) context.fillText(NotNews[1], Xposition, Yposition + (lineHeight * 1), 900);
+        if (NotNews[2]) context.fillText(NotNews[2], Xposition, Yposition + (lineHeight * 2), 900);
+
+        //display source as per lines of text
+        context.font = "bold 20pt 'PT Sans'";
+        context.fillStyle = "#808080";
+        if (NotNews[0] && !NotNews[1] && !NotNews[2]) {
+            context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 1) + 30);
+            Yposition = Yposition + (lineHeight * 1) + 90;
+        }
+        if (NotNews[0] && NotNews[1] && !NotNews[2]) {
+            context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 2) + 30);
+            Yposition = Yposition + (lineHeight * 2) + 90;
+        }
+        if (NotNews[0] && NotNews[1] && NotNews[2]) {
+            context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 3) + 30);
+            Yposition = Yposition + (lineHeight * 3) + 90;
+        }
+
+        //horizontal line
+        context.fillStyle = "#d5d5d5";
+        context.fillRect(30, Yposition, 1020, 10);
+        Yposition = Yposition + 60;
+
+        //NZ NEWS
+        context.fillStyle = "#000000";
+        context.font = "bold 45pt 'PT Sans'";
+        const teaserImagePosition = {
+            w2: 935,
+            h2: 500,
+            x2: Xposition,
+            y2: Yposition,
+        };
+        Yposition = Yposition + 600;
+        const NZNews = formatTitle(NZNewsArray[randomNumNZNews].articleTitle);
+        context.fillText(NZNews[0], Xposition, Yposition, 900);
+        if (NZNews[1]) context.fillText(NZNews[1], Xposition, Yposition + (lineHeight * 1), 900);
+        if (NZNews[2]) context.fillText(NZNews[2], Xposition, Yposition + (lineHeight * 2), 900);
+        //display source as per lines of text
+        context.font = "bold 20pt 'PT Sans'";
+        context.fillStyle = "#808080";
+        if (NZNews[0] && !NZNews[1] && !NZNews[2]) {
+            context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 1) + 30);
+            Yposition = Yposition + (lineHeight * 1) + 100;
+        }
+        if (NZNews[0] && NZNews[1] && !NZNews[2]) {
+            context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 2) + 30);
+            Yposition = Yposition + (lineHeight * 2) + 100;
+        }
+        if (NZNews[0] && NZNews[1] && NZNews[2]) {
+            context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, Xposition, Yposition + (lineHeight * 3) + 30);
+            Yposition = Yposition + (lineHeight * 3) + 100;
+        }
+
+        //Credits
+        context.fillStyle = "#808080";
+        context.font = "bold 10pt 'PT Sans'";
+        context.fillText(`@NewsExpressNZ || ${formattedDate}`, 800, Yposition);
+
+        loadImage("/tmp/teaserimage.png").then((image) => {
+            const { w2, h2, x2, y2 } = teaserImagePosition;
+            context.drawImage(image, x2, y2, w2, h2);
+            const buffer = canvas.toBuffer("image/png");
+            fs.writeFileSync("/tmp/twitteradimage.png", buffer);
+        })
+
+        loadImage("/tmp/adlogo.png").then((image) => {
+            const { w, h, x, y } = logoImagePosition;
+            context.drawImage(image, x, y, w, h);
+            const buffer = canvas.toBuffer("image/png");
+            fs.writeFileSync("/tmp/twitteradimage.png", buffer);
+            // fs.writeFileSync("../twitteradimage.png", buffer);
+        });
+        console.log('Twitter Ad image created');
+    } else {
+        console.log('No article data available for creating Ad')
     }
-
-    context.font = "bold 50pt 'PT Sans'";
-    context.textAlign = "left";
-    context.fillStyle = "#000000";
-
-    let Yposition = 250;
-    const lineHeight = 70;
-
-    const randomNumNZNews = Math.floor(Math.random() * NZNewsArray.length);
-    const randomNumNotNews = Math.floor(Math.random() * NotNewsArray.length);
-
-    await downloadImage(NZNewsArray[randomNumNZNews].teaserImageUrl, '/tmp/teaserimage.png');
-    await downloadImage('https://i.ibb.co/f1VMLDh/Screenshot-2023-10-01-at-11-18-05-PM.png', '/tmp/adlogo.png');
-
-    //LOGO
-    const logoImagePosition = {
-        w: 900,
-        h: 220,
-        x: 90,
-        y: 20,
-    };
-
-    //horizontal line
-    context.fillStyle = "#d5d5d5";
-    context.fillRect(30, Yposition, 1020, 10);
-    Yposition = Yposition + 100;
-    context.fillStyle = "#000000";
-
-    //!NEWS
-    const NotNews = formatTitle(NotNewsArray[randomNumNotNews].articleTitle);
-    // const NotNews = formatTitle(post.testTitle);
-    context.fillText(NotNews[0], 80, Yposition, 900);
-    if (NotNews[1]) context.fillText(NotNews[1], 80, Yposition + (lineHeight * 1), 900);
-    if (NotNews[2]) context.fillText(NotNews[2], 80, Yposition + (lineHeight * 2), 900);
-    //display source as per lines of text
-    context.font = "bold 30pt 'PT Sans'";
-    context.fillStyle = "#808080";
-    if (NotNews[0] && !NotNews[1] && !NotNews[2]) {
-        context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, 80, Yposition + (lineHeight * 1) + 30);
-        Yposition = Yposition + (lineHeight * 1) + 90;
-    }
-    if (NotNews[0] && NotNews[1] && !NotNews[2]) {
-        context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, 80, Yposition + (lineHeight * 2) + 30);
-        Yposition = Yposition + (lineHeight * 2) + 90;
-    }
-    if (NotNews[0] && NotNews[1] && NotNews[2]) {
-        context.fillText(`${NotNewsArray[randomNumNotNews].articleSource} || ${NotNewsArray[randomNumNotNews].articleAuthor}`, 80, Yposition + (lineHeight * 3) + 30);
-        Yposition = Yposition + (lineHeight * 3) + 90;
-    }
-
-    //horizontal line
-    context.fillStyle = "#d5d5d5";
-    context.fillRect(30, Yposition, 1020, 10);
-    Yposition = Yposition + 60;
-
-    //NZ NEWS
-    context.fillStyle = "#000000";
-    context.font = "bold 50pt 'PT Sans'";
-    const teaserImagePosition = {
-        w2: 920,
-        h2: 500,
-        x2: 80,
-        y2: Yposition,
-    };
-    Yposition = Yposition + 600;
-    const NZNews = formatTitle(NZNewsArray[randomNumNZNews].articleTitle);
-    context.fillText(NZNews[0], 80, Yposition, 900);
-    if (NZNews[1]) context.fillText(NZNews[1], 80, Yposition + (lineHeight * 1), 900);
-    if (NZNews[2]) context.fillText(NZNews[2], 80, Yposition + (lineHeight * 2), 900);
-    //display source as per lines of text
-    context.font = "bold 30pt 'PT Sans'";
-    context.fillStyle = "#808080";
-    if (NZNews[0] && !NZNews[1] && !NZNews[2]) {
-        context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, 80, Yposition + (lineHeight * 1) + 30);
-        Yposition = Yposition + (lineHeight * 1) + 100;
-    }
-    if (NZNews[0] && NZNews[1] && !NZNews[2]) {
-        context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, 80, Yposition + (lineHeight * 2) + 30);
-        Yposition = Yposition + (lineHeight * 2) + 100;
-    }
-    if (NZNews[0] && NZNews[1] && NZNews[2]) {
-        context.fillText(`${NZNewsArray[randomNumNZNews].articleSource} || ${NZNewsArray[randomNumNZNews].articleAuthor}`, 80, Yposition + (lineHeight * 3) + 30);
-        Yposition = Yposition + (lineHeight * 3) + 100;
-    }
-
-    //Credits
-    context.fillStyle = "#808080";
-    context.font = "bold 10pt 'PT Sans'";
-    context.fillText(`@NewsExpressNZ || ${formattedDate}`, 700, Yposition);
-
-    loadImage("/tmp/teaserimage.png").then((image) => {
-        const { w2, h2, x2, y2 } = teaserImagePosition;
-        context.drawImage(image, x2, y2, w2, h2);
-        const buffer = canvas.toBuffer("image/png");
-        fs.writeFileSync("/tmp/twitteradimage.png", buffer);
-    })
-
-    loadImage("/tmp/adlogo.png").then((image) => {
-        const { w, h, x, y } = logoImagePosition;
-        context.drawImage(image, x, y, w, h);
-        const buffer = canvas.toBuffer("image/png");
-        fs.writeFileSync("/tmp/twitteradimage.png", buffer);
-    });
-    console.log('Twitter Ad image created');
 }
 
 async function downloadImage(url, filename) {
     const response = await axios.get(url, { responseType: 'arraybuffer' });
-
     const writeFileAsync = util.promisify(fs.writeFile);
     await writeFileAsync(filename, response.data);
-
-    console.log('Teaser Image downloaded');
+    // console.log('Teaser Image downloaded');
 }
 
 function formatTitle(title) {
@@ -253,25 +279,23 @@ function formatTitle(title) {
         const secondLine = getMaxNextLine(firstLine.remainingChars);
         const thirdLine = getMaxNextLine(secondLine.remainingChars);
         output = [firstLine.line];
-        let fmSecondLine = [secondLine.line];
+        let fmSecondLine = secondLine.line;
         output.push(fmSecondLine);
 
-        let fmThirdLine = [thirdLine.line];
+        let fmThirdLine = thirdLine.line;
         //if title is longer than x characters, add the ... character
         if (thirdLine.remainingChars.length > 0) fmThirdLine += " ...";
-
         output.push(fmThirdLine);
     }
 
-    else if (title.length >= 10) {
-        const firstLine = getMaxNextLine(title);
-        output = [firstLine.line, firstLine.remainingChars];
-    }
+    // else if (title.length >= 10) {
+    //     const firstLine = getMaxNextLine(title);
+    //     output = [firstLine.line, firstLine.remainingChars];
+    // }
     // Otherwise, return the short title.
     else {
         output = [title];
     }
-
     return output;
 };
 
@@ -280,8 +304,11 @@ function getMaxNextLine(input, maxChars = 30) {
     const lineIndex = allWords.reduce((prev, cur, index) => {
         if (prev?.done) return prev;
         const endLastWord = prev?.position || 0;
-        const position = endLastWord + 1 + cur.length; //+1 is to count space
-        if (position >= maxChars) {
+        const position = endLastWord + 1 + cur.length; //+1 is to exclude space
+        if (position >= maxChars + 5) { //issue - if last word is too long , text is squeezed. Fix -select 1 word less if last word is too long
+            index = index - 1;
+            return { done: true, index };
+        } else if (position >= maxChars) {
             return { done: true, index };
         } else {
             //issue - last word is selected twice
@@ -289,7 +316,6 @@ function getMaxNextLine(input, maxChars = 30) {
             return { position, index };
         }
     });
-
     const line = allWords.slice(0, lineIndex.index).join(" ");
     let remainingChars;
     // FIX  if only one word, select nothing here because it is already selected above
