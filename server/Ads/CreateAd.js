@@ -31,7 +31,7 @@ async function getNotNews() {
     })
     //remove articles with long titles
     for (let k = 0; k < NotNewsArray.length; k++) {
-        if (NotNewsArray[k].articleTitle.length > 100) {
+        if (NotNewsArray[k].articleTitle.length > 90) {
             NotNewsArray.splice(k, 1);
         }
     }
@@ -81,7 +81,7 @@ async function getNZNews() {
 
     //remove articles with long title
     for (let k = 0; k < NZNewsArray2.length; k++) {
-        if (NZNewsArray2[k].articleTitle.length > 100) {
+        if (NZNewsArray2[k].articleTitle.length > 90) {
             NZNewsArray2.splice(k, 1);
         }
     }
@@ -256,8 +256,8 @@ async function createAd() {
             const { w, h, x, y } = logoImagePosition;
             context.drawImage(image, x, y, w, h);
             const buffer = canvas.toBuffer("image/png");
-            fs.writeFileSync("/tmp/twitteradimage.png", buffer);
-            // fs.writeFileSync("../twitteradimage.png", buffer);
+            // fs.writeFileSync("/tmp/twitteradimage.png", buffer);
+            fs.writeFileSync("../twitteradimage.png", buffer);
         });
         console.log('Twitter Ad image created');
     } else {
@@ -274,7 +274,7 @@ async function downloadImage(url, filename) {
 
 function formatTitle(title) {
     let output = [];
-    if (title.length >= 30) {
+    if (title.length >= 28) {
         const firstLine = getMaxNextLine(title);
         const secondLine = getMaxNextLine(firstLine.remainingChars);
         const thirdLine = getMaxNextLine(secondLine.remainingChars);
@@ -299,7 +299,7 @@ function formatTitle(title) {
     return output;
 };
 
-function getMaxNextLine(input, maxChars = 30) {
+function getMaxNextLine(input, maxChars = 28) {
     const allWords = input.split(" ");
     const lineIndex = allWords.reduce((prev, cur, index) => {
         if (prev?.done) return prev;

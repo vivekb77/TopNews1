@@ -58,17 +58,21 @@ async function postArticleTweet() {
 
 
 async function getAIArticle() {
+    
     const configuration = new Configuration({
         apiKey: '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',
     });
     const openai = new OpenAIApi(configuration);
 
-    let prompt = 'Generate a new tweet on a historical fact.';
+
+    let prompts = ['Generate a new tweet on a historical fact.','Generate a new tweet on a geographical fact.','Generate a new tweet on a science fact.','Generate a new tweet on a mathematics fact.'];
     let AIArticle;
+    const randomNum = Math.floor(Math.random() * prompts.length);
+
     try {
         const response = await openai.createCompletion({
             model: "gpt-3.5-turbo-instruct",
-            prompt: prompt,
+            prompt: prompts[randomNum],
             max_tokens: 70,
             temperature: 0.5,
         });
