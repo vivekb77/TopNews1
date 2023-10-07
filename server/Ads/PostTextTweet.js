@@ -102,7 +102,7 @@ async function postPollTweet() {
 
     try {
         const { data: createdTweet } = await client.v2.tweet(PollTweetText, {
-            poll: { duration_minutes: 120, options: [PollAnswersArray[0], PollAnswersArray[1], PollAnswersArray[2], PollAnswersArray[3]] },
+            poll: { duration_minutes: 300, options: [PollAnswersArray[0], PollAnswersArray[1], PollAnswersArray[2], PollAnswersArray[3]] },
         });
         // console.log('Tweet', createdTweet.id, ':', createdTweet.text);
     } catch (error) {

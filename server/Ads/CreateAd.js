@@ -170,7 +170,7 @@ async function createAd() {
         Yposition = Yposition + 100;
         context.fillStyle = "#000000";
 
-        context.font = "bold 45pt 'PT Sans'";
+        context.font = "bold 40pt 'PT Sans'";
         context.textAlign = "left";
         context.fillStyle = "#000000";
 
@@ -185,9 +185,9 @@ async function createAd() {
         const NotNews = formatTitle(NotNewsArray[randomNumNotNews].articleTitle);
         // const NotNews = formatTitle(post.testTitle);
 
-        context.fillText(NotNews[0], Xposition, Yposition, 900);
-        if (NotNews[1]) context.fillText(NotNews[1], Xposition, Yposition + (lineHeight * 1), 900);
-        if (NotNews[2]) context.fillText(NotNews[2], Xposition, Yposition + (lineHeight * 2), 900);
+        context.fillText(NotNews[0], Xposition, Yposition, 935);
+        if (NotNews[1]) context.fillText(NotNews[1], Xposition, Yposition + (lineHeight * 1), 935);
+        if (NotNews[2]) context.fillText(NotNews[2], Xposition, Yposition + (lineHeight * 2), 935);
 
         //display source as per lines of text
         context.font = "bold 20pt 'PT Sans'";
@@ -212,7 +212,7 @@ async function createAd() {
 
         //NZ NEWS
         context.fillStyle = "#000000";
-        context.font = "bold 45pt 'PT Sans'";
+        context.font = "bold 40pt 'PT Sans'";
         const teaserImagePosition = {
             w2: 935,
             h2: 500,
@@ -221,9 +221,9 @@ async function createAd() {
         };
         Yposition = Yposition + 600;
         const NZNews = formatTitle(NZNewsArray[randomNumNZNews].articleTitle);
-        context.fillText(NZNews[0], Xposition, Yposition, 900);
-        if (NZNews[1]) context.fillText(NZNews[1], Xposition, Yposition + (lineHeight * 1), 900);
-        if (NZNews[2]) context.fillText(NZNews[2], Xposition, Yposition + (lineHeight * 2), 900);
+        context.fillText(NZNews[0], Xposition, Yposition, 935);
+        if (NZNews[1]) context.fillText(NZNews[1], Xposition, Yposition + (lineHeight * 1), 935);
+        if (NZNews[2]) context.fillText(NZNews[2], Xposition, Yposition + (lineHeight * 2), 935);
         //display source as per lines of text
         context.font = "bold 20pt 'PT Sans'";
         context.fillStyle = "#808080";
@@ -243,7 +243,7 @@ async function createAd() {
         //Credits
         context.fillStyle = "#808080";
         context.font = "bold 10pt 'PT Sans'";
-        context.fillText(`@NewsExpressNZ || ${formattedDate}`, 800, Yposition);
+        context.fillText(`@NewsExpressNZ || ${formattedDate}`, 730, Yposition);
 
         loadImage("/tmp/teaserimage.png").then((image) => {
             const { w2, h2, x2, y2 } = teaserImagePosition;
