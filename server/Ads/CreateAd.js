@@ -170,7 +170,7 @@ async function createAd() {
         Yposition = Yposition + 100;
         context.fillStyle = "#000000";
 
-        context.font = "bold 50pt 'PT Sans'";
+        context.font = "bold 45pt 'PT Sans'";
         context.textAlign = "left";
         context.fillStyle = "#000000";
 
@@ -217,7 +217,7 @@ async function createAd() {
 
         //NZ NEWS
         context.fillStyle = "#000000";
-        context.font = "bold 50pt 'PT Sans'";
+        context.font = "bold 45pt 'PT Sans'";
         const teaserImagePosition = {
             w2: 935,
             h2: 500,

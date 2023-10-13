@@ -65,7 +65,7 @@ async function getAIArticle() {
     const openai = new OpenAIApi(configuration);
 
 
-    let prompts = ['Generate a new tweet on a historical fact.','Generate a new tweet on a geographical fact.','Generate a new tweet on a science fact.','Generate a new tweet on a mathematics fact.'];
+    let prompts = ['Generate a new random tweet on a historical fact.','Generate a new random tweet on a geographical fact.','Generate a new random tweet on a science fact.','Generate a new random tweet on a mathematics fact.'];
     let AIArticle;
     const randomNum = Math.floor(Math.random() * prompts.length);
 
@@ -76,7 +76,11 @@ async function getAIArticle() {
             max_tokens: 70,
             temperature: 0.5,
         });
-        AIArticle = response.data.choices[0].text;
+        if (response.status==200) {
+            AIArticle = response.data.choices[0].text;
+          } else {
+            console.error("OpenAI API request failed with status code:", response.status);
+          }
         return AIArticle;
     } catch (error) {
         console.error("Error generating AIArticle:", error);
