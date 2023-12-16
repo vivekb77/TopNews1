@@ -196,6 +196,7 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 				};
 				NewsItemsArray.push(newsItem);
 			});
+				NewsItemsArray.splice(20); //remove all after 20
 		}
 
 		//nz herald
@@ -294,6 +295,7 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 				};
 				NewsItemsArray.push(newsItem);
 			});
+			NewsItemsArray.splice(20); //remove all after 20
 		}
 
 		await addNewsItemsToDB(NewsItemsArray)

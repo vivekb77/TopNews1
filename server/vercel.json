@@ -11,5 +11,16 @@
           "src": "/(.*)",
           "dest": "/"
       }
+  ],
+  "headers": [
+    {
+      "source": "/GetNewsForNZ",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=60, stale-while-revalidate=59"
+        }
+      ]
+    }
   ]
 }

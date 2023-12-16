@@ -22,6 +22,7 @@ const CreateAd = require('./Ads/CreateAd')
 const PostAd = require('./Ads/PostAd')
 const PostTextTweet = require('./Ads/PostTextTweet')
 const AIArticles = require('./Ads/AIArticles')
+const AIArticleSummary = require('./Curate/AIArticleSummary')
 
 
 const MONGO_URL = process.env.MONGO_URL
