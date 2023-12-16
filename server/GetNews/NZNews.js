@@ -75,7 +75,13 @@ router.get('/GetNewsForNZ', async (req, res) => {
         }
         return res.json({ status: 'ok', tweets: AITweets })
     } else {
-        return res.json({ status: 'error', errormessage: 'Something went wrong' })
+        return res.json({ status: 'error', 
+        errormessage: 'Something went wrong',
+        headers: {
+            'Cache-Control': 'public, s-maxage=60',
+            'CDN-Cache-Control': 'public, s-maxage=60',
+            'Vercel-CDN-Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60'
+          }})
     }
 
 })
@@ -97,7 +103,14 @@ router.get('/dateTimeOfLastPullNZ', async (req, res) => {
             hour12: true,
             timeZone: 'Pacific/Auckland'
         };
-        return res.json({ status: 'ok', dateTimeOfLastPull: inputDate.toLocaleDateString('en-US', options) })
+        return res.json(
+            { status: 'ok', 
+            dateTimeOfLastPull: inputDate.toLocaleDateString('en-US', options),
+            headers: {
+                'Cache-Control': 'public, s-maxage=60',
+                'CDN-Cache-Control': 'public, s-maxage=60',
+                'Vercel-CDN-Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60'
+              }})
 
     } catch (error) {
         res.json({ status: 'error', errormessage: 'Error getting dateTimeOfLastPull' })

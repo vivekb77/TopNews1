@@ -11,24 +11,5 @@
           "src": "/(.*)",
           "dest": "/"
       }
-  ],
-  "headers": [
-    {
-      "source": "/",
-      "headers": [
-        {
-          "key": "Vercel-CDN-Cache-Control",
-          "value": "s-maxage=60"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "s-maxage=60"
-        },
-        {
-          "key": "CDN-Cache-Control",
-          "value": "s-maxage=60"
-        }
-      ]
-    }
   ]
 }
