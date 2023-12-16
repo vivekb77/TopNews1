@@ -14,7 +14,7 @@
   ],
   "headers": [
     {
-      "source": "/api/GetNewsForNZ",
+      "source": "/GetNewsForNZ",
       "headers": [
         {
           "key": "Vercel-CDN-Cache-Control",
