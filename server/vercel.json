@@ -14,7 +14,7 @@
   ],
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/",
       "headers": [
         {
           "key": "Vercel-CDN-Cache-Control",
