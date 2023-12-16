@@ -73,15 +73,20 @@ router.get('/GetNewsForNZ', async (req, res) => {
             const formattedDate = inputDate.toLocaleDateString('en-US', options);
             AITweets[f].articleAuthor = formattedDate; //updating author field as new date is of string type can t reassign to date fields
         }
-        return res.json({ status: 'ok', tweets: AITweets })
+        return res.json({
+            status: 'ok',
+            tweets: AITweets,
+            headers: {
+                'Cache-Control': 'public, s-maxage=60',
+                'CDN-Cache-Control': 'public, s-maxage=60',
+                'Vercel-CDN-Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60'
+            }
+        })
     } else {
-        return res.json({ status: 'error', 
-        errormessage: 'Something went wrong',
-        headers: {
-            'Cache-Control': 'public, s-maxage=60',
-            'CDN-Cache-Control': 'public, s-maxage=60',
-            'Vercel-CDN-Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60'
-          }})
+        return res.json({
+            status: 'error',
+            errormessage: 'Something went wrong'
+        })
     }
 
 })
@@ -103,14 +108,14 @@ router.get('/dateTimeOfLastPullNZ', async (req, res) => {
             hour12: true,
             timeZone: 'Pacific/Auckland'
         };
+        res.setHeader('Vercel-CDN-Cache-Control', 'max-age=3600');
+        res.setHeader('CDN-Cache-Control', 'max-age=60');
+        res.setHeader('Cache-Control', 'max-age=10');
         return res.json(
-            { status: 'ok', 
-            dateTimeOfLastPull: inputDate.toLocaleDateString('en-US', options),
-            headers: {
-                'Cache-Control': 'public, s-maxage=60',
-                'CDN-Cache-Control': 'public, s-maxage=60',
-                'Vercel-CDN-Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60'
-              }})
+            {
+                status: 'ok',
+                dateTimeOfLastPull: inputDate.toLocaleDateString('en-US', options),
+            })
 
     } catch (error) {
         res.json({ status: 'error', errormessage: 'Error getting dateTimeOfLastPull' })
