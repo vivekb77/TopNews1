@@ -6,7 +6,7 @@ const DateTimeOfLastPullModel = require('../models/datetime.model')
 const axios = require('axios');
 
 //get news articles
-router.post('/GetNewsForWorld', async (req, res) => {
+router.get('/GetNewsForWorld', async (req, res) => {
 
     let topictopulltweets = "PullAllNews";
     const timeZone = 'Pacific/Auckland';
@@ -81,7 +81,7 @@ router.post('/GetNewsForWorld', async (req, res) => {
     
       
 //get last article update datetime
-router.post('/dateTimeOfLastPullWorld', async (req, res) => {
+router.get('/dateTimeOfLastPullWorld', async (req, res) => {
 try {
     const dateTimeOfLastPull = await DateTimeOfLastPullModel.find({
         _id: "64b7bd95181d90534a16cb5a"

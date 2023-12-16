@@ -6,7 +6,7 @@ const DateTimeOfLastPullModel = require('../models/datetime.model')
 const axios = require('axios');
 
 //get news articles
-router.post('/GetNewsForAU', async (req, res) => {
+router.get('/GetNewsForAU', async (req, res) => {
 
     let topictopulltweets = "PullAllNews";
     const timeZone = 'Pacific/Auckland';
@@ -24,6 +24,7 @@ router.post('/GetNewsForAU', async (req, res) => {
     
             })
         }
+       
         else {
             //this will be need if want to pull articles for specific provider
              AITweets = await NewsDataAU.find({
@@ -31,7 +32,6 @@ router.post('/GetNewsForAU', async (req, res) => {
                 displayOnFE: true
             })
         }
-    
         //if total news articles today are less than 20, pull yesterdays articles and add
         if(AITweets.length < 100){
             
@@ -72,6 +72,7 @@ router.post('/GetNewsForAU', async (req, res) => {
                 const formattedDate = inputDate.toLocaleDateString('en-US', options);
                 AITweets[f].articleAuthor = formattedDate; //updating author field as new date is of string type can t reassign to date fields
             }
+            
         return res.json({ status: 'ok', tweets: AITweets })
         }else{
             return res.json({ status: 'error', errormessage: 'Something went wrong' })
@@ -81,7 +82,7 @@ router.post('/GetNewsForAU', async (req, res) => {
     
       
 //get last article update datetime
-router.post('/dateTimeOfLastPullAU', async (req, res) => {
+router.get('/dateTimeOfLastPullAU', async (req, res) => {
 try {
     const dateTimeOfLastPull = await DateTimeOfLastPullModel.find({
         _id: "64b7bd95181d90534a16cb5a"

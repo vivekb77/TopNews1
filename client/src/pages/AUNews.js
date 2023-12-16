@@ -42,13 +42,7 @@ const AUNews = () => {
 //get date time when articles were updated from rss
 	async function dateTimeOfLastPull(event) {
 	const req = await fetch(`${baseURL}/api/dateTimeOfLastPullAU`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({
-			//nothing
-		}),
+		method: 'GET'
 	})
 	const dateTimeOfLastPull = await req.json();
 	if (dateTimeOfLastPull.status === 'ok') {
@@ -70,16 +64,7 @@ const AUNews = () => {
 		setErrormessage(errormessage => "");
 
 		const req = await fetch(`${baseURL}/api/GetNewsForAU`, {
-
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'x-access-token': localStorage.getItem('token'),
-			},
-			body: JSON.stringify({
-				topictopuflltweets: newsCountry || "PullAllNews",
-			}),
-
+			method: 'GET'
 		}) 
 
 		const data = await req.json()

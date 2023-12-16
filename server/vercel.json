@@ -14,7 +14,7 @@
   ],
   "headers": [
     {
-      "source": "/GetNewsForNZ",
+      "source": "api/GetNewsForNZ",
       "headers": [
         {
           "key": "Cache-Control",

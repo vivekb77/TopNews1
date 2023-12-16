@@ -6,7 +6,7 @@ const DateTimeOfLastPullModel = require('../models/datetime.model')
 const axios = require('axios');
 
 //get not news articles
-router.post('/GetNotNews', async (req, res) => {
+router.get('/GetNotNews', async (req, res) => {
 
     let topictopufllnews = "PullAllNews";
     const timeZone = 'Pacific/Auckland';

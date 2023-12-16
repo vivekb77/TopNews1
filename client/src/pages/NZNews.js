@@ -48,13 +48,7 @@ const NZNews = () => {
 	//get date time when articles were updated from rss
 	async function dateTimeOfLastPull(event) {
 		const req = await fetch(`${baseURL}/api/dateTimeOfLastPullNZ`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				//nothing
-			}),
+			method: 'GET'
 		})
 		const dateTimeOfLastPull = await req.json();
 		if (dateTimeOfLastPull.status === 'ok') {
@@ -77,16 +71,7 @@ const NZNews = () => {
 		setNewsLoaded(false);
 
 		const req = await fetch(`${baseURL}/api/GetNewsForNZ`, {
-
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'x-access-token': localStorage.getItem('token'),
-			},
-			body: JSON.stringify({
-				topictopuflltweets: "PullAllNews",
-			}),
-
+			method: 'GET'
 		})
 		const newsArray = [];
 		const data = await req.json()
@@ -139,16 +124,7 @@ const NZNews = () => {
 	async function GetNotNews(event) {
 		setNotNewsLoaded(false)
 		const req = await fetch(`${baseURL}/api/GetNotNews`, {
-
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'x-access-token': localStorage.getItem('token'),
-			},
-			body: JSON.stringify({
-				topictopufllnews: "PullAllNews",
-			}),
-
+			method: 'GET'
 		})
 
 
