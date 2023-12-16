@@ -40,10 +40,6 @@
         {
           "key": "Cache-Control",
           "value": "maxage=60"
-        },
-        {
-          "key": "CDN-Cache-Control",
-          "value": "maxage=60"
         }
       ]
     },
