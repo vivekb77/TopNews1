@@ -19,15 +19,15 @@
       "headers": [
         {
           "key": "Vercel-CDN-Cache-Control",
-          "value": "maxage=60"
+          "value": "s-maxage=60"
         },
         {
           "key": "Cache-Control",
-          "value": "maxage=60"
+          "value": "s-maxage=60"
         },
         {
           "key": "CDN-Cache-Control",
-          "value": "maxage=60"
+          "value": "s-maxage=60"
         }
       ]
     }
