@@ -75,7 +75,7 @@ router.get('/GetNewsForNZ', async (req, res) => {
         }
         res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=300, stale-while-revalidate=60');
         res.setHeader('CDN-Cache-Control', 'max-age=60');
-        res.setHeader('Cache-Control', 's-maxage=60');
+        res.setHeader('Cache-Control', 'public, s-maxage=60');
         return res.json({
             status: 'ok',
             tweets: AITweets
@@ -108,7 +108,7 @@ router.get('/dateTimeOfLastPullNZ', async (req, res) => {
         };
         res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=300, stale-while-revalidate=60');
         res.setHeader('CDN-Cache-Control', 'max-age=60');
-        res.setHeader('Cache-Control', 's-maxage=60');
+        res.setHeader('Cache-Control', 'public, s-maxage=60');
         return res.json(
             {
                 status: 'ok',
