@@ -73,7 +73,7 @@ export default function NewsCard(props) {
             }
             
             <div className="card-body">
-                {props.article.articleTitle && <a href={`${props.article.articleUrl}`} rel="noreferrer noopener" onClick={() => addClickCount(props.article.dbid,props.article.whichcontinent)}>
+                {props.article.articleTitle && <a target={window.innerWidth > 800 ? '_blank' : '_self'} href={`${props.article.articleUrl}`} rel="noreferrer noopener" onClick={() => addClickCount(props.article.dbid,props.article.whichcontinent)}>
                 {props.article.articleTitle && props.article.whichcontinent !== "NOTNEWS" && <h5 className="card-title"><span style={{color: `#808080`}}></span>{props.article.articleTitle}</h5>}
                 {props.article.articleTitle && props.article.whichcontinent === "NOTNEWS" && <h5 className="card-title-notnews"><span style={{color: `#808080`}}></span>{props.article.articleTitle}</h5>}
                 {!props.isReadFastOn && props.article.articleTitle && props.article.articleDescription && <h5 className="card-text">{props.article.articleDescription}</h5>}

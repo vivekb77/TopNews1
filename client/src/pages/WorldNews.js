@@ -10,8 +10,8 @@ import GA4React from "ga-4-react";
 import { Helmet } from 'react-helmet';
 require('dotenv').config();
 
-const ga4react = new GA4React("G-4YQR5FRQQL");
-ga4react.initialize().then().catch()
+// const ga4react = new GA4React("G-4YQR5FRQQL");
+// ga4react.initialize().then().catch()
 
 const baseURL = process.env.REACT_APP_BASE_URL
 

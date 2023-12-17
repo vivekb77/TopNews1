@@ -33,7 +33,7 @@ router.get('/GetNewsForAU', async (req, res) => {
         })
     }
     //if total news articles today are less than 20, pull yesterdays articles and add
-    if (AITweets.length < 100) {
+    if (AITweets.length < 20) {
 
         AITweetsYesterday = await NewsDataAU.find({
             displayOnFE: true,
@@ -72,9 +72,9 @@ router.get('/GetNewsForAU', async (req, res) => {
             const formattedDate = inputDate.toLocaleDateString('en-US', options);
             AITweets[f].articleAuthor = formattedDate; //updating author field as new date is of string type can t reassign to date fields
         }
-        res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=300, stale-while-revalidate=60');
+        res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=300, stale-while-revalidate=3600');
         res.setHeader('CDN-Cache-Control', 'max-age=60');
-        res.setHeader('Cache-Control', 'public, s-maxage=60');
+        res.setHeader('Cache-Control', 'public, max-age=60');
         return res.json({ status: 'ok', tweets: AITweets })
     } else {
         return res.json({ status: 'error', errormessage: 'Something went wrong' })
@@ -99,9 +99,9 @@ router.get('/dateTimeOfLastPullAU', async (req, res) => {
             hour12: true,
             timeZone: 'Pacific/Auckland'
         };
-        res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=60, stale-while-revalidate=60');
+        res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=60');
         res.setHeader('CDN-Cache-Control', 'max-age=60');
-        res.setHeader('Cache-Control', 'public, s-maxage=60');
+        res.setHeader('Cache-Control', 'public, max-age=30');
         return res.json({ status: 'ok', dateTimeOfLastPull: inputDate.toLocaleDateString('en-US', options) })
 
     } catch (error) {

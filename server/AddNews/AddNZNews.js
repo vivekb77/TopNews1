@@ -18,7 +18,7 @@ router.post('/cronstuffnorth', async (req, res) => {
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
 	await fetchDataFromRSS('https://www.stuff.co.nz/rss', "STUFF");
-	await fetchDataFromRSS('https://www.waikatotimes.co.nz/rss', "WAIKATO TIMES");
+	// await fetchDataFromRSS('https://www.waikatotimes.co.nz/rss', "WAIKATO TIMES");
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for stuff North. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
