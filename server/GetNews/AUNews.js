@@ -101,7 +101,7 @@ router.get('/dateTimeOfLastPullAU', async (req, res) => {
         };
         res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=60');
         res.setHeader('CDN-Cache-Control', 'max-age=60');
-        res.setHeader('Cache-Control', 'public, max-age=30');
+        res.setHeader('Cache-Control', 'public, max-age=60');
         return res.json({ status: 'ok', dateTimeOfLastPull: inputDate.toLocaleDateString('en-US', options) })
 
     } catch (error) {
