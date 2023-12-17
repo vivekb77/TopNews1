@@ -74,7 +74,7 @@ router.get('/GetNewsForWorld', async (req, res) => {
         }
         res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=300, stale-while-revalidate=3600');
         res.setHeader('CDN-Cache-Control', 'max-age=60');
-        res.setHeader('Cache-Control', 'max-age=60');
+        res.setHeader('Cache-Control', 's-maxage=60');
         return res.json({ status: 'ok', tweets: AITweets })
     } else {
         return res.json({ status: 'error', errormessage: 'Something went wrong' })
@@ -99,9 +99,9 @@ router.get('/dateTimeOfLastPullWorld', async (req, res) => {
             hour12: true,
             timeZone: 'Pacific/Auckland'
         };
-        res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=60');
+        res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=300');
         res.setHeader('CDN-Cache-Control', 'max-age=60');
-        res.setHeader('Cache-Control', 'max-age=60');
+        res.setHeader('Cache-Control', 's-maxage=60');
         return res.json({ status: 'ok', dateTimeOfLastPull: inputDate.toLocaleDateString('en-US', options) })
 
     } catch (error) {
