@@ -73,8 +73,7 @@ router.get('/GetNewsForAU', async (req, res) => {
             AITweets[f].articleAuthor = formattedDate; //updating author field as new date is of string type can t reassign to date fields
         }
         res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=300, stale-while-revalidate=3600');
-        res.setHeader('CDN-Cache-Control', 'max-age=60');
-        res.setHeader('Cache-Control', 's-maxage=60');
+        res.setHeader('Cache-Control','max-age=0, s-maxage=60', 'stale-while-revalidate');
         return res.json({ status: 'ok', tweets: AITweets })
     } else {
         return res.json({ status: 'error', errormessage: 'Something went wrong' })
@@ -100,8 +99,7 @@ router.get('/dateTimeOfLastPullAU', async (req, res) => {
             timeZone: 'Pacific/Auckland'
         };
         res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=300');
-        res.setHeader('CDN-Cache-Control', 'max-age=60');
-        res.setHeader('Cache-Control', 's-maxage=60');
+        res.setHeader('Cache-Control','max-age=0, s-maxage=60', 'stale-while-revalidate');
         return res.json({ status: 'ok', dateTimeOfLastPull: inputDate.toLocaleDateString('en-US', options) })
 
     } catch (error) {
