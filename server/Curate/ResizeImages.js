@@ -29,7 +29,7 @@ router.post('/ResizeImages', async (req, res) => {
     for (let i = 0; i < Articles.length; i++) {
 
         //only add image if already not added to imageresizer
-        if (!Articles[i].resizedImageUrl) {
+        if (!Articles[i].resizedImageUrl && Articles[i].teaserImageUrl) {
             const req = await fetch(`https://api.imageresizer.io/v1/images?key=${imageResizerKey}&url=${Articles[i].teaserImageUrl}`, {
                 method: 'GET'
             })

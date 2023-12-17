@@ -15,18 +15,6 @@ const handler = async function(event, context) {
     console.error(e)
   })
 
-  //nz herald
-  await axios
-  .post('https://topnews7.vercel.app/api/cronnzherald')
-  .then((response) => {
-    if (response.status === 200) {
-      console.log('NZ HERALD: ', response.data)
-    }
-  })
-  .catch((e) => {
-    console.error(e)
-  })
-
    //googlenews
    await axios
    .post('https://topnews7.vercel.app/api/crongooglenews')
