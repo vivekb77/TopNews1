@@ -9,6 +9,7 @@ const NewsData = new mongoose.Schema(
 		articleDescription: { type: String, required: false },
 		articleUrl: { type: String, required: true },
         teaserImageUrl: { type: String, required: false },
+        resizedImageUrl: { type: String, required: false },
         articleAuthor: { type: String, required: false },
         articleGuid: { type: String, required: true, unique: true },
 		articlePublicationDate: { type: Date, required: true },

@@ -23,6 +23,7 @@ const PostAd = require('./Ads/PostAd')
 const PostTextTweet = require('./Ads/PostTextTweet')
 const AIArticles = require('./Ads/AIArticles')
 const AIArticleSummary = require('./Curate/AIArticleSummary')
+const ResizeImages = require('./Curate/ResizeImages')
 
 
 const MONGO_URL = process.env.MONGO_URL
@@ -52,6 +53,7 @@ app.use('/api', CreateAd)
 app.use('/api', PostAd)
 app.use('/api', PostTextTweet)
 app.use('/api', AIArticles)
+app.use('/api', ResizeImages)
 
 app.listen(PORT, () => {
 	console.log(`Server started on ${PORT}`)
