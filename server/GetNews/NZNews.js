@@ -74,7 +74,7 @@ router.get('/GetNewsForNZ', async (req, res) => {
             AITweets[f].articleAuthor = formattedDate; //updating author field as new date is of string type can t reassign to date fields
         }
         res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=300, stale-while-revalidate=3600');
-        res.setHeader('Cache-Control','public, max-age=60, s-maxage=60');
+        res.setHeader('Cache-Control','max-age=60, s-maxage=60');
         return res.json({
             status: 'ok',
             tweets: AITweets
@@ -106,7 +106,7 @@ router.get('/dateTimeOfLastPullNZ', async (req, res) => {
             timeZone: 'Pacific/Auckland'
         };
         res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=300');
-        res.setHeader('Cache-Control','public, max-age=60, s-maxage=60');
+        res.setHeader('Cache-Control','max-age=60, s-maxage=60');
         return res.json(
             {
                 status: 'ok',
