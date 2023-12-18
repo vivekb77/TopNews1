@@ -19,6 +19,7 @@ router.post('/cronstuffnorth', async (req, res) => {
 	errorAddingArticlesCount = 0;
 	try {
 		await fetchDataFromRSS('https://www.stuff.co.nz/rss', "STUFF");
+		console.log('STUFF articles added');
 	} catch (e) {
 		return res.json({ status: `error`, message: `Error in adding STUFF articles`, error: e });
 	};
