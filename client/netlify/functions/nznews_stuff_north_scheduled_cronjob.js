@@ -3,8 +3,6 @@ const axios = require('axios')
 
 const handler = async function (event, context) {
 
-  await new Promise(resolve => setTimeout(resolve, 30000)); //wait for others to finish
-
   //stuff north
   await axios
     .post('https://topnews7.vercel.app/api/cronstuffnorth')

@@ -3,8 +3,6 @@ const axios = require('axios')
 
 const handler = async function(event, context) {
 
-  await new Promise(resolve => setTimeout(resolve, 40000)); //wait for others to finish
-
   await axios
   .post('https://topnews7.vercel.app/api/removeDuplicateTitles')
   .then((response) => {
