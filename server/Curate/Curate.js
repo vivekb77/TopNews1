@@ -315,7 +315,6 @@ router.post('/cronremoveWeirdArticles', async (req, res) => {
     return res.json({ status: 'ok', removedWeirdArticlesCount:removedWeirdArticlesCount, skippedWeirdArticlesCount:skippedWeirdArticlesCount });
 })
 
-
 //auto remove duplicate titled articles
 router.post('/cronremoveDuplicateTitles', async (req, res) => {
     

@@ -3,6 +3,9 @@ const axios = require('axios')
 
 const handler = async function(event, context) {
   
+  setTimeout(() => {
+    console.log('Waiting for others to free DB usage');
+  }, 30000);
   //stuff north
   await axios
   .post('https://topnews7.vercel.app/api/cronstuffnorth')
