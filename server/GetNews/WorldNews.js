@@ -33,7 +33,7 @@ router.get('/GetNewsForWorld', async (req, res) => {
     }
 
     //if total news articles today are less than 20, pull yesterdays articles and add
-    if (AITweets.length < 20) {
+    if (AITweets.length < 30) {
 
         AITweetsYesterday = await NewsDataWorld.find({
             displayOnFE: true,

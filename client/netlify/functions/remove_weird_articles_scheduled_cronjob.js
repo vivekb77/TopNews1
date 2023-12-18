@@ -4,7 +4,7 @@ const axios = require('axios')
 const handler = async function(event, context) {
 
   await axios
-  .post('https://topnews7.vercel.app/api/cronremoveWeirdArticles')
+  .post('https://topnews7.vercel.app/api/removeWeirdArticles')
   .then((response) => {
     if (response.status === 200) {
       console.log('Weirds articles with specific names removal: ', response.data)

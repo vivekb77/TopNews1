@@ -4,7 +4,7 @@ const axios = require('axios')
 const handler = async function(event, context) {
 
   await axios
-  .post('https://topnews7.vercel.app/api/cronremoveDuplicateTitles')
+  .post('https://topnews7.vercel.app/api/removeDuplicateTitles')
   .then((response) => {
     if (response.status === 200) {
       console.log('Duplicate titles removal: ', response.data)

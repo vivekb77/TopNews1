@@ -24,6 +24,8 @@ const PostTextTweet = require('./Ads/PostTextTweet')
 const AIArticles = require('./Ads/AIArticles')
 const AIArticleSummary = require('./Curate/AIArticleSummary')
 const ResizeImages = require('./Curate/ResizeImages')
+const RemoveDuplicates = require('./Curate/RemoveDuplicates')
+const RemoveWeird = require('./Curate/RemoveWeird')
 
 
 const MONGO_URL = process.env.MONGO_URL
@@ -54,6 +56,8 @@ app.use('/api', PostAd)
 app.use('/api', PostTextTweet)
 app.use('/api', AIArticles)
 app.use('/api', ResizeImages)
+app.use('/api', RemoveDuplicates)
+app.use('/api', RemoveWeird)
 
 app.listen(PORT, () => {
 	console.log(`Server started on ${PORT}`)
