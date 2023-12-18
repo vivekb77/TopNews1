@@ -81,9 +81,6 @@ const Curate = () => {
 					stuffImageUrlForBigImage = `${teaserImageUrlSpliturlArraySliced.join(".")}.related.StuffLandscapeSixteenByNine.1420x800.${teaserImageUrlSpliturlArray[7]}.${teaserImageUrlSpliturlArray[8]}.jpg?format=pjpg&optimize=medium`;
 					teaserImageUrl = ""
 				}
-				else if(data.tweets[i].resizedImageUrl){
-					teaserImageUrl = `https://newsexpress.imageresizer.io/${data.tweets[i].resizedImageUrl}?size=1240x700&format=webp&quality=100`;
-				}
 				else{
 					teaserImageUrl = data.news[i].teaserImageUrl;
 					stuffImageUrlForBigImage = "";

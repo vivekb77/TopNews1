@@ -15,6 +15,7 @@ router.post('/ResizeImages', async (req, res) => {
     let reSizedImageId;
     let articleId;
     let countOfImagesResized = 0;
+    let countOfImagesSkippedResized = 0;
 
     let Articles = [];
     Articles = await NewsData.find({
@@ -30,25 +31,24 @@ router.post('/ResizeImages', async (req, res) => {
 
         //only add image if already not added to imageresizer
         if (!Articles[i].resizedImageUrl && Articles[i].teaserImageUrl) {
-            const req = await fetch(`https://api.imageresizer.io/v1/images?key=${imageResizerKey}&url=${Articles[i].teaserImageUrl}`, {
-                method: 'GET'
-            })
-            const data = await req.json()
+            try {
+                const req = await axios.get(`https://api.imageresizer.io/v1/images?key=${imageResizerKey}&url=${Articles[i].teaserImageUrl}`);
 
-            if (data.success == true) {
-                articleId = Articles[i]._id
-                reSizedImageId = data.response.id
+                if (req.data.success == true) {
+                    articleId = Articles[i]._id
+                    reSizedImageId = req.data.response.id
 
-                try {
                     updatedDoc = await NewsData.findByIdAndUpdate(articleId, { $set: { resizedImageUrl: reSizedImageId } }, { new: true });
                     countOfImagesResized++;
-                } catch (error) {
-                    console.log(`Could not add resized image url to DB at round ${i}`);
                 }
+            } catch (error) {
+                console.log(`Could not add resized image url to DB at round ${i} , Error is ${error.message}`);
             }
+        } else {
+            countOfImagesSkippedResized++;
         }
     }
-    return res.json({ status: 'ok', message: `Added ${countOfImagesResized} resized image url to DB` });
+    return res.json({ status: 'ok', message: `Added ${countOfImagesResized} resized image url to DB, skipped ${countOfImagesSkippedResized}` });
 });
 
 module.exports = router;
