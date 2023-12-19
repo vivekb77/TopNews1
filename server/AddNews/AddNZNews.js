@@ -18,12 +18,11 @@ router.post('/cronstuffnorth', async (req, res) => {
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
 	try {
-		// await fetchDataFromRSS('https://www.stuff.co.nz/rss', "STUFF");
-		console.log('STUFF articles added');
+		await fetchDataFromRSS('https://www.stuff.co.nz/rss', "STUFF");
 	} catch (e) {
 		return res.json({ status: `error`, message: `Error in adding STUFF articles`, error: e });
 	};
-	await fetchDataFromRSS('https://www.waikatotimes.co.nz/rss', "WAIKATO TIMES");
+	// await fetchDataFromRSS('https://www.waikatotimes.co.nz/rss', "WAIKATO TIMES");
 	// AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for stuff North. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
@@ -201,7 +200,7 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 				};
 				NewsItemsArray.push(newsItem);
 			});
-			NewsItemsArray.splice(10); //remove all after 20
+			NewsItemsArray.splice(5); //remove all after 5 to fasten db writes
 		}
 
 		//nz herald

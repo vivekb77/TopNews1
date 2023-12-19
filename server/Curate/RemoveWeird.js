@@ -60,7 +60,7 @@ router.post('/removeWeirdArticles', async (req, res) => {
         const notWeirdArticles = [];
         const weirdArticles = [];
         const weirdArticleIds = [];
-        const keywordsToCheck = ['kill','sex','death', 'edition', 'died', 'quiz', 'crash', 'dead', 'die', 'debate', 'open mike', 'caption competition', 'daily review', 'have your say', 'injured', 'arrest','charged'];
+        const keywordsToCheck = ['jail','murder','prison','kill','sex','death', 'edition', 'died', 'quiz', 'crash', 'dead', 'die', 'debate', 'open mike', 'caption competition', 'daily review', 'have your say', 'injured', 'arrest','charged'];
 
         await ArticlesArray.forEach(article => {
             if (isArticleWeird(article)) {

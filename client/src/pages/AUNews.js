@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import jwt from 'jsonwebtoken'
 import { useHistory } from 'react-router-dom'
 import NewsCard from './NewsCard'
 import LaptopPlaceholderCard from './LaptopPlaceholderCard'
@@ -24,38 +23,29 @@ const AUNews = () => {
 	const [errormessage, setErrormessage] = React.useState();
 	const [infoMessage, setInfoMessage] = React.useState();
 	const [isReadFastOn, setIsReadFastOn] = useState(false);
-	const [newsCountry, setNewsCountry] = useState(false);
 
-	
 	useEffect(() => {
 		GetNews();
 		dateTimeOfLastPull();
-		const params = new URLSearchParams()
-		if (newsCountry) {
-		  params.append("", newsCountry)
-		} else {
-		  params.delete("")
-		}
-		history.push({search: params.toString()})
-	  }, [newsCountry, history])
+	}, [])
 
-//get date time when articles were updated from rss
+	//get date time when articles were updated from rss
 	async function dateTimeOfLastPull(event) {
-	const req = await fetch(`${baseURL}/api/dateTimeOfLastPullAU`, {
-		method: 'GET'
-	})
-	const dateTimeOfLastPull = await req.json();
-	if (dateTimeOfLastPull.status === 'ok') {
-		setDisable(false);
-		//remove day and append "today"
-		// let makedatereadable = dateTimeOfLastPull.dateTimeOfLastPull.slice(6,16);
-		// setDateTimeOfLastPulltoshow(handle => "Today"+makedatereadable);
-		setDateTimeOfLastPulltoshow(handle => dateTimeOfLastPull.dateTimeOfLastPull);
+		const req = await fetch(`${baseURL}/api/dateTimeOfLastPullAU`, {
+			method: 'GET'
+		})
+		const dateTimeOfLastPull = await req.json();
+		if (dateTimeOfLastPull.status === 'ok') {
+			setDisable(false);
+			//remove day and append "today"
+			// let makedatereadable = dateTimeOfLastPull.dateTimeOfLastPull.slice(6,16);
+			// setDateTimeOfLastPulltoshow(handle => "Today"+makedatereadable);
+			setDateTimeOfLastPulltoshow(handle => dateTimeOfLastPull.dateTimeOfLastPull);
+		}
+		else if (dateTimeOfLastPull.status === 'error') {
+			setDisable(false);
+		}
 	}
-	else if (dateTimeOfLastPull.status === 'error') {
-		setDisable(false);
-	}
-	} 
 
 	async function GetNews(event) {
 		// event.preventDefault()
@@ -65,15 +55,15 @@ const AUNews = () => {
 
 		const req = await fetch(`${baseURL}/api/GetNewsForAU`, {
 			method: 'GET'
-		}) 
+		})
 
 		const data = await req.json()
 		if (data.status === 'ok') {
-			
-			for (let i=0;i<data.tweets.length;i++){ 
-				
+
+			for (let i = 0; i < data.tweets.length; i++) {
+
 				const obj = {
-					dbid:data.tweets[i]._id,
+					dbid: data.tweets[i]._id,
 					articleSource: data.tweets[i].articleSource,
 					articleTitle: data.tweets[i].articleTitle,
 					articleDescription: data.tweets[i].articleDescription,
@@ -83,96 +73,96 @@ const AUNews = () => {
 					articleGuid: data.tweets[i].articleGuid,
 					articlePublicationDate: data.tweets[i].articleAuthor, //author field has formatted date so using it
 					articleImportedToTopNewsDate: data.tweets[i].articleImportedToTopNewsDate,
-					whichcontinent : "AU"
-					
+					whichcontinent: "AU"
+
 				}
 				setTweets(prevArray => [...prevArray, obj])
-				setDisablePlaceholder(true);	
+				setDisablePlaceholder(true);
 				setInfoMessage(true);
-				
-              }
-		} 
-		else if(data.status === 'error'){
+
+			}
+		}
+		else if (data.status === 'error') {
 			setDisablePlaceholder(false);
 			setErrormessage(data.errormessage);
-			
+
 		}
 	}
-	
-    const handleReadFastClick = () => {
-        setIsReadFastOn((prevToggle) => !prevToggle);
-    };
+
+	const handleReadFastClick = () => {
+		setIsReadFastOn((prevToggle) => !prevToggle);
+	};
 	const selectCountryNewsNZ = () => {
 		history.push('/newzealand-news');
-	  };
+	};
 	const selectCountryNewsWorld = () => {
-	history.push('/world-news');
-	};  
-	
+		history.push('/world-news');
+	};
+
 	return (
 		<div className='tweetdiv'>
 			<div className='header'>
 				<div className='logoandtitle'>
-				<div className="logoimage"></div> 
-				<div className="logonameimage"></div>       
-				{/* <h1 className='maintitle'>NEWS EXPRESS</h1> */}
+					<div className="logoimage"></div>
+					<div className="logonameimage"></div>
+					{/* <h1 className='maintitle'>NEWS EXPRESS</h1> */}
 				</div>
-				
-				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{color: `#808080`}}>{`Last updated ${dateTimeOfLastPulltoshow}`}</span></h5>}
+
+				{dateTimeOfLastPulltoshow && !errormessage && <h5 className="articledateandsourcetop"><span style={{ color: `#808080` }}>{`Last updated ${dateTimeOfLastPulltoshow}`}</span></h5>}
 				{errormessage && <h4 className="errormessage">{`${errormessage}`}</h4>}
 				{disable && <div class="articledateandsourcetoploading-placeholder"></div>}
-				
+
 				<div className='countrynewscardholder'>
-					<div  className={'countrynewscard'} onClick={(selectCountryNewsNZ)}>
-					{  <p className="textofcountrybuttontext">NZ<span style={{color: `#808080`}}></span></p>}
+					<div className={'countrynewscard'} onClick={(selectCountryNewsNZ)}>
+						{<p className="textofcountrybuttontext">NZ<span style={{ color: `#808080` }}></span></p>}
 					</div>
-					
-					<div  className={'countrynewscardselected'} >
-					{  <p className="textofcountrybuttontext">AU & UK</p>}
+
+					<div className={'countrynewscardselected'} >
+						{<p className="textofcountrybuttontext">AU & UK</p>}
 					</div>
-					<div  className={'countrynewscard'} onClick={(selectCountryNewsWorld)} >
-					{  <p className="textofcountrybuttontext">WORLD</p>}
+					<div className={'countrynewscard'} onClick={(selectCountryNewsWorld)} >
+						{<p className="textofcountrybuttontext">WORLD</p>}
 					</div>
 				</div>
 
 				{infoMessage && <GoToTop />}
-				{infoMessage && <ReadFast isReadFastOn ={handleReadFastClick}/>}
+				{infoMessage && <ReadFast isReadFastOn={handleReadFastClick} />}
 			</div>
 
 			{tweets.map((article) => {
-				return <NewsCard 
-				article={article} 
-				isReadFastOn={isReadFastOn}  
-				key={(Math.random() + 1).toString(36).substring(7)}
-				onChange={setTweets}
+				return <NewsCard
+					article={article}
+					isReadFastOn={isReadFastOn}
+					key={(Math.random() + 1).toString(36).substring(7)}
+					onChange={setTweets}
 				/>
 			})}
 
-			{!disablePlaceholder &&<div className='laptopplaceholderdiv'>
-			<LaptopPlaceholderCard/>
-			<LaptopPlaceholderCard/>
-			<LaptopPlaceholderCard/>
-			<LaptopPlaceholderCard/>
+			{!disablePlaceholder && <div className='laptopplaceholderdiv'>
+				<LaptopPlaceholderCard />
+				<LaptopPlaceholderCard />
+				<LaptopPlaceholderCard />
+				<LaptopPlaceholderCard />
 			</div>}
-			
+
 			{!disablePlaceholder && <div className='mobileplaceholderdiv'>
-			<MobilePlaceholderCard/>
-			<MobilePlaceholderCard/>
-			<MobilePlaceholderCard/>
-			<MobilePlaceholderCard/>
+				<MobilePlaceholderCard />
+				<MobilePlaceholderCard />
+				<MobilePlaceholderCard />
+				<MobilePlaceholderCard />
 			</div>}
 
 			<div className='bottommenuholder'>
-			{infoMessage &&  <h4 className='mainsubtitleads'><a href='https://twitter.com/NewsExpressNZ'>Twitter</a></h4>}
-			{infoMessage &&  <h4 className='mainsubtitleads'><a href='mailto:newsexpressnz@gmail.com'>Contact</a></h4>}
-			{infoMessage &&  <h4 className='mainsubtitleads'><a href='/terms'>Terms</a></h4>}
+				{infoMessage && <h4 className='mainsubtitleads'><a href='https://twitter.com/NewsExpressNZ'>Twitter</a></h4>}
+				{infoMessage && <h4 className='mainsubtitleads'><a href='mailto:newsexpressnz@gmail.com'>Contact</a></h4>}
+				{infoMessage && <h4 className='mainsubtitleads'><a href='/terms'>Terms</a></h4>}
 			</div>
 			<Helmet>
-			{<title>NEWS EXPRESS | NEWS on the go | The fastest way to stay updated with latest NZ NEWS | AU News</title>}
+				{<title>NEWS EXPRESS | NEWS on the go | The fastest way to stay updated with latest NZ NEWS | AU News</title>}
 			</Helmet>
 
 		</div>
-		
+
 	)
 }
 

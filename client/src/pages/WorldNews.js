@@ -24,20 +24,11 @@ const WorldNews = () => {
 	const [errormessage, setErrormessage] = React.useState();
 	const [infoMessage, setInfoMessage] = React.useState();
 	const [isReadFastOn, setIsReadFastOn] = useState(false);
-	const [newsCountry, setNewsCountry] = useState(false);
-
 	
 	useEffect(() => {
 		GetNews();
 		dateTimeOfLastPull();
-		const params = new URLSearchParams()
-		if (newsCountry) {
-		  params.append("", newsCountry)
-		} else {
-		  params.delete("")
-		}
-		history.push({search: params.toString()})
-	  }, [newsCountry, history])
+	  }, [])
 
 //get date time when articles were updated from rss
 	async function dateTimeOfLastPull(event) {
