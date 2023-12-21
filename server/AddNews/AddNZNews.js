@@ -17,12 +17,8 @@ router.post('/cronstuffonlynorth', async (req, res) => {
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	try {
-		// await fetchDataFromRSS('https://www.stuff.co.nz/rss', "STUFF");
-	} catch (e) {
-		return res.json({ status: `error`, message: `Error in adding STUFF articles`, error: e });
-	};
-	await fetchDataFromRSS('https://www.waikatotimes.co.nz/rss', "WAIKATO TIMES");
+	await fetchDataFromRSS('https://www.stuff.co.nz/rss', "STUFF");
+	// await fetchDataFromRSS('https://www.waikatotimes.co.nz/rss', "WAIKATO TIMES");
 	// AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: `ok`, message: `Cron job completed successfully for stuff North. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
@@ -100,214 +96,216 @@ router.post('/crontpplus', async (req, res) => {
 async function fetchDataFromRSS(sourceUrl, articleSource) {
 	try {
 		const response = await axios.get(sourceUrl);
-		const parser = new Parser();
-		const parsedrssfeedforstuff = await parser.parseString(response.data); //using rss parser , this does not parse image url
-		const parserrssfeed = await xml2js.parseStringPromise(response.data) //this parses image url
+		if (response.status === 200) {
+			const parser = new Parser();
+			const parsedrssfeedforstuff = await parser.parseString(response.data); //using rss parser , this does not parse image url
+			const parserrssfeed = await xml2js.parseStringPromise(response.data) //this parses image url
 
-		let NewsItemsArray = [];
-		const timeZone = 'Pacific/Auckland';
+			let NewsItemsArray = [];
+			const timeZone = 'Pacific/Auckland';
 
-		//TPPLUS
-		if (articleSource == "TPPLUS") {
-			parserrssfeed.rss.channel[0].item.forEach(item => {
-				const newsItem = {
-					displayOnFE: true,
-					articleSource: articleSource,
-					articleTitle: item.title[0],
-					articleUrl: item.link[0],
-					articleGuid: guid = item.guid[0]['_'],
-					articlePublicationDate: new Date(item.pubDate[0]),
-					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-				};
-				NewsItemsArray.push(newsItem);
-			});
-		}
-
-		//BUSINESSDESK
-		if (articleSource == "BUSINESSDESK") {
-			//only pull last 20 articles
-			for (let i = 0; i < 20; i++) {
-
-				//only add if image url is present
-				const enclosure = parserrssfeed.rss.channel[0].item[i]['media:content']?.[0];
-				const imageUrl = enclosure?.['$']?.['url'] ?? null;
-				if (imageUrl) {
+			//TPPLUS
+			if (articleSource == "TPPLUS") {
+				parserrssfeed.rss.channel[0].item.forEach(item => {
 					const newsItem = {
 						displayOnFE: true,
 						articleSource: articleSource,
-						articleTitle: parserrssfeed.rss.channel[0].item[i].title[0],
-						articleUrl: parserrssfeed.rss.channel[0].item[i].link[0],
-						teaserImageUrl: parserrssfeed.rss.channel[0].item[i]['media:content'][0]['$']['url'],
-						articleAuthor: parserrssfeed.rss.channel[0].item[i]['dc:creator'][0],
-						articleGuid: parserrssfeed.rss.channel[0].item[i].guid[0]['_'],
-						articlePublicationDate: new Date(parserrssfeed.rss.channel[0].item[i].pubDate[0]),
+						articleTitle: item.title[0],
+						articleUrl: item.link[0],
+						articleGuid: guid = item.guid[0]['_'],
+						articlePublicationDate: new Date(item.pubDate[0]),
+						articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+					};
+					NewsItemsArray.push(newsItem);
+				});
+			}
+
+			//BUSINESSDESK
+			if (articleSource == "BUSINESSDESK") {
+				//only pull last 20 articles
+				for (let i = 0; i < 20; i++) {
+
+					//only add if image url is present
+					const enclosure = parserrssfeed.rss.channel[0].item[i]['media:content']?.[0];
+					const imageUrl = enclosure?.['$']?.['url'] ?? null;
+					if (imageUrl) {
+						const newsItem = {
+							displayOnFE: true,
+							articleSource: articleSource,
+							articleTitle: parserrssfeed.rss.channel[0].item[i].title[0],
+							articleUrl: parserrssfeed.rss.channel[0].item[i].link[0],
+							teaserImageUrl: parserrssfeed.rss.channel[0].item[i]['media:content'][0]['$']['url'],
+							articleAuthor: parserrssfeed.rss.channel[0].item[i]['dc:creator'][0],
+							articleGuid: parserrssfeed.rss.channel[0].item[i].guid[0]['_'],
+							articlePublicationDate: new Date(parserrssfeed.rss.channel[0].item[i].pubDate[0]),
+							articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+						};
+						NewsItemsArray.push(newsItem);
+					}
+				}
+			}
+
+			//NEWSTALKZB
+			if (articleSource == "NEWSTALKZB") {
+				parserrssfeed.rss.channel[0].item.forEach(item => {
+					const newsItem = {
+						displayOnFE: true,
+						articleSource: articleSource,
+						articleTitle: item.title[0],
+						articleUrl: item.link[0],
+						teaserImageUrl: item['media:content'][0]['$']['url'],
+						articleGuid: guid = item.guid[0]['_'],
+						articlePublicationDate: new Date(item.pubDate[0]),
+						articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+					};
+					NewsItemsArray.push(newsItem);
+				});
+			}
+
+			//google news for 1news, newshub , newsroom, otago daily news, reseller news
+			if (articleSource == "GOOGLENEWS") {
+				parserrssfeed.rss.channel[0].item.forEach(item => {
+					const newsItem = {
+						displayOnFE: true,
+						articleSource: item.source[0]['_'],
+						articleTitle: item.title[0].split(' - ')[0], //google news add source at the end of title, remove it
+						articleUrl: item.link[0],
+						articleGuid: guid = item.guid[0]['_'],
+						articlePublicationDate: new Date(item.pubDate[0]),
+						articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+					};
+					if (newsItem.articleSource === "Newshub" || newsItem.articleSource === "1News" || newsItem.articleSource === "Newsroom" || newsItem.articleSource === "Otago Daily Times" || newsItem.articleSource === "Reseller News" || newsItem.articleSource === "SunLive" || newsItem.articleSource === "Scoop") {
+						NewsItemsArray.push(newsItem);
+					}
+				});
+			}
+
+			//stuff
+			if (articleSource == "STUFF") {
+				parsedrssfeedforstuff.items.forEach(item => {
+					const newsItem = {
+						displayOnFE: true,
+						articleSource: articleSource,
+						articleTitle: item.title,
+						articleDescription: item.contentSnippet,
+						articleUrl: item.link,
+						teaserImageUrl: item.enclosure.url,
+						articleAuthor: item['dc:creator'],
+						articleGuid: item.guid,
+						articlePublicationDate: new Date(item.pubDate),
+						articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+					};
+					NewsItemsArray.push(newsItem);
+				});
+				NewsItemsArray.splice(10); //remove all after 5 to fasten db writes
+				console.log(NewsItemsArray[0]);
+			}
+
+			//nz herald
+			if (articleSource == "NZ Herald") {
+				parserrssfeed.rss.channel[0].item.forEach(item => {
+					const newsItem = {
+						displayOnFE: true,
+						articleSource: articleSource,
+						articleTitle: item.title[0],
+						articleDescription: item.description[0],
+						articleUrl: item.link[0],
+						teaserImageUrl: item['media:content'][0]['$']['url'],
+						articleGuid: guid = item.guid[0]['_'].slice(-27),
+						// articleAuthor :item['dc:creator'],
+						articlePublicationDate: new Date(item.pubDate[0]),
+						articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+					};
+					NewsItemsArray.push(newsItem);
+				});
+			}
+
+			//rnz
+			if (articleSource == "RNZ") {
+				parsedrssfeedforstuff.items.forEach(item => {
+					const newsItem = {
+						displayOnFE: true,
+						articleSource: articleSource,
+						articleTitle: item.title,
+						articleDescription: item.contentSnippet,
+						articleUrl: item.link,
+						// teaserImageUrl: item.media_content['url'],
+						articleGuid: item.guid,
+						articlePublicationDate: new Date(item.pubDate),
+						articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+					};
+					NewsItemsArray.push(newsItem);
+				});
+			}
+
+			//the post
+			const regex = /\d+[^0-9]/
+			if (articleSource == "THE POST") {
+				//only pull last 25 articles
+				for (let i = 0; i < 25; i++) {
+					const newsItem = {
+						displayOnFE: true,
+						articleSource: articleSource,
+						articleTitle: parserrssfeed.feed.entry[i].title[0],
+						articleDescription: parserrssfeed.feed.entry[i].summary[0],
+						articleUrl: parserrssfeed.feed.entry[i].link[0]['$'].href,
+						teaserImageUrl: parserrssfeed.feed.entry[i]['media:content'][0]['$']['url'],
+						articleAuthor: parserrssfeed.feed.entry[i].author[0].name[0],
+						articleGuid: parserrssfeed.feed.entry[i].id[0].slice(0, parserrssfeed.feed.entry[i].id[0].search(regex) + 10),
+						articlePublicationDate: new Date(parserrssfeed.feed.entry[i].published[0]),
+						articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+					};
+					NewsItemsArray.push(newsItem);
+				};
+			}
+
+			//the press
+			if (articleSource == "THE PRESS") {
+				//only pull last 25
+				for (let i = 0; i < 25; i++) {
+					const newsItem = {
+						displayOnFE: true,
+						articleSource: articleSource,
+						articleTitle: parserrssfeed.feed.entry[i].title[0],
+						articleDescription: parserrssfeed.feed.entry[i].summary[0],
+						articleUrl: parserrssfeed.feed.entry[i].link[0]['$'].href,
+						teaserImageUrl: parserrssfeed.feed.entry[i]['media:content'][0]['$']['url'],
+						articleAuthor: parserrssfeed.feed.entry[i].author[0].name[0],
+						articleGuid: parserrssfeed.feed.entry[i].id[0].slice(0, parserrssfeed.feed.entry[i].id[0].search(regex) + 10),
+						articlePublicationDate: new Date(parserrssfeed.feed.entry[i].published[0]),
 						articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
 					};
 					NewsItemsArray.push(newsItem);
 				}
 			}
-		}
 
-		//NEWSTALKZB
-		if (articleSource == "NEWSTALKZB") {
-			parserrssfeed.rss.channel[0].item.forEach(item => {
-				const newsItem = {
-					displayOnFE: true,
-					articleSource: articleSource,
-					articleTitle: item.title[0],
-					articleUrl: item.link[0],
-					teaserImageUrl: item['media:content'][0]['$']['url'],
-					articleGuid: guid = item.guid[0]['_'],
-					articlePublicationDate: new Date(item.pubDate[0]),
-					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-				};
-				NewsItemsArray.push(newsItem);
-			});
-		}
+			//waikato times
+			if (articleSource == "WAIKATO TIMES") {
 
-		//google news for 1news, newshub , newsroom, otago daily news, reseller news
-		if (articleSource == "GOOGLENEWS") {
-			parserrssfeed.rss.channel[0].item.forEach(item => {
-				const newsItem = {
-					displayOnFE: true,
-					articleSource: item.source[0]['_'],
-					articleTitle: item.title[0].split(' - ')[0], //google news add source at the end of title, remove it
-					articleUrl: item.link[0],
-					articleGuid: guid = item.guid[0]['_'],
-					articlePublicationDate: new Date(item.pubDate[0]),
-					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-				};
-				if (newsItem.articleSource === "Newshub" || newsItem.articleSource === "1News" || newsItem.articleSource === "Newsroom" || newsItem.articleSource === "Otago Daily Times" || newsItem.articleSource === "Reseller News" || newsItem.articleSource === "SunLive" || newsItem.articleSource === "Scoop") {
+				parserrssfeed.feed.entry.forEach(item => {
+					const newsItem = {
+						displayOnFE: true,
+						articleSource: articleSource,
+						articleTitle: item.title[0],
+						articleDescription: item.summary[0],
+						articleUrl: item.link[0]['$'].href,
+						teaserImageUrl: item['media:content'][0]['$']['url'],
+						articleAuthor: item.author[0].name[0],
+						articleGuid: item.id[0].slice(0, item.id[0].search(regex) + 10),
+						articlePublicationDate: new Date(item.published[0]),
+						articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
+					};
 					NewsItemsArray.push(newsItem);
-				}
-			});
-		}
-
-		//stuff
-		if (articleSource == "STUFF") {
-			parsedrssfeedforstuff.items.forEach(item => {
-				const newsItem = {
-					displayOnFE: true,
-					articleSource: articleSource,
-					articleTitle: item.title,
-					articleDescription: item.contentSnippet,
-					articleUrl: item.link,
-					teaserImageUrl: item.enclosure.url,
-					articleAuthor: item['dc:creator'],
-					articleGuid: item.guid,
-					articlePublicationDate: new Date(item.pubDate),
-					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-				};
-				NewsItemsArray.push(newsItem);
-			});
-			NewsItemsArray.splice(10); //remove all after 5 to fasten db writes
-			console.log(NewsItemsArray[0]);
-		}
-
-		//nz herald
-		if (articleSource == "NZ Herald") {
-			parserrssfeed.rss.channel[0].item.forEach(item => {
-				const newsItem = {
-					displayOnFE: true,
-					articleSource: articleSource,
-					articleTitle: item.title[0],
-					articleDescription: item.description[0],
-					articleUrl: item.link[0],
-					teaserImageUrl: item['media:content'][0]['$']['url'],
-					articleGuid: guid = item.guid[0]['_'].slice(-27),
-					// articleAuthor :item['dc:creator'],
-					articlePublicationDate: new Date(item.pubDate[0]),
-					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-				};
-				NewsItemsArray.push(newsItem);
-			});
-		}
-
-		//rnz
-		if (articleSource == "RNZ") {
-			parsedrssfeedforstuff.items.forEach(item => {
-				const newsItem = {
-					displayOnFE: true,
-					articleSource: articleSource,
-					articleTitle: item.title,
-					articleDescription: item.contentSnippet,
-					articleUrl: item.link,
-					// teaserImageUrl: item.media_content['url'],
-					articleGuid: item.guid,
-					articlePublicationDate: new Date(item.pubDate),
-					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-				};
-				NewsItemsArray.push(newsItem);
-			});
-		}
-
-		//the post
-		const regex = /\d+[^0-9]/
-		if (articleSource == "THE POST") {
-			//only pull last 25 articles
-			for (let i = 0; i < 25; i++) {
-				const newsItem = {
-					displayOnFE: true,
-					articleSource: articleSource,
-					articleTitle: parserrssfeed.feed.entry[i].title[0],
-					articleDescription: parserrssfeed.feed.entry[i].summary[0],
-					articleUrl: parserrssfeed.feed.entry[i].link[0]['$'].href,
-					teaserImageUrl: parserrssfeed.feed.entry[i]['media:content'][0]['$']['url'],
-					articleAuthor: parserrssfeed.feed.entry[i].author[0].name[0],
-					articleGuid: parserrssfeed.feed.entry[i].id[0].slice(0, parserrssfeed.feed.entry[i].id[0].search(regex) + 10),
-					articlePublicationDate: new Date(parserrssfeed.feed.entry[i].published[0]),
-					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-				};
-				NewsItemsArray.push(newsItem);
-			};
-		}
-
-		//the press
-		if (articleSource == "THE PRESS") {
-			//only pull last 25
-			for (let i = 0; i < 25; i++) {
-				const newsItem = {
-					displayOnFE: true,
-					articleSource: articleSource,
-					articleTitle: parserrssfeed.feed.entry[i].title[0],
-					articleDescription: parserrssfeed.feed.entry[i].summary[0],
-					articleUrl: parserrssfeed.feed.entry[i].link[0]['$'].href,
-					teaserImageUrl: parserrssfeed.feed.entry[i]['media:content'][0]['$']['url'],
-					articleAuthor: parserrssfeed.feed.entry[i].author[0].name[0],
-					articleGuid: parserrssfeed.feed.entry[i].id[0].slice(0, parserrssfeed.feed.entry[i].id[0].search(regex) + 10),
-					articlePublicationDate: new Date(parserrssfeed.feed.entry[i].published[0]),
-					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-				};
-				NewsItemsArray.push(newsItem);
+				});
+				NewsItemsArray.splice(20); //remove all after 20
 			}
+			await addNewsItemsToDB(NewsItemsArray)
+		} else {
+			console.error('Error fetching or parsing RSS feed: status code - ', response.status);
 		}
-
-		//waikato times
-		if (articleSource == "WAIKATO TIMES") {
-
-			parserrssfeed.feed.entry.forEach(item => {
-				const newsItem = {
-					displayOnFE: true,
-					articleSource: articleSource,
-					articleTitle: item.title[0],
-					articleDescription: item.summary[0],
-					articleUrl: item.link[0]['$'].href,
-					teaserImageUrl: item['media:content'][0]['$']['url'],
-					articleAuthor: item.author[0].name[0],
-					articleGuid: item.id[0].slice(0, item.id[0].search(regex) + 10),
-					articlePublicationDate: new Date(item.published[0]),
-					articleImportedToTopNewsDate: moment().tz(timeZone).toDate()
-				};
-				NewsItemsArray.push(newsItem);
-			});
-			NewsItemsArray.splice(20); //remove all after 20
-		}
-
-		await addNewsItemsToDB(NewsItemsArray)
-
 
 	} catch (error) {
-		console.error('Error fetching or parsing RSS feed:', error);
+		console.error('Error fetching or parsing RSS feed:', error.message);
 	}
 }
 
