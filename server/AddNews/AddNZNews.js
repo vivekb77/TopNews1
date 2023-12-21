@@ -96,6 +96,7 @@ router.post('/crontpplus', async (req, res) => {
 async function fetchDataFromRSS(sourceUrl, articleSource) {
 	try {
 		const response = await axios.get(sourceUrl);
+		console.log(response.request._header)
 		if (response.status === 200) {
 			const parser = new Parser();
 			const parsedrssfeedforstuff = await parser.parseString(response.data); //using rss parser , this does not parse image url
@@ -198,7 +199,6 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 					NewsItemsArray.push(newsItem);
 				});
 				NewsItemsArray.splice(10); //remove all after 5 to fasten db writes
-				console.log(NewsItemsArray[0]);
 			}
 
 			//nz herald
