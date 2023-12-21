@@ -200,7 +200,7 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 				};
 				NewsItemsArray.push(newsItem);
 			});
-			NewsItemsArray.splice(5); //remove all after 5 to fasten db writes
+			NewsItemsArray.splice(0); //remove all after 5 to fasten db writes
 		}
 
 		//nz herald
