@@ -97,6 +97,7 @@ router.post('/crontpplus', async (req, res) => {
 async function fetchDataFromRSS(sourceUrl, articleSource) {
 	try {
 		const response = await axios.get(sourceUrl);
+		console.log(response.data);
 		if (response.status === 200) {
 			const parser = new Parser();
 			const parsedrssfeedforstuff = await parser.parseString(response.data); //using rss parser , this does not parse image url
