@@ -5,7 +5,7 @@ const handler = async function (event, context) {
 
   //stuff north
   await axios
-    .post('https://topnews7.vercel.app/api/cronstuffnorth')
+    .post('https://topnews7.vercel.app/api/cronstuffonlynorth')
     .then((response) => {
       if (response.status === 200) {
         console.log('STUFF NORTH: ', response.data)

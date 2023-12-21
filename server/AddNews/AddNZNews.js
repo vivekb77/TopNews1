@@ -13,7 +13,7 @@ let addedArticlesCount;
 let skippedArticlesCount;
 let errorAddingArticlesCount;
 // Get RSS feed from new providers whenever needed with a post request to api/cron
-router.post('/cronstuffnorth', async (req, res) => {
+router.post('/cronstuffonlynorth', async (req, res) => {
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
@@ -200,7 +200,8 @@ async function fetchDataFromRSS(sourceUrl, articleSource) {
 				};
 				NewsItemsArray.push(newsItem);
 			});
-			NewsItemsArray.splice(0); //remove all after 5 to fasten db writes
+			NewsItemsArray.splice(10); //remove all after 5 to fasten db writes
+			console.log(NewsItemsArray[0]);
 		}
 
 		//nz herald
