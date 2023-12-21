@@ -13,7 +13,7 @@ let addedArticlesCount;
 let skippedArticlesCount;
 let errorAddingArticlesCount;
 // Get RSS feed from new providers whenever needed with a post request to api/cron
-router.post('/cronstuffonlynorth', async (req, res) => {
+router.post('/cronstuffnorth', async (req, res) => {
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
@@ -27,9 +27,8 @@ router.post('/cronstuffsouth', async (req, res) => {
 	addedArticlesCount = 0;
 	skippedArticlesCount = 0;
 	errorAddingArticlesCount = 0;
-	await fetchDataFromRSS('https://www.stuff.co.nz/rss', "STUFF");
-	// await fetchDataFromRSS('https://www.thepress.co.nz/rss', "THE PRESS");
-	// await fetchDataFromRSS('https://www.thepost.co.nz/rss', "THE POST");
+	await fetchDataFromRSS('https://www.thepress.co.nz/rss', "THE PRESS");
+	await fetchDataFromRSS('https://www.thepost.co.nz/rss', "THE POST");
 	AddDateTimeOfLastPull(new Date().toLocaleString());
 	return res.json({ status: 'ok', message: `Cron job completed successfully for STUFF SOUTH. Added ${addedArticlesCount}, Skipped ${skippedArticlesCount}, Error ${errorAddingArticlesCount}` })
 });
@@ -96,8 +95,9 @@ router.post('/crontpplus', async (req, res) => {
 
 async function fetchDataFromRSS(sourceUrl, articleSource) {
 	try {
+		console.log('sending request');
 		const response = await axios.get(sourceUrl);
-		console.log(response.data);
+		console.log('response received');
 		if (response.status === 200) {
 			const parser = new Parser();
 			const parsedrssfeedforstuff = await parser.parseString(response.data); //using rss parser , this does not parse image url
