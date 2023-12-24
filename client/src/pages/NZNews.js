@@ -87,7 +87,7 @@ const NZNews = () => {
 					stuffImageUrlForBigImage = `${teaserImageUrlSpliturlArraySliced.join(".")}.related.StuffLandscapeSixteenByNine.1420x800.${teaserImageUrlSpliturlArray[7]}.${teaserImageUrlSpliturlArray[8]}.jpg?format=pjpg&optimize=medium`;
 					teaserImageUrl = ""
 				}
-				else if(data.tweets[i].resizedImageUrl){
+				else if (data.tweets[i].resizedImageUrl) {
 					teaserImageUrl = `https://newsexpress.imageresizer.io/${data.tweets[i].resizedImageUrl}?size=1240x700&format=webp&quality=100`;
 				}
 				else {
@@ -107,7 +107,7 @@ const NZNews = () => {
 					articleGuid: data.tweets[i].articleGuid,
 					articlePublicationDate: data.tweets[i].articleAuthor, //author field has formatted date so using it
 					articleImportedToTopNewsDate: data.tweets[i].articleImportedToTopNewsDate,
-					whichcontinent : "NZ"
+					whichcontinent: "NZ"
 
 				}
 				newsArray.push(obj);
@@ -144,7 +144,7 @@ const NZNews = () => {
 					articleGuid: data.notnews[i].articleGuid,
 					articlePublicationDate: data.notnews[i].articleAuthor, //author field has formatted date so using it
 					articleImportedToTopNewsDate: data.notnews[i].articleImportedToTopNewsDate,
-					whichcontinent : "NOTNEWS"
+					whichcontinent: "NOTNEWS"
 				}
 				notNewsArray.push(obj);
 			}
@@ -203,15 +203,15 @@ const NZNews = () => {
 						{<p className="textofcountrybuttontext">WORLD</p>}
 					</div>
 				</div>
-				
+
 				{infoMessage && <GoToTop />}
 				{infoMessage && <ReadFast isReadFastOn={handleReadFastClick} />}
 			</div>
 
 			{news.map((article) => {
 				return <NewsCard
-					article={article} 
-					isReadFastOn={isReadFastOn} 
+					article={article}
+					isReadFastOn={isReadFastOn}
 					key={(Math.random() + 1).toString(36).substring(7)}
 					onChange={setNews}
 				/>
@@ -237,6 +237,8 @@ const NZNews = () => {
 			</div>
 			<Helmet>
 				{<title>NEWS EXPRESS | NEWS on the go | The fastest way to stay updated with latest NZ NEWS | NZ News</title>}
+				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7452283240439769"
+					crossorigin="anonymous"></script>
 			</Helmet>
 
 		</div>
