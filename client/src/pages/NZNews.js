@@ -236,8 +236,9 @@ const NZNews = () => {
 				{infoMessage && <h4 className='mainsubtitleads'><a href='/terms'>Terms</a></h4>}
 			</div>
 			<Helmet>
-				<title>NEWS EXPRESS | NEWS on the go | The fastest way to stay updated with latest NZ NEWS | NZ News</title>
-				<meta name="google-adsense-account" content="ca-pub-7452283240439769"></meta>
+				{<title>NEWS EXPRESS | NEWS on the go | The fastest way to stay updated with latest NZ NEWS | NZ News</title>}
+				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7452283240439769"
+					crossorigin="anonymous"></script>
 			</Helmet>
 
 		</div>
