@@ -237,8 +237,6 @@ const NZNews = () => {
 			</div>
 			<Helmet>
 				{<title>NEWS EXPRESS | NEWS on the go | The fastest way to stay updated with latest NZ NEWS | NZ News</title>}
-				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7452283240439769"
-					crossorigin="anonymous"></script>
 			</Helmet>
 
 		</div>
