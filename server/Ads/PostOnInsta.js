@@ -21,7 +21,6 @@ router.post('/PostOnInsta', async (req, res) => {
         endTimeNZT.setHours(23, 5, 0);
         if (currentTimeNZT >= startTimeNZT && currentTimeNZT <= endTimeNZT) {
             console.log("Posting on Insta: " + currentTimeNZT);
-            // await getLongLivedAccessToken(); //only use this to generate long lived token
             await getImageUrl();
             return res.json({ status: 'ok', message: "Posted on Insta: " + currentTimeNZT })
         } else {
@@ -33,26 +32,6 @@ router.post('/PostOnInsta', async (req, res) => {
         return res.json({ status: 'error' })
     }
 })
-
-async function getLongLivedAccessToken() {
-    //get long live token from short live token
-    // the token from facebook graph explorer is short lived ie 1 hour, so we need to create long lived 60 days token from short live token
-    //https://graph.facebook.com/{graph-api-version}/oauth/access_token?grant_type=fb_exchange_token&client_id={app-id}&client_secret={app-secret}&fb_exchange_token={your-access-token}
-    //app-id and app-secret can be found in fb dev account 
-    try {
-        const longlivedtoken = await axios.get(
-            `https://graph.facebook.com/v18.0/oauth/access_token?grant_type=fb_exchange_token&client_id=387649156945968&client_secret=db19d06416ce4e0cd76978761ea8cfb2&fb_exchange_token=${shortLivedAccessToken}`,
-        );
-        if (longlivedtoken.status === 200) {
-            longLivedAccessToken = longlivedtoken.data.access_token
-            console.log(`Long live access token created ${longLivedAccessToken}`);
-        } else {
-            console.log(`Long live access token not created`);
-        }
-    } catch (e) {
-        console.log(`Long live access token not created ${e.message}`);
-    }
-}
 
 //to upload image to insta, url is needed , cant upload from local storage
 async function getImageUrl() {
@@ -177,6 +156,29 @@ async function PostAReel() {
 }
 
 module.exports = router;
+
+ // await getLongLivedAccessToken(); //only use this to generate long lived token
+ async function getLongLivedAccessToken() {
+    //get long live token from short live token
+    // the token from facebook graph explorer is short lived ie 1 hour, so we need to create long lived 60 days token from short live token
+    //https://graph.facebook.com/{graph-api-version}/oauth/access_token?grant_type=fb_exchange_token&client_id={app-id}&client_secret={app-secret}&fb_exchange_token={your-access-token}
+    //app-id and app-secret can be found in fb dev account 
+    try {
+        const longlivedtoken = await axios.get(
+            `https://graph.facebook.com/v18.0/oauth/access_token?grant_type=fb_exchange_token&client_id=387649156945968&client_secret=db19d06416ce4e0cd76978761ea8cfb2&fb_exchange_token=${shortLivedAccessToken}`,
+        );
+        if (longlivedtoken.status === 200) {
+            longLivedAccessToken = longlivedtoken.data.access_token
+            console.log(`Long live access token created ${longLivedAccessToken}`);
+        } else {
+            console.log(`Long live access token not created`);
+        }
+    } catch (e) {
+        console.log(`Long live access token not created ${e.message}`);
+    }
+}
+var currentHour = new Date().getHours();
+console.log(`Current Hour: ${currentHour % 2}`);
 
 //to get insta business account id and access token
 // https://developers.facebook.com/docs/instagram-api/getting-started

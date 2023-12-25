@@ -17,7 +17,7 @@ const handler = async function (event, context) {
 
     //post tweet
     await axios
-        .post('https://topnews7.vercel.app/api/PostTweet')
+        .post('https://topnews7.vercel.app/api/PostImageTweet')
         .then((response) => {
             if (response.status === 200) {
                 console.log('Posted Ad on Twitter: ', response.data)
