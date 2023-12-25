@@ -8,31 +8,19 @@ const handler = async function (event, context) {
         .post('https://topnews7.vercel.app/api/CreateAd')
         .then((response) => {
             if (response.status === 200) {
-                console.log('Created Ad for Twitter: ', response.data)
+                console.log('Created Ad for Insta: ', response.data)
             }
         })
         .catch((e) => {
             console.error(e)
         })
 
-    //post add
+    //post on insta
     await axios
-        .post('https://topnews7.vercel.app/api/PostAd')
+        .post('https://topnews7.vercel.app/api/PostOnInsta')
         .then((response) => {
             if (response.status === 200) {
-                console.log('Posted Ad on Twitter: ', response.data)
-            }
-        })
-        .catch((e) => {
-            console.error(e)
-        })
-
-    //post article url
-    await axios
-        .post('https://topnews7.vercel.app/api/PostTextTweet')
-        .then((response) => {
-            if (response.status === 200) {
-                console.log('Posted Article URL to twitter: ', response.data)
+                console.log('Posted on Insta: ', response.data)
             }
         })
         .catch((e) => {

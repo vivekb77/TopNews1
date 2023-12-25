@@ -11,7 +11,7 @@ const client = new TwitterApi({
 
 const rwClient = client.readWrite;
 
-router.post('/PostAd', async (req, res) => {
+router.post('/PostImageTweet', async (req, res) => {
     try {
         //only post Media Tweet from 7am to 11pm
         const currentTimeUTC = new Date();
@@ -24,7 +24,7 @@ router.post('/PostAd', async (req, res) => {
 
         if (currentTimeNZT >= startTimeNZT && currentTimeNZT <= endTimeNZT) {
             console.log("Posting Media Tweet: " + currentTimeNZT);
-            await postAd();
+            await PostImageTweet();
             return res.json({ status: 'ok', message: "Posted Media Tweet: " + currentTimeNZT })
         } else {
             console.log("Skipping Media Tweet: " + currentTimeNZT);
@@ -36,7 +36,7 @@ router.post('/PostAd', async (req, res) => {
     }
 })
 
-async function postAd() {
+async function PostImageTweet() {
     try {
         const mediaId = await client.v1.uploadMedia(
             "/tmp/twitteradimage.png"
