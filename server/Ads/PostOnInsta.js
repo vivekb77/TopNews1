@@ -40,11 +40,11 @@ router.post('/PostOnInsta', async (req, res) => {
                     let postsuccessfail;
                     if (currentHour % 2 === 0) {
                         postsuccessfail = await InstaPostAPost(image_name_or_id);
-                        await ImageResizerDeleteImage(image_name_or_id);
+                        // await ImageResizerDeleteImage(image_name_or_id);
                     } else {
                         postsuccessfail = await InstaPostAStory(image_name_or_id);
                         // postsuccessfail = await PostAReel();
-                        await ImageResizerDeleteImage(image_name_or_id);
+                        // await ImageResizerDeleteImage(image_name_or_id);
                     }
                     if (postsuccessfail) {
                         return res.json({ status: `ok`, message: "Posted image to Insta", posted_at: currentTimeNZT })
@@ -211,8 +211,6 @@ async function getLongLivedAccessToken() {
         console.log(`Long live access token not created ${e.message}`);
     }
 }
-var currentHour = new Date().getHours();
-console.log(`Current Hour: ${currentHour % 2}`);
 
 //to get insta business account id and access token
 // https://developers.facebook.com/docs/instagram-api/getting-started
