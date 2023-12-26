@@ -5,7 +5,7 @@ const handler = async function (event, context) {
 
     //create image for insta
     await axios
-        .post('http://localhost:1337/api/CreateAd')
+        .post('https://topnews7.vercel.app/api/CreateAd')
         .then((response) => {
             if (response.status === 200) {
                 console.log('Created Image for Insta: ', response.data)
@@ -18,7 +18,7 @@ const handler = async function (event, context) {
 
     // upload image created by above to image resizer
     try {
-        const uploadresponse = await axios.post('http://localhost:1337/api/PostOnInsta',
+        const uploadresponse = await axios.post('https://topnews7.vercel.app/api/PostOnInsta',
             {
                 "upload_or_post_image": "uploadImage",
                 "image_name_or_id": "twitteradimage.png"
@@ -34,7 +34,7 @@ const handler = async function (event, context) {
             console.log('Image uploaded to image resizer, Image id :', uploadresponse.data.image_id);
 
             //post on insta
-            const postresponse = await axios.post('http://localhost:1337/api/PostOnInsta',
+            const postresponse = await axios.post('https://topnews7.vercel.app/api/PostOnInsta',
                 {
                     "upload_or_post_image": "postImage",
                     "image_name_or_id": uploadresponse.data.image_id
