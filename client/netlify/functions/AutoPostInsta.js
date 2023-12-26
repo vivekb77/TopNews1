@@ -4,16 +4,16 @@ const axios = require('axios')
 const handler = async function (event, context) {
 
     //create image for insta
-    // await axios
-    //     .post('https://topnews7.vercel.app/api/CreateAd')
-    //     .then((response) => {
-    //         if (response.status === 200) {
-    //             console.log('Created Image for Insta: ', response.data)
-    //         }
-    //     })
-    //     .catch((e) => {
-    //         console.error("Error creating image for insta " + e)
-    //     })
+    await axios
+        .post('https://topnews7.vercel.app/api/CreateAd')
+        .then((response) => {
+            if (response.status === 200) {
+                console.log('Created Image for Insta: ', response.data)
+            }
+        })
+        .catch((e) => {
+            console.error("Error creating image for insta " + e)
+        })
 
 
     // upload image created by above to image resizer

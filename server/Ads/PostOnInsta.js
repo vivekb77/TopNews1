@@ -126,28 +126,28 @@ async function InstaPostAPost(image_name_or_id) {
 async function InstaPostAStory(image_name_or_id) {
     image_url = `https://newsexpress.imageresizer.io/${image_name_or_id}?size=1080x1800&format=webp&qualty=80`;
     let post_caption = `Read latest NZ NEWS, link in bio`;
+    return "success";
+    // try {
+    //     //story upload
+    //     const response = await axios.post(
+    //         `https://graph.facebook.com/v18.0/${instagram_business_account_id}/media?media_type=STORIES&image_url=${image_url}&access_token=${longLivedAccessToken}`,
+    //     );
+    //     if (response.data.id) {
+    //         console.log('Insta Story uploaded')
 
-    try {
-        //story upload
-        const response = await axios.post(
-            `https://graph.facebook.com/v18.0/${instagram_business_account_id}/media?media_type=STORIES&image_url=${image_url}&access_token=${longLivedAccessToken}`,
-        );
-        if (response.data.id) {
-            console.log('Insta Story uploaded')
-
-            //story post
-            const response1 = await axios.post(
-                `https://graph.facebook.com/v18.0/${instagram_business_account_id}/media_publish?creation_id=${response.data.id}&access_token=${longLivedAccessToken}`,
-            );
-            if (response1.data.id) {
-                console.log('Insta Story posted')
-            }
-        }
-        return "success";
-    } catch (error) {
-        console.error('Error posting Insta Story:', error.response ? error.response.data : error.message);
-        return null;
-    }
+    //         //story post
+    //         const response1 = await axios.post(
+    //             `https://graph.facebook.com/v18.0/${instagram_business_account_id}/media_publish?creation_id=${response.data.id}&access_token=${longLivedAccessToken}`,
+    //         );
+    //         if (response1.data.id) {
+    //             console.log('Insta Story posted')
+    //         }
+    //     }
+    //     return "success";
+    // } catch (error) {
+    //     console.error('Error posting Insta Story:', error.response ? error.response.data : error.message);
+    //     return null;
+    // }
 }
 
 
