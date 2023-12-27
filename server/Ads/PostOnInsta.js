@@ -37,14 +37,14 @@ router.post('/PostOnInsta', async (req, res) => {
                 } else if (upload_or_post_image === "postImage") {
                     console.log("Posting image to Insta");
                     var currentHour = new Date().getHours();
-                    let postsuccessfail;
+                    let postsuccessfail = 'success'; //for now as response should be sent in 10 secs
                     if (currentHour % 2 === 0) {
-                        postsuccessfail = await InstaPostAPost(image_name_or_id);
-                        // await ImageResizerDeleteImage(image_name_or_id);
+                        // postsuccessfail = await InstaPostAPost(image_name_or_id);
+                        InstaPostAPost(image_name_or_id); // no await so func sends reply within 10secs
                     } else {
-                        postsuccessfail = await InstaPostAStory(image_name_or_id);
+                        InstaPostAStory(image_name_or_id);
+                        // postsuccessfail = await InstaPostAStory(image_name_or_id);
                         // postsuccessfail = await PostAReel();
-                        // await ImageResizerDeleteImage(image_name_or_id);
                     }
                     if (postsuccessfail) {
                         return res.json({ status: `ok`, message: "Posted image to Insta", posted_at: currentTimeNZT })
@@ -114,6 +114,7 @@ async function InstaPostAPost(image_name_or_id) {
             );
             if (response1.data.id) {
                 console.log('Insta Post posted')
+                await ImageResizerDeleteImage(image_name_or_id);
             }
         }
         return "success";
@@ -141,6 +142,7 @@ async function InstaPostAStory(image_name_or_id) {
     //         );
     //         if (response1.data.id) {
     //             console.log('Insta Story posted')
+    //             await ImageResizerDeleteImage(image_name_or_id);
     //         }
     //     }
     //     return "success";
