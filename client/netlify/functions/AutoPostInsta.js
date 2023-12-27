@@ -17,7 +17,7 @@ const handler = async function (event, context) {
 
 
     // upload image created by above to image resizer
-    try {
+
         const uploadresponse = await axios.post('https://topnews7.vercel.app/api/PostOnInsta',
             {
                 "upload_or_post_image": "uploadImage",
@@ -53,9 +53,6 @@ const handler = async function (event, context) {
         }else{
             console.log("Image Not uploaded to image resizer. Error: ", uploadresponse.data.message);
         }
-    } catch (error) {
-        console.error("Error while uploading to image resizer and posting to insta " + error.message);
-    }
 
 };
 
