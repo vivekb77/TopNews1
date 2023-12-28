@@ -4,16 +4,16 @@ const axios = require('axios')
 const handler = async function (event, context) {
 
     //create image for insta
-    await axios
-        .post('https://topnews7.vercel.app/api/CreateAd')
-        .then((response) => {
-            if (response.status === 200) {
-                console.log('Created Image for Insta: ', response.data)
-            }
-        })
-        .catch((e) => {
-            console.error("Error creating image for insta " + e)
-        })
+    // await axios
+    //     .post('http://localhost:1337/api/CreateAd')
+    //     .then((response) => {
+    //         if (response.status === 200) {
+    //             console.log('Created Image for Insta: ', response.data)
+    //         }
+    //     })
+    //     .catch((e) => {
+    //         console.error("Error creating image for insta " + e)
+    //     })
 
 
     // upload image created by above to image resizer
@@ -30,7 +30,7 @@ const handler = async function (event, context) {
                 }
             });
             
-        if (uploadresponse.data.status === 'ok' && uploadresponse.data.image_id) {
+        if (uploadresponse.status === 200 && uploadresponse.data.image_id) {
             console.log('Image uploaded to image resizer, Image id :', uploadresponse.data.image_id);
 
             //post on insta
@@ -45,8 +45,8 @@ const handler = async function (event, context) {
                         'Authorization': 'Basic bmV3c2V4cHJlc3M6wqM1MHIwQDc9b1FYOQ==',
                     }
                 });
-            if (postresponse.data.status === 'ok') {
-                console.log("Image posted to Insta");
+            if (postresponse.status === 200) {
+                console.log("Image posted to Insta, status " +postresponse.status);
             }else{
                 console.log("Image not posted to Insta. Error: ", postresponse.data.message);
             }

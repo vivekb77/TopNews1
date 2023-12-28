@@ -30,26 +30,26 @@ router.post('/PostOnInsta', async (req, res) => {
                     console.log("Uploading image to image resizer");
                     const image_id = await uploadImageToImageResizer(image_name_or_id);
                     if (image_id) {
-                        return res.json({ status: `ok`, message: `Uploaded image to Image Resizer`, image_id: image_id, uploaded_at: currentTimeNZT })
+                        return res.json({ status: "ok", message: `Uploaded image to Image Resizer`, image_id: image_id, uploaded_at: currentTimeNZT })
                     } else {
                         return res.json({ status: `error`, message: `Uploaded image to Image Resizer failed`, upload_tried_at: currentTimeNZT })
                     }
                 } else if (upload_or_post_image === "postImage") {
                     console.log("Posting image to Insta");
                     var currentHour = new Date().getHours();
-                    let postsuccessfail = 'success'; //for now as response should be sent in 10 secs
+                    let postsuccessfail;
                     if (currentHour % 2 === 0) {
-                        // postsuccessfail = await InstaPostAPost(image_name_or_id);
-                        InstaPostAPost(image_name_or_id); // no await so func sends reply within 10secs
+                        postsuccessfail =  await InstaPostAPost(image_name_or_id);
+                        ImageResizerDeleteImage(image_name_or_id);
                     } else {
-                        InstaPostAStory(image_name_or_id);
-                        // postsuccessfail = await InstaPostAStory(image_name_or_id);
+                        postsuccessfail = await InstaPostAStory(image_name_or_id);
                         // postsuccessfail = await PostAReel();
+                        ImageResizerDeleteImage(image_name_or_id);
                     }
                     if (postsuccessfail) {
-                        return res.json({ status: `ok`, message: "Posted image to Insta", posted_at: currentTimeNZT })
+                        return res.json({ status: "ok", message: "Posted image to Insta", posted_at: currentTimeNZT })
                     } else {
-                        return res.json({ status: `error`, message: "Not posted image to Insta", post_tried_at: currentTimeNZT })
+                        return res.json({ status: "error", message: "Not posted image to Insta", post_tried_at: currentTimeNZT })
                     }
                 } else {
                     console.log("Not uploaded or posted. Valid values are uploadImage or postImage");
@@ -114,7 +114,6 @@ async function InstaPostAPost(image_name_or_id) {
             );
             if (response1.data.id) {
                 console.log('Insta Post posted')
-                await ImageResizerDeleteImage(image_name_or_id);
             }
         }
         return "success";
@@ -127,29 +126,27 @@ async function InstaPostAPost(image_name_or_id) {
 async function InstaPostAStory(image_name_or_id) {
     image_url = `https://newsexpress.imageresizer.io/${image_name_or_id}?size=1080x1800&format=webp&qualty=80`;
     let post_caption = `Read latest NZ NEWS, link in bio`;
-    return "success";
-    // try {
-    //     //story upload
-    //     const response = await axios.post(
-    //         `https://graph.facebook.com/v18.0/${instagram_business_account_id}/media?media_type=STORIES&image_url=${image_url}&access_token=${longLivedAccessToken}`,
-    //     );
-    //     if (response.data.id) {
-    //         console.log('Insta Story uploaded')
+    try {
+        //story upload
+        const response = await axios.post(
+            `https://graph.facebook.com/v18.0/${instagram_business_account_id}/media?media_type=STORIES&image_url=${image_url}&access_token=${longLivedAccessToken}`,
+        );
+        if (response.data.id) {
+            console.log('Insta Story uploaded')
 
-    //         //story post
-    //         const response1 = await axios.post(
-    //             `https://graph.facebook.com/v18.0/${instagram_business_account_id}/media_publish?creation_id=${response.data.id}&access_token=${longLivedAccessToken}`,
-    //         );
-    //         if (response1.data.id) {
-    //             console.log('Insta Story posted')
-    //             await ImageResizerDeleteImage(image_name_or_id);
-    //         }
-    //     }
-    //     return "success";
-    // } catch (error) {
-    //     console.error('Error posting Insta Story:', error.response ? error.response.data : error.message);
-    //     return null;
-    // }
+            //story post
+            const response1 = await axios.post(
+                `https://graph.facebook.com/v18.0/${instagram_business_account_id}/media_publish?creation_id=${response.data.id}&access_token=${longLivedAccessToken}`,
+            );
+            if (response1.data.id) {
+                console.log('Insta Story posted')
+            }
+        }
+        return "success";
+    } catch (error) {
+        console.error('Error posting Insta Story:', error.response ? error.response.data : error.message);
+        return null;
+    }
 }
 
 
