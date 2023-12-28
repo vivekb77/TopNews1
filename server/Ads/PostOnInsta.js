@@ -98,7 +98,7 @@ async function uploadImageToImageResizer(image_name_or_id) {
 }
 
 async function InstaPostAPost(image_name_or_id) {
-    try {
+    // try {
         image_url = `https://newsexpress.imageresizer.io/${image_name_or_id}?size=1080x1800&format=webp&qualty=80`;
         let post_caption = `Read latest NZ NEWS, link in bio`;
 
@@ -117,16 +117,16 @@ async function InstaPostAPost(image_name_or_id) {
             }
         }
         return "success";
-    } catch (error) {
-        console.error('Error posting Insta post:', error.response ? error.response.data : error.message);
-        return null;
-    }
+    // } catch (error) {
+    //     console.error('Error posting Insta post:', error.response ? error.response.data : error.message);
+    //     return null;
+    // }
 }
 
 async function InstaPostAStory(image_name_or_id) {
     image_url = `https://newsexpress.imageresizer.io/${image_name_or_id}?size=1080x1800&format=webp&qualty=80`;
     let post_caption = `Read latest NZ NEWS, link in bio`;
-    try {
+    // try {
         //story upload
         const response = await axios.post(
             `https://graph.facebook.com/v18.0/${instagram_business_account_id}/media?media_type=STORIES&image_url=${image_url}&access_token=${longLivedAccessToken}`,
@@ -143,10 +143,10 @@ async function InstaPostAStory(image_name_or_id) {
             }
         }
         return "success";
-    } catch (error) {
-        console.error('Error posting Insta Story:', error.response ? error.response.data : error.message);
-        return null;
-    }
+    // } catch (error) {
+    //     console.error('Error posting Insta Story:', error.response ? error.response.data : error.message);
+    //     return null;
+    // }
 }
 
 

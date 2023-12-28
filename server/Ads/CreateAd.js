@@ -271,7 +271,7 @@ async function createAd() {
 
             // compress image
             const compressedImage = await sharp(buffer)
-                .jpeg({ quality: 40 }) // Adjust the quality as needed
+                .png({ quality: 50 }) // Adjust the quality as needed
                 .toBuffer();
             fs.writeFileSync("/tmp/twitteradimage.png", compressedImage);
             // fs.writeFileSync("../twitteradimage.png", compressedImage); //for local dev
