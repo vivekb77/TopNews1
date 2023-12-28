@@ -40,11 +40,11 @@ router.post('/PostOnInsta', async (req, res) => {
                     let postsuccessfail;
                     if (currentHour % 2 === 0) {
                         postsuccessfail =  await InstaPostAPost(image_name_or_id);
-                        ImageResizerDeleteImage(image_name_or_id);
+                        await ImageResizerDeleteImage(image_name_or_id);
                     } else {
                         postsuccessfail = await InstaPostAStory(image_name_or_id);
                         // postsuccessfail = await PostAReel();
-                        ImageResizerDeleteImage(image_name_or_id);
+                        await ImageResizerDeleteImage(image_name_or_id);
                     }
                     if (postsuccessfail) {
                         return res.json({ status: "ok", message: "Posted image to Insta", posted_at: currentTimeNZT })

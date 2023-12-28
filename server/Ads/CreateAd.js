@@ -7,6 +7,7 @@ const axios = require('axios');
 const { createCanvas, loadImage } = require("canvas");
 const fs = require("fs");
 const util = require('util');
+const sharp = require('sharp');
 
 const options = {
     day: '2-digit',
@@ -263,12 +264,17 @@ async function createAd() {
             fs.writeFileSync("/tmp/twitteradimage.png", buffer);
         })
 
-        loadImage("/tmp/adlogo.png").then((image) => {
+        loadImage("/tmp/adlogo.png").then(async (image) => {
             const { w, h, x, y } = logoImagePosition;
             context.drawImage(image, x, y, w, h);
             const buffer = canvas.toBuffer("image/png");
-            fs.writeFileSync("/tmp/twitteradimage.png", buffer);
-            // fs.writeFileSync("../twitteradimage.png", buffer);
+
+            // compress image
+            const compressedImage = await sharp(buffer)
+                .jpeg({ quality: 40 }) // Adjust the quality as needed
+                .toBuffer();
+            fs.writeFileSync("/tmp/twitteradimage.png", compressedImage);
+            // fs.writeFileSync("../twitteradimage.png", compressedImage); //for local dev
         });
         console.log('Twitter Ad image created');
     } else {
